@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A227C79E1DA758A900EFFD7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C79D1DA758A900EFFD7B /* AppDelegate.swift */; };
 		A227C7A01DA758A900EFFD7B /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = A227C79F1DA758A900EFFD7B /* GameScene.sks */; };
-		A227C7A21DA758A900EFFD7B /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = A227C7A11DA758A900EFFD7B /* Actions.sks */; };
 		A227C7A41DA758A900EFFD7B /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C7A31DA758A900EFFD7B /* GameScene.swift */; };
 		A227C7A61DA758A900EFFD7B /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C7A51DA758A900EFFD7B /* GameViewController.swift */; };
 		A227C7A91DA758A900EFFD7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A227C7A71DA758A900EFFD7B /* Main.storyboard */; };
@@ -17,6 +16,15 @@
 		A227C7AE1DA758AA00EFFD7B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A227C7AC1DA758AA00EFFD7B /* LaunchScreen.storyboard */; };
 		A227C7B91DA758AA00EFFD7B /* ghostpuncherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C7B81DA758AA00EFFD7B /* ghostpuncherTests.swift */; };
 		A227C7C41DA758AA00EFFD7B /* ghostpuncherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C7C31DA758AA00EFFD7B /* ghostpuncherUITests.swift */; };
+		A2B49AEB1DA88C1900F86F40 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEA1DA88C1900F86F40 /* Room.swift */; };
+		A2B49AED1DA88CB600F86F40 /* Opponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEC1DA88CB600F86F40 /* Opponent.swift */; };
+		A2B49AEF1DA88CE400F86F40 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEE1DA88CE400F86F40 /* Player.swift */; };
+		A2B49AF11DA88EAF00F86F40 /* FightScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AF01DA88EAF00F86F40 /* FightScene.swift */; };
+		A2B49AF41DA89BC900F86F40 /* Ghost.sks in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AF31DA89BC900F86F40 /* Ghost.sks */; };
+		A2B49AF61DA89C1F00F86F40 /* Ghost.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AF51DA89C1F00F86F40 /* Ghost.xcassets */; };
+		A2B49AF91DA8BC3500F86F40 /* Player1.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AF81DA8BC3500F86F40 /* Player1.xcassets */; };
+		A2B49AFC1DA9FA2A00F86F40 /* ghostleftarm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AFA1DA9FA2A00F86F40 /* ghostleftarm.atlas */; };
+		A2B49AFD1DA9FA2A00F86F40 /* ghostrightarm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AFB1DA9FA2A00F86F40 /* ghostrightarm.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +48,6 @@
 		A227C79A1DA758A900EFFD7B /* ghostpuncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ghostpuncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A227C79D1DA758A900EFFD7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A227C79F1DA758A900EFFD7B /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		A227C7A11DA758A900EFFD7B /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		A227C7A31DA758A900EFFD7B /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		A227C7A51DA758A900EFFD7B /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		A227C7A81DA758A900EFFD7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -53,6 +60,15 @@
 		A227C7BF1DA758AA00EFFD7B /* ghostpuncherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ghostpuncherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A227C7C31DA758AA00EFFD7B /* ghostpuncherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ghostpuncherUITests.swift; sourceTree = "<group>"; };
 		A227C7C51DA758AA00EFFD7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A2B49AEA1DA88C1900F86F40 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Room.swift; path = classes/Room.swift; sourceTree = "<group>"; };
+		A2B49AEC1DA88CB600F86F40 /* Opponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Opponent.swift; path = classes/Opponent.swift; sourceTree = "<group>"; };
+		A2B49AEE1DA88CE400F86F40 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Player.swift; path = classes/Player.swift; sourceTree = "<group>"; };
+		A2B49AF01DA88EAF00F86F40 /* FightScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FightScene.swift; path = classes/FightScene.swift; sourceTree = "<group>"; };
+		A2B49AF31DA89BC900F86F40 /* Ghost.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Ghost.sks; path = opponents/Ghost.sks; sourceTree = "<group>"; };
+		A2B49AF51DA89C1F00F86F40 /* Ghost.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Ghost.xcassets; path = opponents/Ghost.xcassets; sourceTree = "<group>"; };
+		A2B49AF81DA8BC3500F86F40 /* Player1.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Player1.xcassets; sourceTree = "<group>"; };
+		A2B49AFA1DA9FA2A00F86F40 /* ghostleftarm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ghostleftarm.atlas; sourceTree = "<group>"; };
+		A2B49AFB1DA9FA2A00F86F40 /* ghostrightarm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ghostrightarm.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,15 +119,18 @@
 		A227C79C1DA758A900EFFD7B /* ghostpuncher */ = {
 			isa = PBXGroup;
 			children = (
+				A2B49AF71DA8BC2400F86F40 /* players */,
+				A2B49AF21DA89B9800F86F40 /* opponents */,
+				A2B49AE91DA88ACC00F86F40 /* classes */,
 				A227C79D1DA758A900EFFD7B /* AppDelegate.swift */,
 				A227C79F1DA758A900EFFD7B /* GameScene.sks */,
-				A227C7A11DA758A900EFFD7B /* Actions.sks */,
 				A227C7A31DA758A900EFFD7B /* GameScene.swift */,
 				A227C7A51DA758A900EFFD7B /* GameViewController.swift */,
 				A227C7A71DA758A900EFFD7B /* Main.storyboard */,
 				A227C7AA1DA758AA00EFFD7B /* Assets.xcassets */,
 				A227C7AC1DA758AA00EFFD7B /* LaunchScreen.storyboard */,
 				A227C7AF1DA758AA00EFFD7B /* Info.plist */,
+				A2B49AF01DA88EAF00F86F40 /* FightScene.swift */,
 			);
 			path = ghostpuncher;
 			sourceTree = "<group>";
@@ -132,6 +151,35 @@
 				A227C7C51DA758AA00EFFD7B /* Info.plist */,
 			);
 			path = ghostpuncherUITests;
+			sourceTree = "<group>";
+		};
+		A2B49AE91DA88ACC00F86F40 /* classes */ = {
+			isa = PBXGroup;
+			children = (
+				A2B49AEA1DA88C1900F86F40 /* Room.swift */,
+				A2B49AEC1DA88CB600F86F40 /* Opponent.swift */,
+				A2B49AEE1DA88CE400F86F40 /* Player.swift */,
+			);
+			name = classes;
+			sourceTree = "<group>";
+		};
+		A2B49AF21DA89B9800F86F40 /* opponents */ = {
+			isa = PBXGroup;
+			children = (
+				A2B49AFA1DA9FA2A00F86F40 /* ghostleftarm.atlas */,
+				A2B49AFB1DA9FA2A00F86F40 /* ghostrightarm.atlas */,
+				A2B49AF31DA89BC900F86F40 /* Ghost.sks */,
+				A2B49AF51DA89C1F00F86F40 /* Ghost.xcassets */,
+			);
+			name = opponents;
+			sourceTree = "<group>";
+		};
+		A2B49AF71DA8BC2400F86F40 /* players */ = {
+			isa = PBXGroup;
+			children = (
+				A2B49AF81DA8BC3500F86F40 /* Player1.xcassets */,
+			);
+			name = players;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,10 +293,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A227C7A91DA758A900EFFD7B /* Main.storyboard in Resources */,
+				A2B49AFD1DA9FA2A00F86F40 /* ghostrightarm.atlas in Resources */,
+				A2B49AF91DA8BC3500F86F40 /* Player1.xcassets in Resources */,
+				A2B49AF61DA89C1F00F86F40 /* Ghost.xcassets in Resources */,
 				A227C7A01DA758A900EFFD7B /* GameScene.sks in Resources */,
+				A2B49AF41DA89BC900F86F40 /* Ghost.sks in Resources */,
+				A2B49AFC1DA9FA2A00F86F40 /* ghostleftarm.atlas in Resources */,
 				A227C7AB1DA758AA00EFFD7B /* Assets.xcassets in Resources */,
 				A227C7AE1DA758AA00EFFD7B /* LaunchScreen.storyboard in Resources */,
-				A227C7A21DA758A900EFFD7B /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +327,10 @@
 			files = (
 				A227C7A41DA758A900EFFD7B /* GameScene.swift in Sources */,
 				A227C7A61DA758A900EFFD7B /* GameViewController.swift in Sources */,
+				A2B49AED1DA88CB600F86F40 /* Opponent.swift in Sources */,
+				A2B49AF11DA88EAF00F86F40 /* FightScene.swift in Sources */,
+				A2B49AEB1DA88C1900F86F40 /* Room.swift in Sources */,
+				A2B49AEF1DA88CE400F86F40 /* Player.swift in Sources */,
 				A227C79E1DA758A900EFFD7B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -526,6 +582,7 @@
 				A227C7CA1DA758AA00EFFD7B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A227C7CB1DA758AA00EFFD7B /* Build configuration list for PBXNativeTarget "ghostpuncherTests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +591,7 @@
 				A227C7CD1DA758AA00EFFD7B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A227C7CE1DA758AA00EFFD7B /* Build configuration list for PBXNativeTarget "ghostpuncherUITests" */ = {
 			isa = XCConfigurationList;
@@ -542,6 +600,7 @@
 				A227C7D01DA758AA00EFFD7B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
