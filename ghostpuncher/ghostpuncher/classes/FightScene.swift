@@ -8,12 +8,12 @@
 
 import SpriteKit
 
-class FightScene: SKScene
+class FightScene: SKScene, ControlsDelegate
 {
     var room:Room
     var opponent:Opponent?
     var player:Player?
-    
+    var controls:Controls?
     
     init(frame: CGRect, backgroundColor : UIColor) {
         self.room = Room(frame:frame)
@@ -30,6 +30,11 @@ class FightScene: SKScene
         self.player = Player(frame: frame)
         self.player?.zPosition = 10
         self.addChild(self.player!)
+        
+        self.controls = Controls(frame: frame)
+        self.controls?.zPosition = 20
+        self.addChild(self.controls!)
+        self.controls?.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -44,12 +49,43 @@ class FightScene: SKScene
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch: AnyObject in touches {
-            let location = touch.location(in: self)
-            
-            self.opponent?.doLeftArmAttack()
-            self.opponent?.doRightArmAttack()
-            
-        }
+        for t in touches { self.touchDown(atPoint: t.location(in: self), touch: t) }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for t in touches { self.touchUp(atPoint: t.location(in: self), touch: t) }
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for t in touches { self.touchUp(atPoint: t.location(in: self), touch: t) }
+    }
+    
+    func touchDown(atPoint pos : CGPoint, touch:UITouch) {
+        self.controls?.checkButtonHit(location: pos, touch:touch)
+    }
+    
+    func touchMoved(toPoint pos : CGPoint) {
+        
+    }
+    
+    func touchUp(atPoint pos : CGPoint, touch:UITouch) {
+        self.controls?.touchEnded(location: pos, touch:touch)
+    }
+    
+    func punchRight() {
+        self.player?.punchRight()
+    }
+    func punchLeft() {
+        self.player?.punchLeft()
+    }
+    func kickLeft() {
+        self.player?.kickLeft()
+    }
+    func kickRight() {
+        self.player?.kickRight()
     }
 }

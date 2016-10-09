@@ -25,6 +25,8 @@
 		A2B49AF91DA8BC3500F86F40 /* Player1.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AF81DA8BC3500F86F40 /* Player1.xcassets */; };
 		A2B49AFC1DA9FA2A00F86F40 /* ghostleftarm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AFA1DA9FA2A00F86F40 /* ghostleftarm.atlas */; };
 		A2B49AFD1DA9FA2A00F86F40 /* ghostrightarm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AFB1DA9FA2A00F86F40 /* ghostrightarm.atlas */; };
+		A2B49B001DAAB63000F86F40 /* Buttons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AFF1DAAB63000F86F40 /* Buttons.xcassets */; };
+		A2B49B021DAAB6E100F86F40 /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49B011DAAB6E100F86F40 /* Controls.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +71,8 @@
 		A2B49AF81DA8BC3500F86F40 /* Player1.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Player1.xcassets; sourceTree = "<group>"; };
 		A2B49AFA1DA9FA2A00F86F40 /* ghostleftarm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ghostleftarm.atlas; sourceTree = "<group>"; };
 		A2B49AFB1DA9FA2A00F86F40 /* ghostrightarm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ghostrightarm.atlas; sourceTree = "<group>"; };
+		A2B49AFF1DAAB63000F86F40 /* Buttons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Buttons.xcassets; sourceTree = "<group>"; };
+		A2B49B011DAAB6E100F86F40 /* Controls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Controls.swift; path = classes/Controls.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +123,7 @@
 		A227C79C1DA758A900EFFD7B /* ghostpuncher */ = {
 			isa = PBXGroup;
 			children = (
+				A2B49AFE1DAAB61E00F86F40 /* UI */,
 				A2B49AF71DA8BC2400F86F40 /* players */,
 				A2B49AF21DA89B9800F86F40 /* opponents */,
 				A2B49AE91DA88ACC00F86F40 /* classes */,
@@ -130,7 +135,6 @@
 				A227C7AA1DA758AA00EFFD7B /* Assets.xcassets */,
 				A227C7AC1DA758AA00EFFD7B /* LaunchScreen.storyboard */,
 				A227C7AF1DA758AA00EFFD7B /* Info.plist */,
-				A2B49AF01DA88EAF00F86F40 /* FightScene.swift */,
 			);
 			path = ghostpuncher;
 			sourceTree = "<group>";
@@ -156,9 +160,11 @@
 		A2B49AE91DA88ACC00F86F40 /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				A2B49AF01DA88EAF00F86F40 /* FightScene.swift */,
 				A2B49AEA1DA88C1900F86F40 /* Room.swift */,
 				A2B49AEC1DA88CB600F86F40 /* Opponent.swift */,
 				A2B49AEE1DA88CE400F86F40 /* Player.swift */,
+				A2B49B011DAAB6E100F86F40 /* Controls.swift */,
 			);
 			name = classes;
 			sourceTree = "<group>";
@@ -180,6 +186,14 @@
 				A2B49AF81DA8BC3500F86F40 /* Player1.xcassets */,
 			);
 			name = players;
+			sourceTree = "<group>";
+		};
+		A2B49AFE1DAAB61E00F86F40 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				A2B49AFF1DAAB63000F86F40 /* Buttons.xcassets */,
+			);
+			name = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,6 +309,7 @@
 				A227C7A91DA758A900EFFD7B /* Main.storyboard in Resources */,
 				A2B49AFD1DA9FA2A00F86F40 /* ghostrightarm.atlas in Resources */,
 				A2B49AF91DA8BC3500F86F40 /* Player1.xcassets in Resources */,
+				A2B49B001DAAB63000F86F40 /* Buttons.xcassets in Resources */,
 				A2B49AF61DA89C1F00F86F40 /* Ghost.xcassets in Resources */,
 				A227C7A01DA758A900EFFD7B /* GameScene.sks in Resources */,
 				A2B49AF41DA89BC900F86F40 /* Ghost.sks in Resources */,
@@ -330,6 +345,7 @@
 				A2B49AED1DA88CB600F86F40 /* Opponent.swift in Sources */,
 				A2B49AF11DA88EAF00F86F40 /* FightScene.swift in Sources */,
 				A2B49AEB1DA88C1900F86F40 /* Room.swift in Sources */,
+				A2B49B021DAAB6E100F86F40 /* Controls.swift in Sources */,
 				A2B49AEF1DA88CE400F86F40 /* Player.swift in Sources */,
 				A227C79E1DA758A900EFFD7B /* AppDelegate.swift in Sources */,
 			);

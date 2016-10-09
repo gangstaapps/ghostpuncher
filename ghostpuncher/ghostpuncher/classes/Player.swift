@@ -34,20 +34,63 @@ class Player:SKNode
         
         self.frontKick?.position = CGPoint(x: frame.size.width/2, y: 0)
         self.frontKick?.anchorPoint = CGPoint(x:0.5, y:0)
-        self.frontKick?.setScale(0.5)
+        
+        self.leftKick?.position = CGPoint(x: frame.size.width * 0.4, y: -frame.size.height * 0.2)
+        self.leftKick?.anchorPoint = CGPoint(x:0.5, y:0)
         
         self.leftUpperCut?.position = CGPoint(x: frame.size.width/2, y: 0)
         self.leftUpperCut?.anchorPoint = CGPoint(x:0.5, y:0)
-//        self.addChild(self.leftUpperCut!)
         
         self.rightPunch?.position = CGPoint(x: frame.size.width * 0.75, y: 0)
         self.rightPunch?.anchorPoint = CGPoint(x:0.5, y:0)
-//        self.addChild(self.rightPunch!)
-        
         
         self.leftPunch?.position = CGPoint(x: frame.size.width * 0.25, y: 0)
         self.leftPunch?.anchorPoint = CGPoint(x:0.5, y:0)
-//        self.addChild(self.leftPunch!)
+
+    }
+    
+    func punchRight(){
+        if self.rightPunch?.parent != nil {
+            return
+        }
+        self.addChild(self.rightPunch!)
+        let pause = SKAction.wait(forDuration: 0.1)
+        let sequence = SKAction.sequence([pause, SKAction.removeFromParent()])
+        self.rightPunch?.run(sequence)
+        
+    }
+    
+    func punchLeft(){
+        if self.leftPunch?.parent != nil {
+            return
+        }
+        self.addChild(self.leftPunch!)
+        let pause = SKAction.wait(forDuration: 0.1)
+        let sequence = SKAction.sequence([pause, SKAction.removeFromParent()])
+        self.leftPunch?.run(sequence)
+        
+    }
+    
+    func kickLeft(){
+        if self.leftKick?.parent != nil {
+            return
+        }
+        self.addChild(self.leftKick!)
+        let pause = SKAction.wait(forDuration: 0.1)
+        let sequence = SKAction.sequence([pause, SKAction.removeFromParent()])
+        self.leftKick?.run(sequence)
+        
+    }
+    
+    func kickRight(){
+        if self.frontKick?.parent != nil {
+            return
+        }
+        self.addChild(self.frontKick!)
+        let pause = SKAction.wait(forDuration: 0.1)
+        let sequence = SKAction.sequence([pause, SKAction.removeFromParent()])
+        self.frontKick?.run(sequence)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -28,6 +28,7 @@ class Opponent:SKNode
             self.opponent = ghostScene.childNode(withName: "opponent")!
             
             self.opponent.removeFromParent();
+            self.opponent.position = CGPoint(x: 0, y: -self.opponentFrame.size.height * 0.3)
             self.addChild(self.opponent)
             
             let leftArmAtlas = SKTextureAtlas(named: "ghostleftarm.atlas")
