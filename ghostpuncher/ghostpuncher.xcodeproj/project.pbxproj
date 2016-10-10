@@ -15,6 +15,7 @@
 		A227C7B91DA758AA00EFFD7B /* ghostpuncherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C7B81DA758AA00EFFD7B /* ghostpuncherTests.swift */; };
 		A227C7C41DA758AA00EFFD7B /* ghostpuncherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C7C31DA758AA00EFFD7B /* ghostpuncherUITests.swift */; };
 		A25615F41DAB59F000BA3DF8 /* ghostHead.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A25615F31DAB59F000BA3DF8 /* ghostHead.atlas */; };
+		A25615F61DAC207D00BA3DF8 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25615F51DAC207D00BA3DF8 /* MenuScene.swift */; };
 		A2B49AEB1DA88C1900F86F40 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEA1DA88C1900F86F40 /* Room.swift */; };
 		A2B49AED1DA88CB600F86F40 /* Opponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEC1DA88CB600F86F40 /* Opponent.swift */; };
 		A2B49AEF1DA88CE400F86F40 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEE1DA88CE400F86F40 /* Player.swift */; };
@@ -61,6 +62,7 @@
 		A227C7C31DA758AA00EFFD7B /* ghostpuncherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ghostpuncherUITests.swift; sourceTree = "<group>"; };
 		A227C7C51DA758AA00EFFD7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A25615F31DAB59F000BA3DF8 /* ghostHead.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = ghostHead.atlas; path = "../../Art Source/sprite/ghostHead.atlas"; sourceTree = "<group>"; };
+		A25615F51DAC207D00BA3DF8 /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		A2B49AEA1DA88C1900F86F40 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Room.swift; path = classes/Room.swift; sourceTree = "<group>"; };
 		A2B49AEC1DA88CB600F86F40 /* Opponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Opponent.swift; path = classes/Opponent.swift; sourceTree = "<group>"; };
 		A2B49AEE1DA88CE400F86F40 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Player.swift; path = classes/Player.swift; sourceTree = "<group>"; };
@@ -133,7 +135,6 @@
 				A227C79D1DA758A900EFFD7B /* AppDelegate.swift */,
 				A227C7A51DA758A900EFFD7B /* GameViewController.swift */,
 				A227C7A71DA758A900EFFD7B /* Main.storyboard */,
-				A227C7AA1DA758AA00EFFD7B /* Assets.xcassets */,
 				A227C7AC1DA758AA00EFFD7B /* LaunchScreen.storyboard */,
 				A227C7AF1DA758AA00EFFD7B /* Info.plist */,
 			);
@@ -166,6 +167,7 @@
 				A2B49AEC1DA88CB600F86F40 /* Opponent.swift */,
 				A2B49AEE1DA88CE400F86F40 /* Player.swift */,
 				A2B49B011DAAB6E100F86F40 /* Controls.swift */,
+				A25615F51DAC207D00BA3DF8 /* MenuScene.swift */,
 			);
 			name = classes;
 			sourceTree = "<group>";
@@ -193,6 +195,7 @@
 		A2B49AFE1DAAB61E00F86F40 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				A227C7AA1DA758AA00EFFD7B /* Assets.xcassets */,
 				A2B49AFF1DAAB63000F86F40 /* Buttons.xcassets */,
 			);
 			name = UI;
@@ -382,6 +385,7 @@
 				A2B49AF11DA88EAF00F86F40 /* FightScene.swift in Sources */,
 				A2B49AEB1DA88C1900F86F40 /* Room.swift in Sources */,
 				A2B49B021DAAB6E100F86F40 /* Controls.swift in Sources */,
+				A25615F61DAC207D00BA3DF8 /* MenuScene.swift in Sources */,
 				A2B49AEF1DA88CE400F86F40 /* Player.swift in Sources */,
 				A227C79E1DA758A900EFFD7B /* AppDelegate.swift in Sources */,
 			);

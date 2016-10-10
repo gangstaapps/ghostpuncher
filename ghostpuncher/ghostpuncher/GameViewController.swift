@@ -41,10 +41,10 @@ class GameViewController: UIViewController {
 //            }
 //        }
         
-        let fightScene = FightScene(frame: self.view.frame, backgroundColor: UIColor.red)
+        let menuScene = MenuScene(frame: self.view.frame, backgroundColor: UIColor.black)
         
         if let view = self.view as! SKView? {
-            view.presentScene(fightScene)
+            view.presentScene(menuScene)
         }
         
         
