@@ -19,16 +19,20 @@ class Opponent:SKNode
     var leftArm:SKNode?
     var rightArm:SKNode?
     
+    let startPosition:CGPoint
+    var currentlyMoving:Bool = false
+    
     init(frame: CGRect, name:String) {
         self.opponentFrame = frame
         self.opponentName = name
+        startPosition = CGPoint(x: 0, y: -self.opponentFrame.size.height * 0.3)
         super.init()
         
         if let ghostScene:SKScene = SKScene(fileNamed: self.opponentName){
             self.opponent = ghostScene.childNode(withName: "opponent")!
             
             self.opponent.removeFromParent();
-            self.opponent.position = CGPoint(x: 0, y: -self.opponentFrame.size.height * 0.3)
+            self.opponent.position = startPosition
             self.addChild(self.opponent)
             
             let leftArmAtlas = SKTextureAtlas(named: "ghostleftarm.atlas")
@@ -70,5 +74,18 @@ class Opponent:SKNode
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func update(){
+        if !currentlyMoving {
+            currentlyMoving = true
+            let newPos:CGPoint = CGPoint(x: startPosition.x + CGFloat(arc4random_uniform(UInt32(30))) - CGFloat(arc4random_uniform(UInt32(30))), y: startPosition.y + CGFloat(arc4random_uniform(UInt32(30))) - CGFloat(arc4random_uniform(UInt32(30))))
+            
+            let movement:SKAction = SKAction.move(to: newPos, duration: 4)
+            self.opponent.run(movement, completion: {() -> Void in
+                self.currentlyMoving = false
+            })
+        }
+        
     }
 }
