@@ -14,6 +14,7 @@
 		A227C7AE1DA758AA00EFFD7B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A227C7AC1DA758AA00EFFD7B /* LaunchScreen.storyboard */; };
 		A227C7B91DA758AA00EFFD7B /* ghostpuncherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C7B81DA758AA00EFFD7B /* ghostpuncherTests.swift */; };
 		A227C7C41DA758AA00EFFD7B /* ghostpuncherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C7C31DA758AA00EFFD7B /* ghostpuncherUITests.swift */; };
+		A25615F41DAB59F000BA3DF8 /* ghostHead.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A25615F31DAB59F000BA3DF8 /* ghostHead.atlas */; };
 		A2B49AEB1DA88C1900F86F40 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEA1DA88C1900F86F40 /* Room.swift */; };
 		A2B49AED1DA88CB600F86F40 /* Opponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEC1DA88CB600F86F40 /* Opponent.swift */; };
 		A2B49AEF1DA88CE400F86F40 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEE1DA88CE400F86F40 /* Player.swift */; };
@@ -59,6 +60,7 @@
 		A227C7BF1DA758AA00EFFD7B /* ghostpuncherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ghostpuncherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A227C7C31DA758AA00EFFD7B /* ghostpuncherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ghostpuncherUITests.swift; sourceTree = "<group>"; };
 		A227C7C51DA758AA00EFFD7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A25615F31DAB59F000BA3DF8 /* ghostHead.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = ghostHead.atlas; path = "../../Art Source/sprite/ghostHead.atlas"; sourceTree = "<group>"; };
 		A2B49AEA1DA88C1900F86F40 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Room.swift; path = classes/Room.swift; sourceTree = "<group>"; };
 		A2B49AEC1DA88CB600F86F40 /* Opponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Opponent.swift; path = classes/Opponent.swift; sourceTree = "<group>"; };
 		A2B49AEE1DA88CE400F86F40 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Player.swift; path = classes/Player.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 		A2B49AF21DA89B9800F86F40 /* opponents */ = {
 			isa = PBXGroup;
 			children = (
+				A25615F31DAB59F000BA3DF8 /* ghostHead.atlas */,
 				A2B49AFA1DA9FA2A00F86F40 /* ghostleftarm.atlas */,
 				A2B49AFB1DA9FA2A00F86F40 /* ghostrightarm.atlas */,
 				A2B49AF31DA89BC900F86F40 /* Ghost.sks */,
@@ -333,6 +336,7 @@
 				A2B49AFC1DA9FA2A00F86F40 /* ghostleftarm.atlas in Resources */,
 				A227C7AB1DA758AA00EFFD7B /* Assets.xcassets in Resources */,
 				A227C7AE1DA758AA00EFFD7B /* LaunchScreen.storyboard in Resources */,
+				A25615F41DAB59F000BA3DF8 /* ghostHead.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

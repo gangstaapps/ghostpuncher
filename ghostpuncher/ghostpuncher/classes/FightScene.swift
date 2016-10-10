@@ -46,13 +46,13 @@ class FightScene: SKScene, ControlsDelegate
     }
     override func update(_ currentTime: TimeInterval) {
         //
-//        if Int(arc4random_uniform(UInt32(500))) == 13 {
-//            self.opponent?.doLeftArmAttack()
-//        }
-//        
-//        if Int(arc4random_uniform(UInt32(500))) == 7 {
-//            self.opponent?.doRightArmAttack()
-//        }
+        if Int(arc4random_uniform(UInt32(100))) == 13 {
+            self.opponent?.doLeftArmAttack()
+        }
+        
+        if Int(arc4random_uniform(UInt32(100))) == 7 {
+            self.opponent?.doRightArmAttack()
+        }
         
         self.opponent?.update()
         

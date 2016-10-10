@@ -15,9 +15,11 @@ class Opponent:SKNode
     var opponentFrame:CGRect
     var rightArmAttack:SKAction?
     var leftArmAttack:SKAction?
+    var headAnimation:SKAction?
     
     var leftArm:SKNode?
     var rightArm:SKNode?
+    var head:SKNode?
     
     let startPosition:CGPoint
     var currentlyMoving:Bool = false
@@ -61,15 +63,38 @@ class Opponent:SKNode
             
             self.rightArmAttack = SKAction.animate(with: rightarmFrames, timePerFrame: 0.1)
             self.rightArm =  self.opponent.childNode(withName: "body")?.childNode(withName: "rightarm")
+            
+            let headAtlas = SKTextureAtlas(named: "ghostHead.atlas")
+            let headFrames:[SKTexture] = [
+                headAtlas.textureNamed("head2.png"),
+                headAtlas.textureNamed("head1.png")]
+            
+            
+            self.headAnimation = SKAction.animate(with: headFrames, timePerFrame: 0.4)
+            self.head =  self.opponent.childNode(withName: "body")?.childNode(withName: "head")
         }
     }
     
     func doLeftArmAttack(){
         self.leftArm?.run(self.leftArmAttack!)
+        
+        let scaleUp = SKAction.scale(to: 1.1, duration: 0.2)
+        let scaleDown = SKAction.scale(to: 1.0, duration: 0.1)
+        let sequence = SKAction.sequence([scaleUp, scaleDown])
+        self.opponent?.run(sequence)
+        
+        self.head?.run(self.headAnimation!)
     }
     
     func doRightArmAttack(){
         self.rightArm?.run(self.rightArmAttack!)
+        
+        let scaleUp = SKAction.scale(to: 1.1, duration: 0.2)
+        let scaleDown = SKAction.scale(to: 1.0, duration: 0.1)
+        let sequence = SKAction.sequence([scaleUp, scaleDown])
+        self.opponent?.run(sequence)
+        
+        self.head?.run(self.headAnimation!)
     }
     
     required init?(coder aDecoder: NSCoder) {
