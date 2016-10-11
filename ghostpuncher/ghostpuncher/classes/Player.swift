@@ -20,6 +20,8 @@ class Player:SKNode
     
     var opponentFrame:CGRect
     
+    var blocking:Bool = false
+    
     init(frame: CGRect) {
         self.opponentFrame = frame
         
@@ -38,8 +40,11 @@ class Player:SKNode
         self.leftKick?.position = CGPoint(x: frame.size.width * 0.4, y: -frame.size.height * 0.2)
         self.leftKick?.anchorPoint = CGPoint(x:0.5, y:0)
         
-        self.leftUpperCut?.position = CGPoint(x: frame.size.width/2, y: 0)
+        self.leftUpperCut?.position = CGPoint(x: frame.size.width * 0.4, y: 0)
         self.leftUpperCut?.anchorPoint = CGPoint(x:0.5, y:0)
+        
+        self.rightUpperCut?.position = CGPoint(x: frame.size.width * 0.6, y: 0)
+        self.rightUpperCut?.anchorPoint = CGPoint(x:0.5, y:0)
         
         self.rightPunch?.position = CGPoint(x: frame.size.width * 0.75, y: 0)
         self.rightPunch?.anchorPoint = CGPoint(x:0.5, y:0)
@@ -50,6 +55,9 @@ class Player:SKNode
     }
     
     func punchRight(){
+        if blocking {
+            return
+        }
         if self.rightPunch?.parent != nil {
             return
         }
@@ -61,6 +69,9 @@ class Player:SKNode
     }
     
     func punchLeft(){
+        if blocking {
+            return
+        }
         if self.leftPunch?.parent != nil {
             return
         }
@@ -92,7 +103,23 @@ class Player:SKNode
         self.frontKick?.run(sequence)
         
     }
-    
+    func blockStart(){
+        if self.rightUpperCut?.parent != nil {
+            return
+        }
+        blocking = true;
+        self.addChild(self.rightUpperCut!)
+        self.addChild(self.leftUpperCut!)
+        
+    }
+    func blockEnd(){
+        if !blocking {
+            return
+        }
+        blocking = false
+        self.rightUpperCut?.removeFromParent()
+        self.leftUpperCut?.removeFromParent()
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

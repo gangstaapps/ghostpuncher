@@ -104,7 +104,7 @@ class Opponent:SKNode
     func update(){
         if !currentlyMoving {
             currentlyMoving = true
-            let newPos:CGPoint = CGPoint(x: startPosition.x + CGFloat(arc4random_uniform(UInt32(30))) - CGFloat(arc4random_uniform(UInt32(30))), y: startPosition.y + CGFloat(arc4random_uniform(UInt32(30))) - CGFloat(arc4random_uniform(UInt32(30))))
+            let newPos:CGPoint = CGPoint(x: startPosition.x + CGFloat(arc4random_uniform(UInt32(100))) - CGFloat(arc4random_uniform(UInt32(100))), y: startPosition.y + CGFloat(arc4random_uniform(UInt32(30))) - CGFloat(arc4random_uniform(UInt32(30))))
             
             let movement:SKAction = SKAction.move(to: newPos, duration: 4)
             self.opponent.run(movement, completion: {() -> Void in

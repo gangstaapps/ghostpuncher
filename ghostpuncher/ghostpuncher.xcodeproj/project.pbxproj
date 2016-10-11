@@ -16,6 +16,7 @@
 		A227C7C41DA758AA00EFFD7B /* ghostpuncherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C7C31DA758AA00EFFD7B /* ghostpuncherUITests.swift */; };
 		A25615F41DAB59F000BA3DF8 /* ghostHead.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A25615F31DAB59F000BA3DF8 /* ghostHead.atlas */; };
 		A25615F61DAC207D00BA3DF8 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25615F51DAC207D00BA3DF8 /* MenuScene.swift */; };
+		A25615F81DAD561C00BA3DF8 /* BattleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25615F71DAD561C00BA3DF8 /* BattleManager.swift */; };
 		A2B49AEB1DA88C1900F86F40 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEA1DA88C1900F86F40 /* Room.swift */; };
 		A2B49AED1DA88CB600F86F40 /* Opponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEC1DA88CB600F86F40 /* Opponent.swift */; };
 		A2B49AEF1DA88CE400F86F40 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEE1DA88CE400F86F40 /* Player.swift */; };
@@ -63,6 +64,7 @@
 		A227C7C51DA758AA00EFFD7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A25615F31DAB59F000BA3DF8 /* ghostHead.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = ghostHead.atlas; path = "../../Art Source/sprite/ghostHead.atlas"; sourceTree = "<group>"; };
 		A25615F51DAC207D00BA3DF8 /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		A25615F71DAD561C00BA3DF8 /* BattleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BattleManager.swift; path = classes/BattleManager.swift; sourceTree = "<group>"; };
 		A2B49AEA1DA88C1900F86F40 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Room.swift; path = classes/Room.swift; sourceTree = "<group>"; };
 		A2B49AEC1DA88CB600F86F40 /* Opponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Opponent.swift; path = classes/Opponent.swift; sourceTree = "<group>"; };
 		A2B49AEE1DA88CE400F86F40 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Player.swift; path = classes/Player.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				A2B49AEE1DA88CE400F86F40 /* Player.swift */,
 				A2B49B011DAAB6E100F86F40 /* Controls.swift */,
 				A25615F51DAC207D00BA3DF8 /* MenuScene.swift */,
+				A25615F71DAD561C00BA3DF8 /* BattleManager.swift */,
 			);
 			name = classes;
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A25615F81DAD561C00BA3DF8 /* BattleManager.swift in Sources */,
 				A227C7A61DA758A900EFFD7B /* GameViewController.swift in Sources */,
 				A2B49AED1DA88CB600F86F40 /* Opponent.swift in Sources */,
 				A2B49AF11DA88EAF00F86F40 /* FightScene.swift in Sources */,

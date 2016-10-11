@@ -59,7 +59,8 @@ class FightScene: SKScene, ControlsDelegate
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchDown(atPoint: t.location(in: self), touch: t) }
+//        for t in touches { self.touchDown(atPoint: t.location(in: self), touch: t) }
+        self.controls?.checkButtonHit(touches)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -74,10 +75,7 @@ class FightScene: SKScene, ControlsDelegate
         for t in touches { self.touchUp(atPoint: t.location(in: self), touch: t) }
     }
     
-    func touchDown(atPoint pos : CGPoint, touch:UITouch) {
-        self.controls?.checkButtonHit(location: pos, touch:touch)
-    }
-    
+        
     func touchMoved(toPoint pos : CGPoint) {
         
     }
@@ -97,5 +95,11 @@ class FightScene: SKScene, ControlsDelegate
     }
     func kickRight() {
         self.player?.kickRight()
+    }
+    func blockStart(){
+        self.player?.blockStart()
+    }
+    func checkBlockEnd(){
+        self.player?.blockEnd()
     }
 }
