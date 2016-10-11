@@ -26,8 +26,11 @@ class Controls:SKNode
     let rightPunch:SKSpriteNode
     let rightKick:SKSpriteNode
     
-    let energyBarPlayer:SKSpriteNode
-    let energyBarOpponent:SKSpriteNode
+    let energyBarHolderPlayer:SKSpriteNode
+    let energyBarHolderOpponent:SKSpriteNode
+    
+    let energyBarPlayer:SKShapeNode
+    let energyBarOpponent:SKShapeNode
     
     weak var delegate:ControlsDelegate?
     
@@ -47,8 +50,19 @@ class Controls:SKNode
         self.leftKick = SKSpriteNode(imageNamed: "kick_reg")
         self.rightKick  = SKSpriteNode(imageNamed: "kick_reg")
         
-        self.energyBarPlayer = SKSpriteNode(imageNamed: "control_bar")
-        self.energyBarOpponent = SKSpriteNode(imageNamed: "control_bar")
+        self.energyBarHolderPlayer = SKSpriteNode(imageNamed: "control_bar")
+        self.energyBarHolderOpponent = SKSpriteNode(imageNamed: "control_bar")
+        
+        self.energyBarHolderPlayer.position = CGPoint(x: self.roomFrame.size.width * 0.15, y: self.roomFrame.size.height * 0.95)
+        self.energyBarHolderPlayer.setScale(0.5)
+        self.energyBarHolderOpponent.position = CGPoint(x: self.roomFrame.size.width * 0.85, y: self.roomFrame.size.height * 0.95)
+        self.energyBarHolderOpponent.setScale(0.5)
+        
+        energyBarPlayer = SKShapeNode()
+        energyBarPlayer.fillColor = UIColor.orange
+        
+        energyBarOpponent = SKShapeNode()
+        energyBarOpponent.fillColor = UIColor.green
         
         super.init()
         
@@ -80,15 +94,32 @@ class Controls:SKNode
         self.rightKick.position = CGPoint(x: self.roomFrame.size.width * 0.8, y: self.roomFrame.size.height * 0.15)
         self.addChild(self.rightKick)
         
-        self.energyBarPlayer.position = CGPoint(x: self.roomFrame.size.width * 0.15, y: self.roomFrame.size.height * 0.95)
-        self.energyBarPlayer.setScale(0.5)
-        self.energyBarOpponent.position = CGPoint(x: self.roomFrame.size.width * 0.85, y: self.roomFrame.size.height * 0.95)
-        self.energyBarOpponent.setScale(0.5)
+        
+        
+        self.addChild(self.energyBarHolderPlayer)
+        self.addChild(self.energyBarHolderOpponent)
         
         self.addChild(self.energyBarPlayer)
         self.addChild(self.energyBarOpponent)
+        
+        self.setPlayerHealth(percent:1.00)
+        self.setOpponentHealth(percent:1.00)
     }
     
+    func setPlayerHealth(percent:CGFloat){
+        let energyBarFrame = self.energyBarHolderPlayer.frame
+        let barRect = CGRect(x: energyBarFrame.origin.x + 10,
+                             y: energyBarFrame.origin.y + energyBarFrame.height/3,
+                             width: (energyBarFrame.size.width - 20) * percent, height: energyBarFrame.size.height/3)
+        energyBarPlayer.path = UIBezierPath(rect: barRect).cgPath
+    }
+    func setOpponentHealth(percent:CGFloat){
+        let energyBarFrame = self.energyBarHolderOpponent.frame
+        let barRect = CGRect(x: energyBarFrame.origin.x + 10,
+                             y: energyBarFrame.origin.y + energyBarFrame.height/3,
+                             width: (energyBarFrame.size.width - 20) * percent, height: energyBarFrame.size.height/3)
+        energyBarOpponent.path = UIBezierPath(rect: barRect).cgPath
+    }
     func checkButtonHit(_ touches:Set<UITouch> ){
         
         var hitBitMask:UInt32 = 0

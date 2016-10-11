@@ -32,6 +32,22 @@ class MenuScene: SKScene
         fightButton?.run(SKAction.moveTo(x: frame.size.width/2, duration: 0.5))
     }
     
+    init(frame:CGRect, backgroundColor:UIColor, text:String){
+        super.init(size: frame.size)
+        let myLabel = SKLabelNode(fontNamed: "Arial")
+        myLabel.text = text
+        myLabel.fontSize = 20
+        myLabel.position = CGPoint(x:frame.midX, y:frame.midY)
+        
+        self.addChild(myLabel)
+        
+        fightButton = SKSpriteNode(imageNamed: "start_reg")
+        fightButton?.setScale(0.5)
+        fightButton?.position = CGPoint(x: frame.midX, y: frame.size.height * 0.25)
+        self.addChild(fightButton!)
+        
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -54,9 +70,9 @@ class MenuScene: SKScene
     
     func touchDown(atPoint pos : CGPoint, touch:UITouch) {
         if (self.fightButton?.contains(pos))! {
-            let reveal = SKTransition.push(with: SKTransitionDirection.right, duration: 2.0)
+//            let reveal = SKTransition.push(with: SKTransitionDirection.right, duration: 2.0)
             let scene = FightScene(frame: frame, backgroundColor: UIColor.black)
-            self.view?.presentScene(scene, transition: reveal)
+            self.view?.presentScene(scene)
         }
     }
     

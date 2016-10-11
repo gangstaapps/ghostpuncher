@@ -16,6 +16,8 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate
     var controls:Controls?
     var battleManager:BattleManager?
     
+    var battleOn = false
+    
     init(frame: CGRect, backgroundColor : UIColor) {
         self.room = Room(frame:frame)
         super.init(size: frame.size)
@@ -39,6 +41,8 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate
         
         battleManager = BattleManager()
         battleManager?.delegate = self
+        
+        battleOn = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -50,12 +54,21 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate
     }
     override func update(_ currentTime: TimeInterval) {
         //
+        if !battleOn {
+           return
+        }
+        
+        
         self.battleManager?.update(currentTime)
         self.opponent?.update()
         
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if !battleOn {
+            return
+        }
+        
 //        for t in touches { self.touchDown(atPoint: t.location(in: self), touch: t) }
         self.controls?.checkButtonHit(touches)
     }
@@ -78,6 +91,10 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate
     }
     
     func touchUp(atPoint pos : CGPoint, touch:UITouch) {
+        if !battleOn {
+            return
+        }
+        
         self.controls?.touchEnded(location: pos, touch:touch)
     }
     
@@ -110,15 +127,26 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate
     
     func playerHealthUpdated(newAmount:CGFloat){
         print("player health is now \(newAmount)")
+        self.controls?.setPlayerHealth(percent:newAmount)
     }
     func opponentHealthUpdated(newAmount:CGFloat){
         print("opponent health is now \(newAmount)")
+        self.controls?.setOpponentHealth(percent:newAmount)
     }
     func playerWon(){
+        battleOn = false
+        
+        let reveal = SKTransition.crossFade(withDuration: 1.0)
+        let scene = MenuScene(frame: frame, backgroundColor: UIColor.black, text:"You win")
+        self.view?.presentScene(scene, transition: reveal)
         
     }
     func playerLost(){
+        battleOn = false
         
+        let reveal = SKTransition.crossFade(withDuration: 1.0)
+        let scene = MenuScene(frame: frame, backgroundColor: UIColor.black, text:"You lose")
+        self.view?.presentScene(scene, transition: reveal)
     }
     func opponentAttackLeft(){
         self.opponent?.doLeftArmAttack()

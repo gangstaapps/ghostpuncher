@@ -22,6 +22,9 @@ class BattleManager
     var playerHealth:CGFloat?
     var opponentHealth:CGFloat?
     
+    let opponentHealthStart:CGFloat = 100.0
+    let playerHealthStart:CGFloat = 100.0
+    
     weak var delegate:BattleManagerDelegate?
     
     init(opponentHealth:CGFloat = 100.0, playerHealth:CGFloat = 100.0){
@@ -31,13 +34,13 @@ class BattleManager
     
     func playerConnect(power:CGFloat = 5.0){
         opponentHealth = max(opponentHealth! - power, 0.0)
-        delegate?.opponentHealthUpdated(newAmount: opponentHealth!)
+        delegate?.opponentHealthUpdated(newAmount: opponentHealth!/opponentHealthStart)
         self.checkForWinner()
     }
     
     func opponentConnect(power:CGFloat = 5.0){
         playerHealth = max(playerHealth! - power, 0.0)
-        delegate?.playerHealthUpdated(newAmount: playerHealth!)
+        delegate?.playerHealthUpdated(newAmount: playerHealth!/playerHealthStart)
         self.checkForWinner()
     }
     
