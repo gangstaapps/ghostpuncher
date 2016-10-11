@@ -103,6 +103,8 @@ class Controls:SKNode
                 self.leftPunch.userData = ["touch":touch]
                 self.leftPunch.isHidden = true
                 
+            } else if self.leftPunch.isHidden {
+                hitBitMask |= Button.punchLeft.rawValue
             }
             if self.leftKick.contains(location) {
                 hitBitMask |= Button.kickLeft.rawValue
@@ -115,6 +117,8 @@ class Controls:SKNode
                 self.rightPunch.userData = ["touch":touch]
                 self.rightPunch.isHidden = true
                 
+            }  else if self.rightPunch.isHidden {
+                hitBitMask |= Button.punchRight.rawValue
             }
             if self.rightKick.contains(location) {
                 hitBitMask |= Button.kickRight.rawValue
@@ -138,9 +142,6 @@ class Controls:SKNode
         default:
             break
         }
-        
-        
-        
         
     }
     

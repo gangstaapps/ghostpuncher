@@ -13,6 +13,8 @@ protocol BattleManagerDelegate: class {
     func opponentHealthUpdated(newAmount:CGFloat)
     func playerWon()
     func playerLost()
+    func opponentAttackLeft()
+    func opponentAttackRight()
 }
 
 class BattleManager
@@ -46,5 +48,19 @@ class BattleManager
         } else if playerHealth! <= 0 {
             delegate?.playerLost()
         }
+    }
+    
+    func update(_ currentTime: TimeInterval) {
+        //
+        if Int(arc4random_uniform(UInt32(100))) == 13 {
+//            self.opponent?.doLeftArmAttack()
+            delegate?.opponentAttackLeft()
+        }
+        
+        if Int(arc4random_uniform(UInt32(100))) == 7 {
+//            self.opponent?.doRightArmAttack()
+            delegate?.opponentAttackRight()
+        }
+        
     }
 }

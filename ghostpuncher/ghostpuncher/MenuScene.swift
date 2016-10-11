@@ -54,7 +54,7 @@ class MenuScene: SKScene
     
     func touchDown(atPoint pos : CGPoint, touch:UITouch) {
         if (self.fightButton?.contains(pos))! {
-            let reveal = SKTransition.push(with: SKTransitionDirection.right, duration: 0.3)
+            let reveal = SKTransition.push(with: SKTransitionDirection.right, duration: 2.0)
             let scene = FightScene(frame: frame, backgroundColor: UIColor.black)
             self.view?.presentScene(scene, transition: reveal)
         }

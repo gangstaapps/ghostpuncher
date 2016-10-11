@@ -113,4 +113,11 @@ class Opponent:SKNode
         }
         
     }
+    
+    func willRightPunchConnect() ->Bool {
+        return self.opponent.position.x > -8
+    }
+    func willLeftPunchConnect() ->Bool {
+        return self.opponent.position.x < 8
+    }
 }

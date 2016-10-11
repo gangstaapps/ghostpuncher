@@ -8,12 +8,13 @@
 
 import SpriteKit
 
-class FightScene: SKScene, ControlsDelegate
+class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate
 {
     var room:Room
     var opponent:Opponent?
     var player:Player?
     var controls:Controls?
+    var battleManager:BattleManager?
     
     init(frame: CGRect, backgroundColor : UIColor) {
         self.room = Room(frame:frame)
@@ -35,6 +36,9 @@ class FightScene: SKScene, ControlsDelegate
         self.controls?.zPosition = 20
         self.addChild(self.controls!)
         self.controls?.delegate = self
+        
+        battleManager = BattleManager()
+        battleManager?.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,14 +50,7 @@ class FightScene: SKScene, ControlsDelegate
     }
     override func update(_ currentTime: TimeInterval) {
         //
-        if Int(arc4random_uniform(UInt32(100))) == 13 {
-            self.opponent?.doLeftArmAttack()
-        }
-        
-        if Int(arc4random_uniform(UInt32(100))) == 7 {
-            self.opponent?.doRightArmAttack()
-        }
-        
+        self.battleManager?.update(currentTime)
         self.opponent?.update()
         
     }
@@ -86,9 +83,15 @@ class FightScene: SKScene, ControlsDelegate
     
     func punchRight() {
         self.player?.punchRight()
+        if (self.opponent?.willRightPunchConnect())! {
+            self.battleManager?.playerConnect()
+        }
     }
     func punchLeft() {
         self.player?.punchLeft()
+        if (self.opponent?.willLeftPunchConnect())! {
+            self.battleManager?.playerConnect()
+        }
     }
     func kickLeft() {
         self.player?.kickLeft()
@@ -101,5 +104,32 @@ class FightScene: SKScene, ControlsDelegate
     }
     func checkBlockEnd(){
         self.player?.blockEnd()
+    }
+    
+    // BattleManagerDelegate functions
+    
+    func playerHealthUpdated(newAmount:CGFloat){
+        print("player health is now \(newAmount)")
+    }
+    func opponentHealthUpdated(newAmount:CGFloat){
+        print("opponent health is now \(newAmount)")
+    }
+    func playerWon(){
+        
+    }
+    func playerLost(){
+        
+    }
+    func opponentAttackLeft(){
+        self.opponent?.doLeftArmAttack()
+        if !(self.player?.blocking)! {
+            self.battleManager?.opponentConnect()
+        }
+    }
+    func opponentAttackRight(){
+        self.opponent?.doRightArmAttack()
+        if !(self.player?.blocking)! {
+            self.battleManager?.opponentConnect()
+        }
     }
 }
