@@ -97,6 +97,14 @@ class Opponent:SKNode
         self.head?.run(self.headAnimation!)
     }
     
+    func hitRecoil(){
+        let scaleDown = SKAction.scale(to: 0.95, duration: 0.1)
+        let scaleUp = SKAction.scale(to: 1.0, duration: 0.2)
+        
+        let sequence = SKAction.sequence([scaleDown, scaleUp])
+        self.opponent?.run(sequence)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

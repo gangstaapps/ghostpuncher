@@ -15,7 +15,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate
     var player:Player?
     var controls:Controls?
     var battleManager:BattleManager?
-    
+    var effectsLayer:EffectsLayer?
     var battleOn = false
     
     init(frame: CGRect, backgroundColor : UIColor) {
@@ -33,6 +33,10 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate
         self.player = Player(frame: frame)
         self.player?.zPosition = 10
         self.addChild(self.player!)
+        
+        self.effectsLayer = EffectsLayer(frame: frame)
+        self.effectsLayer?.zPosition = 15
+        self.addChild(self.effectsLayer!)
         
         self.controls = Controls(frame: frame)
         self.controls?.zPosition = 20
@@ -102,12 +106,14 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate
         self.player?.punchRight()
         if (self.opponent?.willRightPunchConnect())! {
             self.battleManager?.playerConnect()
+            self.opponent?.hitRecoil()
         }
     }
     func punchLeft() {
         self.player?.punchLeft()
         if (self.opponent?.willLeftPunchConnect())! {
             self.battleManager?.playerConnect()
+             self.opponent?.hitRecoil()
         }
     }
     func kickLeft() {
@@ -152,12 +158,18 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate
         self.opponent?.doLeftArmAttack()
         if !(self.player?.blocking)! {
             self.battleManager?.opponentConnect()
+            self.room.lunge()
+            self.effectsLayer?.showDamage()
         }
+        
     }
     func opponentAttackRight(){
         self.opponent?.doRightArmAttack()
         if !(self.player?.blocking)! {
             self.battleManager?.opponentConnect()
+            self.room.lunge()
+            self.effectsLayer?.showDamage()
         }
+        
     }
 }
