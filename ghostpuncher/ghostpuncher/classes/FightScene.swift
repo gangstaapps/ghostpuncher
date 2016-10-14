@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate
+class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDelegate
 {
     var room:Room
     var opponent:Opponent?
@@ -28,7 +28,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate
         self.addChild(self.opponent!)
         
         self.opponent?.position = CGPoint(x:frame.size.width/2, y:frame.size.height/2)
-        
+        self.opponent?.delegate = self
         
         self.player = Player(frame: frame)
         self.player?.zPosition = 10
@@ -63,9 +63,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate
         }
         
         
-        self.battleManager?.update(currentTime)
-        self.opponent?.update()
-        
+        self.opponent?.update(currentTime)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -106,21 +104,30 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate
         self.player?.punchRight()
         if (self.opponent?.willRightPunchConnect())! {
             self.battleManager?.playerConnect()
-            self.opponent?.hitRecoil()
+            self.opponent?.hitRecoil(.right)
         }
     }
     func punchLeft() {
         self.player?.punchLeft()
         if (self.opponent?.willLeftPunchConnect())! {
             self.battleManager?.playerConnect()
-             self.opponent?.hitRecoil()
+             self.opponent?.hitRecoil(.left)
         }
     }
     func kickLeft() {
         self.player?.kickLeft()
+        if (self.opponent?.willLeftKickConnect())! {
+            self.battleManager?.playerConnect()
+            self.opponent?.hitRecoil(.left)
+        }
     }
+    
     func kickRight() {
         self.player?.kickRight()
+        if (self.opponent?.willRightKickConnect())! {
+            self.battleManager?.playerConnect()
+            self.opponent?.hitRecoil(.right)
+        }
     }
     func blockStart(){
         self.player?.blockStart()
@@ -132,11 +139,9 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate
     // BattleManagerDelegate functions
     
     func playerHealthUpdated(newAmount:CGFloat){
-        print("player health is now \(newAmount)")
         self.controls?.setPlayerHealth(percent:newAmount)
     }
     func opponentHealthUpdated(newAmount:CGFloat){
-        print("opponent health is now \(newAmount)")
         self.controls?.setOpponentHealth(percent:newAmount)
     }
     func playerWon(){
@@ -155,7 +160,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate
         self.view?.presentScene(scene, transition: reveal)
     }
     func opponentAttackLeft(){
-        self.opponent?.doLeftArmAttack()
+        self.opponent?.doLeftArmAttack(connected:!(self.player?.blocking)!)
         if !(self.player?.blocking)! {
             self.battleManager?.opponentConnect()
             self.room.lunge()
@@ -164,7 +169,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate
         
     }
     func opponentAttackRight(){
-        self.opponent?.doRightArmAttack()
+        self.opponent?.doRightArmAttack(connected:!(self.player?.blocking)!)
         if !(self.player?.blocking)! {
             self.battleManager?.opponentConnect()
             self.room.lunge()
