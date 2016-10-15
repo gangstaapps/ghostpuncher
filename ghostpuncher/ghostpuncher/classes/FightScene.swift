@@ -24,19 +24,20 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.backgroundColor = backgroundColor
         self.addChild(self.room)
         
+        self.effectsLayer = EffectsLayer(frame: frame)
+        self.effectsLayer?.zPosition = 3
+        self.addChild(self.effectsLayer!)
+        
         self.opponent = Opponent(frame: frame, name: "Ghost")
         self.addChild(self.opponent!)
         
         self.opponent?.position = CGPoint(x:frame.size.width/2, y:frame.size.height/2)
+        self.opponent?.zPosition = 5
         self.opponent?.delegate = self
         
         self.player = Player(frame: frame)
         self.player?.zPosition = 10
         self.addChild(self.player!)
-        
-        self.effectsLayer = EffectsLayer(frame: frame)
-        self.effectsLayer?.zPosition = 15
-        self.addChild(self.effectsLayer!)
         
         self.controls = Controls(frame: frame)
         self.controls?.zPosition = 20
@@ -176,5 +177,12 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
             self.effectsLayer?.showDamage()
         }
         
+    }
+    
+    func turnOffLights(){
+        self.effectsLayer?.turnOffLights()
+    }
+    func turnOnLights(){
+        self.effectsLayer?.turnOnLights()
     }
 }

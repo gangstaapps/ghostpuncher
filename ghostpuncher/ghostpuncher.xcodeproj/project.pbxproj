@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		A20600F61DADC6DF00035330 /* EffectsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20600F51DADC6DF00035330 /* EffectsLayer.swift */; };
+		A20600F91DB1A45900035330 /* ectoPlasm.sks in Resources */ = {isa = PBXBuildFile; fileRef = A20600F71DB1A45800035330 /* ectoPlasm.sks */; };
+		A20600FA1DB1A45900035330 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = A20600F81DB1A45800035330 /* spark.png */; };
+		A20600FE1DB1A99700035330 /* ecto.png in Resources */ = {isa = PBXBuildFile; fileRef = A20600FD1DB1A99700035330 /* ecto.png */; };
 		A227C79E1DA758A900EFFD7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C79D1DA758A900EFFD7B /* AppDelegate.swift */; };
 		A227C7A61DA758A900EFFD7B /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C7A51DA758A900EFFD7B /* GameViewController.swift */; };
 		A227C7A91DA758A900EFFD7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A227C7A71DA758A900EFFD7B /* Main.storyboard */; };
@@ -51,6 +54,9 @@
 
 /* Begin PBXFileReference section */
 		A20600F51DADC6DF00035330 /* EffectsLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EffectsLayer.swift; path = classes/EffectsLayer.swift; sourceTree = "<group>"; };
+		A20600F71DB1A45800035330 /* ectoPlasm.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ectoPlasm.sks; sourceTree = "<group>"; };
+		A20600F81DB1A45800035330 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		A20600FD1DB1A99700035330 /* ecto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ecto.png; sourceTree = "<group>"; };
 		A227C79A1DA758A900EFFD7B /* ghostpuncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ghostpuncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A227C79D1DA758A900EFFD7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A227C7A51DA758A900EFFD7B /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -181,6 +187,9 @@
 		A2B49AF21DA89B9800F86F40 /* opponents */ = {
 			isa = PBXGroup;
 			children = (
+				A20600F71DB1A45800035330 /* ectoPlasm.sks */,
+				A20600FD1DB1A99700035330 /* ecto.png */,
+				A20600F81DB1A45800035330 /* spark.png */,
 				A25615F31DAB59F000BA3DF8 /* ghostHead.atlas */,
 				A2B49AFA1DA9FA2A00F86F40 /* ghostleftarm.atlas */,
 				A2B49AFB1DA9FA2A00F86F40 /* ghostrightarm.atlas */,
@@ -337,6 +346,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A227C7A91DA758A900EFFD7B /* Main.storyboard in Resources */,
+				A20600FA1DB1A45900035330 /* spark.png in Resources */,
+				A20600FE1DB1A99700035330 /* ecto.png in Resources */,
+				A20600F91DB1A45900035330 /* ectoPlasm.sks in Resources */,
 				A2B49AFD1DA9FA2A00F86F40 /* ghostrightarm.atlas in Resources */,
 				A2B49AF91DA8BC3500F86F40 /* Player1.xcassets in Resources */,
 				A2B49B001DAAB63000F86F40 /* Buttons.xcassets in Resources */,
