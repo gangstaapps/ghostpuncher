@@ -9,12 +9,12 @@
 import SpriteKit
 
 protocol ControlsDelegate:class {
-    func punchRight()
-    func punchLeft()
+    func punchRight(power:CGFloat)
+    func punchLeft(power:CGFloat)
     func kickRight()
     func kickLeft()
     func blockStart()
-    func checkBlockEnd()
+    func checkBlockEnd()->Bool
 }
 
 class Controls:SKNode
@@ -31,6 +31,14 @@ class Controls:SKNode
     
     let energyBarPlayer:SKShapeNode
     let energyBarOpponent:SKShapeNode
+    
+    var leftButtonPowerMeter:SKShapeNode
+    var rightButtonPowerMeter:SKShapeNode
+    
+    var leftButtonGainingPower = false
+    var rightButtonGainingPower = false
+    var leftButtonPower:CGFloat = 1.0
+    var rightButtonPower:CGFloat = 1.0
     
     weak var delegate:ControlsDelegate?
     
@@ -64,35 +72,59 @@ class Controls:SKNode
         energyBarOpponent = SKShapeNode()
         energyBarOpponent.fillColor = UIColor.green
         
+        let leftPunchRoll = SKSpriteNode(imageNamed: "punch_roll")
+        leftPunchRoll.position = CGPoint(x: self.roomFrame.size.width * 0.1, y: self.roomFrame.size.height * 0.15)
+        self.leftPunch.position = leftPunchRoll.position
+        
+        
+        leftButtonPowerMeter = SKShapeNode()
+        
+        rightButtonPowerMeter = SKShapeNode()
+        
         super.init()
         
-        let leftPunchRoll = SKSpriteNode(imageNamed: "punch_roll")
-        leftPunchRoll.position = CGPoint(x: self.roomFrame.size.width * 0.1, y: self.roomFrame.size.height * 0.45)
+//        leftButtonPower = SKShapeNode(path: self.circlePathWith(angle: 0, forButton: self.leftPunch), centered: false)
+        leftButtonPowerMeter.fillColor = SKColor.clear
+        leftButtonPowerMeter.strokeColor = SKColor.red
+        leftButtonPowerMeter.lineWidth = 4
+        leftButtonPowerMeter.glowWidth = 5
+        self.addChild(leftButtonPowerMeter)
+        
+        rightButtonPowerMeter.fillColor = SKColor.clear
+        rightButtonPowerMeter.strokeColor = SKColor.red
+        rightButtonPowerMeter.lineWidth = 4
+        rightButtonPowerMeter.glowWidth = 5
+        self.addChild(rightButtonPowerMeter)
+        
         self.addChild(leftPunchRoll)
         
-        self.leftPunch.position = CGPoint(x: self.roomFrame.size.width * 0.1, y: self.roomFrame.size.height * 0.45)
         self.addChild(self.leftPunch)
         
+        
+        
         let rightPunchRoll = SKSpriteNode(imageNamed: "punch_roll")
-        rightPunchRoll.position = CGPoint(x: self.roomFrame.size.width * 0.9, y: self.roomFrame.size.height * 0.45)
+        rightPunchRoll.position = CGPoint(x: self.roomFrame.size.width * 0.9, y: self.roomFrame.size.height * 0.15)
         self.addChild(rightPunchRoll)
         
-        self.rightPunch.position = CGPoint(x: self.roomFrame.size.width * 0.9, y: self.roomFrame.size.height * 0.45)
+        self.rightPunch.position = CGPoint(x: self.roomFrame.size.width * 0.9, y: self.roomFrame.size.height * 0.15)
         self.addChild(self.rightPunch)
+        
+//        rightButtonPower = SKShapeNode(path: self.circlePathWith(angle: 0, forButton: self.rightPunch), centered: false)
+        
         
         let leftKickRoll = SKSpriteNode(imageNamed: "kick_roll")
         leftKickRoll.position = CGPoint(x: self.roomFrame.size.width * 0.2, y: self.roomFrame.size.height * 0.15)
-        self.addChild(leftKickRoll)
+//        self.addChild(leftKickRoll)
         
         self.leftKick.position = CGPoint(x: self.roomFrame.size.width * 0.2, y: self.roomFrame.size.height * 0.15)
-        self.addChild(self.leftKick)
+//        self.addChild(self.leftKick)
         
         let rightKickRoll = SKSpriteNode(imageNamed: "kick_roll")
         rightKickRoll.position = CGPoint(x: self.roomFrame.size.width * 0.8, y: self.roomFrame.size.height * 0.15)
-        self.addChild(rightKickRoll)
+//        self.addChild(rightKickRoll)
         
         self.rightKick.position = CGPoint(x: self.roomFrame.size.width * 0.8, y: self.roomFrame.size.height * 0.15)
-        self.addChild(self.rightKick)
+//        self.addChild(self.rightKick)
         
         
         
@@ -104,6 +136,11 @@ class Controls:SKNode
         
         self.setPlayerHealth(percent:1.00)
         self.setOpponentHealth(percent:1.00)
+    }
+    
+    func circlePathWith(angle:CGFloat, forButton sprite:SKSpriteNode)->CGPath{
+        return UIBezierPath(arcCenter:
+            CGPoint(x:sprite.position.x,y:sprite.position.y + 10) , radius: (sprite.frame.size.width + 10)/2, startAngle: 0.0, endAngle: CGFloat(angle).degreesToRadians, clockwise: true).cgPath
     }
     
     func setPlayerHealth(percent:CGFloat){
@@ -162,10 +199,16 @@ class Controls:SKNode
         switch hitBitMask {
         case Button.punchRight.rawValue | Button.punchLeft.rawValue:
             delegate?.blockStart()
+            rightButtonGainingPower = false
+            leftButtonGainingPower = false
+            rightButtonPowerMeter.path = nil
+            leftButtonPowerMeter.path = nil
         case Button.punchRight.rawValue:
-            delegate?.punchRight()
+            rightButtonGainingPower = true
+            rightButtonPower = 1
         case Button.punchLeft.rawValue:
-            delegate?.punchLeft()
+            leftButtonGainingPower = true
+            leftButtonPower = 1
         case Button.kickRight.rawValue:
             delegate?.kickRight()
         case Button.kickLeft.rawValue:
@@ -182,26 +225,63 @@ class Controls:SKNode
             if (data["touch"] as! UITouch) === touch {
                 self.leftPunch.isHidden = false
                 self.leftPunch.userData = nil
-                delegate?.checkBlockEnd()
+                if !(delegate?.checkBlockEnd())! {
+                    delegate?.punchLeft(power: leftButtonPower)
+                    leftButtonPowerMeter.path = nil
+                    leftButtonGainingPower = false
+
+                }
             }
         }
         if let data = self.leftKick.userData {
             if (data["touch"] as! UITouch) === touch {
                 self.leftKick.isHidden = false
                 self.leftKick.userData = nil
-                delegate?.checkBlockEnd()
+//                delegate?.checkBlockEnd()
             }
         }
         if let data = self.rightPunch.userData {
             if (data["touch"] as! UITouch) === touch {
                 self.rightPunch.isHidden = false
                 self.rightPunch.userData = nil
+                if !(delegate?.checkBlockEnd())! {
+                    delegate?.punchRight(power: rightButtonPower)
+                    rightButtonPowerMeter.path = nil
+                    rightButtonGainingPower = false
+                }
             }
         }
         if let data = self.rightKick.userData {
             if (data["touch"] as! UITouch) === touch {
                 self.rightKick.isHidden = false
                 self.rightKick.userData = nil
+            }
+        }
+    }
+    func update(_ currentTime: TimeInterval){
+        if rightButtonGainingPower {
+            rightButtonPower += 0.1
+            let degrees = (rightButtonPower/10.0) * 360
+            rightButtonPowerMeter.path = self.circlePathWith(angle: CGFloat(degrees), forButton: self.rightPunch)
+            if rightButtonPower >= 10 {
+                rightButtonGainingPower = false
+                delegate?.punchRight(power:rightButtonPower)
+                self.rightPunch.isHidden = false
+                self.rightPunch.userData = nil
+                rightButtonPowerMeter.path = nil
+            }
+        }
+        
+        if leftButtonGainingPower {
+            leftButtonPower += 0.1
+            let degrees = (leftButtonPower/10.0) * 360
+            leftButtonPowerMeter.path = self.circlePathWith(angle: CGFloat(degrees), forButton: self.leftPunch)
+            if leftButtonPower >= 10 {
+                leftButtonGainingPower = false
+                delegate?.punchLeft(power:leftButtonPower)
+                self.leftPunch.isHidden = false
+                self.leftPunch.userData = nil
+                leftButtonPowerMeter.path = nil
             }
         }
     }

@@ -215,7 +215,9 @@ class Opponent:SKNode
         self.run(flashingLights)
     }
     
-    func hitRecoil(_ direction:Direction){
+    func hitRecoil(_ direction:Direction, power:CGFloat){
+        
+        let moveAmount = power * 2
         
         if self.opponent.action(forKey: MOVEMENT_KEY) != nil {
             self.opponent.removeAction(forKey: MOVEMENT_KEY)
@@ -230,7 +232,7 @@ class Opponent:SKNode
         let fadeUp = SKAction.fadeAlpha(to: 1.0, duration: 0.3)
         let fadeSequence = SKAction.sequence([fadeDown, fadeUp])
         
-        let headRotate1 = SKAction.rotate(byAngle: (direction == .right ? CGFloat(10).degreesToRadians : CGFloat(-10).degreesToRadians), duration: 0.1)
+        let headRotate1 = SKAction.rotate(byAngle: (direction == .right ? CGFloat(power).degreesToRadians : CGFloat(-power).degreesToRadians), duration: 0.1)
         let headRotate2 = SKAction.rotate(toAngle: CGFloat(0).degreesToRadians, duration: 0.1)
         let headSequence = SKAction.sequence([headRotate1, headRotate2])
         
@@ -243,14 +245,14 @@ class Opponent:SKNode
         self.body?.run(bodySequence)
         
         
-        let leftArmRotate1 = SKAction.rotate(byAngle: (direction == .right ? CGFloat(20).degreesToRadians : CGFloat(-20).degreesToRadians), duration: 0.1)
+        let leftArmRotate1 = SKAction.rotate(byAngle: (direction == .right ? CGFloat(moveAmount).degreesToRadians : CGFloat(-moveAmount).degreesToRadians), duration: 0.1)
         let leftArmRotate2 = SKAction.rotate(toAngle: CGFloat(0).degreesToRadians, duration: 0.2)
         let leftArmSequence = SKAction.sequence([leftArmRotate1, leftArmRotate2])
         
         self.leftArm?.run(leftArmSequence)
         self.rightArm?.run(leftArmSequence)
         
-        self.opponent?.run(SKAction.group([fadeSequence,sequence, SKAction.moveBy(x: (direction == .right ? -20 : 20), y: 0, duration: 0.1)]), withKey: MOVEMENT_KEY )
+        self.opponent?.run(SKAction.group([fadeSequence,sequence, SKAction.moveBy(x: (direction == .right ? -moveAmount : moveAmount), y: 0, duration: 0.1)]), withKey: MOVEMENT_KEY )
         
     }
     

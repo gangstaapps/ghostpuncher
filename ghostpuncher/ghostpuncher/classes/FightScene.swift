@@ -65,6 +65,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         
         
         self.opponent?.update(currentTime)
+        self.controls?.update(currentTime)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -101,25 +102,25 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.controls?.touchEnded(location: pos, touch:touch)
     }
     
-    func punchRight() {
+    func punchRight(power:CGFloat) {
         self.player?.punchRight()
         if (self.opponent?.willRightPunchConnect())! {
-            self.battleManager?.playerConnect()
-            self.opponent?.hitRecoil(.right)
+            self.battleManager?.playerConnect(power: power)
+            self.opponent?.hitRecoil(.right, power:power)
         }
     }
-    func punchLeft() {
+    func punchLeft(power:CGFloat) {
         self.player?.punchLeft()
         if (self.opponent?.willLeftPunchConnect())! {
-            self.battleManager?.playerConnect()
-             self.opponent?.hitRecoil(.left)
+            self.battleManager?.playerConnect(power: power)
+             self.opponent?.hitRecoil(.left, power:power)
         }
     }
     func kickLeft() {
         self.player?.kickLeft()
         if (self.opponent?.willLeftKickConnect())! {
             self.battleManager?.playerConnect()
-            self.opponent?.hitRecoil(.left)
+//            self.opponent?.hitRecoil(.left)
         }
     }
     
@@ -127,14 +128,14 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.player?.kickRight()
         if (self.opponent?.willRightKickConnect())! {
             self.battleManager?.playerConnect()
-            self.opponent?.hitRecoil(.right)
+//            self.opponent?.hitRecoil(.right)
         }
     }
     func blockStart(){
         self.player?.blockStart()
     }
-    func checkBlockEnd(){
-        self.player?.blockEnd()
+    func checkBlockEnd()->Bool{
+        return (self.player?.blockEnd())!
     }
     
     // BattleManagerDelegate functions

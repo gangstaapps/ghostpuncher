@@ -112,13 +112,14 @@ class Player:SKNode
         self.addChild(self.leftUpperCut!)
         
     }
-    func blockEnd(){
+    func blockEnd()->Bool{
         if !blocking {
-            return
+            return false
         }
         blocking = false
         self.rightUpperCut?.removeFromParent()
         self.leftUpperCut?.removeFromParent()
+        return true
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
