@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A20600F61DADC6DF00035330 /* EffectsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20600F51DADC6DF00035330 /* EffectsLayer.swift */; };
 		A20600F91DB1A45900035330 /* ectoPlasm.sks in Resources */ = {isa = PBXBuildFile; fileRef = A20600F71DB1A45800035330 /* ectoPlasm.sks */; };
-		A20600FA1DB1A45900035330 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = A20600F81DB1A45800035330 /* spark.png */; };
 		A20600FE1DB1A99700035330 /* ecto.png in Resources */ = {isa = PBXBuildFile; fileRef = A20600FD1DB1A99700035330 /* ecto.png */; };
 		A227C79E1DA758A900EFFD7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C79D1DA758A900EFFD7B /* AppDelegate.swift */; };
 		A227C7A61DA758A900EFFD7B /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C7A51DA758A900EFFD7B /* GameViewController.swift */; };
@@ -23,6 +22,9 @@
 		A27117861DB31D5A00B36F06 /* ghostHead.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A27117831DB31D5A00B36F06 /* ghostHead.atlas */; };
 		A27117871DB31D5A00B36F06 /* ghostLeftArm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A27117841DB31D5A00B36F06 /* ghostLeftArm.atlas */; };
 		A27117881DB31D5A00B36F06 /* ghostRightArm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A27117851DB31D5A00B36F06 /* ghostRightArm.atlas */; };
+		A271178A1DB3E55200B36F06 /* Ghost_blur.sks in Resources */ = {isa = PBXBuildFile; fileRef = A27117891DB3E55200B36F06 /* Ghost_blur.sks */; };
+		A271178D1DB405FF00B36F06 /* Smoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = A271178B1DB405FF00B36F06 /* Smoke.sks */; };
+		A271178E1DB405FF00B36F06 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = A271178C1DB405FF00B36F06 /* spark.png */; };
 		A2B49AEB1DA88C1900F86F40 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEA1DA88C1900F86F40 /* Room.swift */; };
 		A2B49AED1DA88CB600F86F40 /* Opponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEC1DA88CB600F86F40 /* Opponent.swift */; };
 		A2B49AEF1DA88CE400F86F40 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEE1DA88CE400F86F40 /* Player.swift */; };
@@ -55,7 +57,6 @@
 /* Begin PBXFileReference section */
 		A20600F51DADC6DF00035330 /* EffectsLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EffectsLayer.swift; path = classes/EffectsLayer.swift; sourceTree = "<group>"; };
 		A20600F71DB1A45800035330 /* ectoPlasm.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ectoPlasm.sks; sourceTree = "<group>"; };
-		A20600F81DB1A45800035330 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		A20600FD1DB1A99700035330 /* ecto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ecto.png; sourceTree = "<group>"; };
 		A227C79A1DA758A900EFFD7B /* ghostpuncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ghostpuncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A227C79D1DA758A900EFFD7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +76,9 @@
 		A27117831DB31D5A00B36F06 /* ghostHead.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ghostHead.atlas; sourceTree = "<group>"; };
 		A27117841DB31D5A00B36F06 /* ghostLeftArm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ghostLeftArm.atlas; sourceTree = "<group>"; };
 		A27117851DB31D5A00B36F06 /* ghostRightArm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ghostRightArm.atlas; sourceTree = "<group>"; };
+		A27117891DB3E55200B36F06 /* Ghost_blur.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Ghost_blur.sks; path = opponents/Ghost_blur.sks; sourceTree = "<group>"; };
+		A271178B1DB405FF00B36F06 /* Smoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Smoke.sks; path = opponents/Smoke.sks; sourceTree = "<group>"; };
+		A271178C1DB405FF00B36F06 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = opponents/spark.png; sourceTree = "<group>"; };
 		A2B49AEA1DA88C1900F86F40 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Room.swift; path = classes/Room.swift; sourceTree = "<group>"; };
 		A2B49AEC1DA88CB600F86F40 /* Opponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Opponent.swift; path = classes/Opponent.swift; sourceTree = "<group>"; };
 		A2B49AEE1DA88CE400F86F40 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Player.swift; path = classes/Player.swift; sourceTree = "<group>"; };
@@ -175,6 +179,8 @@
 				A2B49AF01DA88EAF00F86F40 /* FightScene.swift */,
 				A2B49AEA1DA88C1900F86F40 /* Room.swift */,
 				A2B49AEC1DA88CB600F86F40 /* Opponent.swift */,
+				A271178B1DB405FF00B36F06 /* Smoke.sks */,
+				A271178C1DB405FF00B36F06 /* spark.png */,
 				A2B49AEE1DA88CE400F86F40 /* Player.swift */,
 				A2B49B011DAAB6E100F86F40 /* Controls.swift */,
 				A25615F51DAC207D00BA3DF8 /* MenuScene.swift */,
@@ -188,12 +194,12 @@
 			isa = PBXGroup;
 			children = (
 				A20600F71DB1A45800035330 /* ectoPlasm.sks */,
+				A2B49AF31DA89BC900F86F40 /* Ghost.sks */,
+				A27117891DB3E55200B36F06 /* Ghost_blur.sks */,
 				A27117831DB31D5A00B36F06 /* ghostHead.atlas */,
 				A27117841DB31D5A00B36F06 /* ghostLeftArm.atlas */,
 				A27117851DB31D5A00B36F06 /* ghostRightArm.atlas */,
 				A20600FD1DB1A99700035330 /* ecto.png */,
-				A20600F81DB1A45800035330 /* spark.png */,
-				A2B49AF31DA89BC900F86F40 /* Ghost.sks */,
 				A2B49AF51DA89C1F00F86F40 /* Ghost.xcassets */,
 			);
 			name = opponents;
@@ -346,16 +352,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				A227C7A91DA758A900EFFD7B /* Main.storyboard in Resources */,
-				A20600FA1DB1A45900035330 /* spark.png in Resources */,
+				A271178A1DB3E55200B36F06 /* Ghost_blur.sks in Resources */,
 				A27117881DB31D5A00B36F06 /* ghostRightArm.atlas in Resources */,
 				A20600FE1DB1A99700035330 /* ecto.png in Resources */,
 				A20600F91DB1A45900035330 /* ectoPlasm.sks in Resources */,
 				A2B49AF91DA8BC3500F86F40 /* Player1.xcassets in Resources */,
 				A2B49B001DAAB63000F86F40 /* Buttons.xcassets in Resources */,
+				A271178D1DB405FF00B36F06 /* Smoke.sks in Resources */,
 				A27117861DB31D5A00B36F06 /* ghostHead.atlas in Resources */,
 				A2B49AF61DA89C1F00F86F40 /* Ghost.xcassets in Resources */,
 				A2B49AF41DA89BC900F86F40 /* Ghost.sks in Resources */,
 				A27117871DB31D5A00B36F06 /* ghostLeftArm.atlas in Resources */,
+				A271178E1DB405FF00B36F06 /* spark.png in Resources */,
 				A227C7AB1DA758AA00EFFD7B /* Assets.xcassets in Resources */,
 				A227C7AE1DA758AA00EFFD7B /* LaunchScreen.storyboard in Resources */,
 			);

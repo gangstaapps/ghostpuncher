@@ -59,6 +59,8 @@ class Opponent:SKNode
     var head:SKSpriteNode?
     var body:SKNode?
     
+    var ghostEffectNode:SKEffectNode
+    
     let startPosition:CGPoint
     
     weak var delegate:OpponentDelegate?
@@ -72,6 +74,8 @@ class Opponent:SKNode
     
     var lastActivityCheck = 0.0
     var currentSceneTime = 0.0
+    
+    let blurFilter:CIFilter?
     
     var ghostMemory:[GameEvents] = Array(repeating: .empty, count: LENGTH_OF_MEMORY)
     
@@ -95,6 +99,12 @@ class Opponent:SKNode
         self.opponentFrame = frame
         self.opponentName = name
         startPosition = CGPoint(x: 0, y: -self.opponentFrame.size.height * 0.3)
+        ghostEffectNode = SKEffectNode()
+        
+        blurFilter = CIFilter(name: "CIBoxBlur")
+        blurFilter?.setDefaults()
+        blurFilter?.setValue(7, forKey: "inputRadius")
+        
         super.init()
         
         if let ghostScene:SKScene = SKScene(fileNamed: self.opponentName){
@@ -102,6 +112,14 @@ class Opponent:SKNode
             
             self.opponent.removeFromParent();
             self.opponent.position = startPosition
+            
+            
+            
+//            ghostEffectNode.filter = self.blurFilter
+//            ghostEffectNode.addChild(self.opponent)
+//            
+//            self.addChild(ghostEffectNode)
+            
             self.addChild(self.opponent)
             
             let leftArmAtlas = SKTextureAtlas(named: "ghostLeftArm.atlas")
@@ -152,6 +170,24 @@ class Opponent:SKNode
             
             self.head =  self.opponent.childNode(withName: "body")?.childNode(withName: "head") as! SKSpriteNode?
             self.body =  self.opponent.childNode(withName: "body")
+            
+            
+            let sparkEmmiter = SKEmitterNode(fileNamed: "Smoke.sks")!
+            sparkEmmiter.position = CGPoint(x: 10, y: 150)
+            sparkEmmiter.name = "sparkEmmitter"
+            sparkEmmiter.particleZPosition = -1
+            sparkEmmiter.targetNode = self.opponent!
+            sparkEmmiter.alpha = 0.5
+            self.opponent?.addChild(sparkEmmiter)
+            
+            let bodyGlow = SKEmitterNode(fileNamed: "Smoke.sks")!
+            bodyGlow.position = CGPoint(x: 0, y: 0)
+            bodyGlow.name = "sparkEmmitter"
+            bodyGlow.particleZPosition = -1
+            bodyGlow.targetNode = self.opponent!
+            bodyGlow.alpha = 0.5
+            bodyGlow.particlePositionRange = CGVector(dx: 300.0, dy: 5.0)
+            self.opponent?.addChild(bodyGlow)
         }
     }
     
@@ -423,6 +459,7 @@ class Opponent:SKNode
     }
     
     func spark(){
+        return 
         let sparkEmmiter = SKEmitterNode(fileNamed: "ectoPlasm.sks")!
         sparkEmmiter.position = CGPoint(x: -8, y: 100)
         sparkEmmiter.name = "sparkEmmitter"

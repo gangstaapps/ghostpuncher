@@ -209,10 +209,10 @@ class Controls:SKNode
         case Button.punchLeft.rawValue:
             leftButtonGainingPower = true
             leftButtonPower = 1
-        case Button.kickRight.rawValue:
-            delegate?.kickRight()
-        case Button.kickLeft.rawValue:
-            delegate?.kickLeft()
+//        case Button.kickRight.rawValue:
+//            delegate?.kickRight()
+//        case Button.kickLeft.rawValue:
+//            delegate?.kickLeft()
         default:
             break
         }
