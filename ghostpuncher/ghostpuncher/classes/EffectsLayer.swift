@@ -14,6 +14,7 @@ class EffectsLayer: SKNode
     let transparentNode:SKShapeNode
     let roomLightNode:SKShapeNode
     
+    
     init(frame: CGRect) {
         self.roomFrame = frame
         self.transparentNode = SKShapeNode(rect: frame)
@@ -26,6 +27,7 @@ class EffectsLayer: SKNode
         self.roomLightNode.fillColor = UIColor.black
         self.roomLightNode.alpha = 0.3
         
+        
         super.init()
         
         self.addChild(self.roomLightNode)
@@ -34,9 +36,10 @@ class EffectsLayer: SKNode
         
     }
     
-    func showDamage(){
+    func showDamage(direction:Direction){
         self.transparentNode.run(SKAction.sequence([SKAction.fadeAlpha(to: 0.3, duration: 0.2),
                                                     SKAction.fadeAlpha(to: 0.0, duration: 0.1)]))
+        
     }
     
     func turnOffLights(){

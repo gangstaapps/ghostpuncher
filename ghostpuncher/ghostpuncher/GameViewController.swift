@@ -23,6 +23,8 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        var skView = self.view as! SKView
+        dump(UIScreen.main.bounds)
         
         // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
         // including entities and graphs.

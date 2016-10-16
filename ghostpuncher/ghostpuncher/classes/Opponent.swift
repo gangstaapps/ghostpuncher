@@ -51,6 +51,9 @@ class Opponent:SKNode
     var leftArmAttack:SKAction?
     var headAnimation:SKAction?
     
+    var headRightPunchAnimation:SKAction?
+    var headLeftPunchAnimation:SKAction?
+    
     var leftArm:SKNode?
     var rightArm:SKNode?
     var head:SKSpriteNode?
@@ -101,28 +104,28 @@ class Opponent:SKNode
             self.opponent.position = startPosition
             self.addChild(self.opponent)
             
-            let leftArmAtlas = SKTextureAtlas(named: "ghostleftarm.atlas")
+            let leftArmAtlas = SKTextureAtlas(named: "ghostLeftArm.atlas")
             let armFrames:[SKTexture] = [
-                leftArmAtlas.textureNamed("left1.png"),
-                leftArmAtlas.textureNamed("left2.png"),
-                leftArmAtlas.textureNamed("left3.png"),
-                leftArmAtlas.textureNamed("left4.png"),
-                leftArmAtlas.textureNamed("left2.png"),
-                leftArmAtlas.textureNamed("left1.png")]
+                leftArmAtlas.textureNamed("ghost_left1.png"),
+                leftArmAtlas.textureNamed("ghost_left2.png"),
+                leftArmAtlas.textureNamed("ghost_left3.png"),
+                leftArmAtlas.textureNamed("ghost_left4.png"),
+                leftArmAtlas.textureNamed("ghost_left2.png"),
+                leftArmAtlas.textureNamed("ghost_left1.png")]
             
             
             self.leftArmAttack = SKAction.animate(with: armFrames, timePerFrame: 0.1)
             self.leftArm =  self.opponent.childNode(withName: "body")?.childNode(withName: "leftarm")
             
             
-            let rightArmAtlas = SKTextureAtlas(named: "ghostrightarm.atlas")
+            let rightArmAtlas = SKTextureAtlas(named: "ghostRightArm.atlas")
             let rightarmFrames:[SKTexture] = [
-                rightArmAtlas.textureNamed("right1.png"),
-                rightArmAtlas.textureNamed("right2.png"),
-                rightArmAtlas.textureNamed("right3.png"),
-                rightArmAtlas.textureNamed("right4.png"),
-                rightArmAtlas.textureNamed("right2.png"),
-                rightArmAtlas.textureNamed("right1.png")]
+                rightArmAtlas.textureNamed("ghost_right1.png"),
+                rightArmAtlas.textureNamed("ghost_right2.png"),
+                rightArmAtlas.textureNamed("ghost_right3.png"),
+                rightArmAtlas.textureNamed("ghost_right4.png"),
+                rightArmAtlas.textureNamed("ghost_right2.png"),
+                rightArmAtlas.textureNamed("ghost_right1.png")]
             
             
             self.rightArmAttack = SKAction.animate(with: rightarmFrames, timePerFrame: 0.1)
@@ -130,11 +133,23 @@ class Opponent:SKNode
             
             let headAtlas = SKTextureAtlas(named: "ghostHead.atlas")
             let headFrames:[SKTexture] = [
-                headAtlas.textureNamed("head2.png"),
-                headAtlas.textureNamed("head1.png")]
-            
+                headAtlas.textureNamed("ghost_head_frontopen_punch.png"),
+                headAtlas.textureNamed("ghost_head_front.png")]
             
             self.headAnimation = SKAction.animate(with: headFrames, timePerFrame: 0.4)
+            
+            let headLeftPunchFrames:[SKTexture] = [
+                headAtlas.textureNamed("ghost_head_leftpunch.png"),
+                headAtlas.textureNamed("ghost_head_front.png")]
+            
+            self.headLeftPunchAnimation = SKAction.animate(with: headLeftPunchFrames, timePerFrame: 0.4)
+            
+            let headRightPunchFrames:[SKTexture] = [
+                headAtlas.textureNamed("ghost_head_rightpunch.png"),
+                headAtlas.textureNamed("ghost_head_front.png")]
+            
+            self.headRightPunchAnimation = SKAction.animate(with: headRightPunchFrames, timePerFrame: 0.4)
+            
             self.head =  self.opponent.childNode(withName: "body")?.childNode(withName: "head") as! SKSpriteNode?
             self.body =  self.opponent.childNode(withName: "body")
         }
@@ -196,7 +211,7 @@ class Opponent:SKNode
         let scaleUp = SKAction.scale(to: 2.0, duration: 0.2)
         let fadeUp = SKAction.fadeAlpha(to: 0.9, duration: 0.3)
         let moveIn = SKAction.moveBy(x: startPosition.x, y: startPosition.y - 100, duration: 0.2)
-        let group1 = SKAction.group([SKAction.run({ self.head?.texture = SKTextureAtlas(named: "ghostHead.atlas").textureNamed("head2.png") }),scaleUp, fadeUp,moveIn])
+        let group1 = SKAction.group([SKAction.run({ self.head?.texture = SKTextureAtlas(named: "ghostHead.atlas").textureNamed("ghost_head_uppercut.png") }),scaleUp, fadeUp,moveIn])
         
         let attackLeft = SKAction.sequence([SKAction.run({ self.delegate?.opponentAttackLeft() }), SKAction.wait(forDuration: 0.3)])
         let attackRight = SKAction.sequence([SKAction.run({ self.delegate?.opponentAttackRight() }), SKAction.wait(forDuration: 0.3)])
@@ -234,7 +249,7 @@ class Opponent:SKNode
         
         let headRotate1 = SKAction.rotate(byAngle: (direction == .right ? CGFloat(power).degreesToRadians : CGFloat(-power).degreesToRadians), duration: 0.1)
         let headRotate2 = SKAction.rotate(toAngle: CGFloat(0).degreesToRadians, duration: 0.1)
-        let headSequence = SKAction.sequence([headRotate1, headRotate2])
+        let headSequence = SKAction.group([SKAction.sequence([headRotate1, headRotate2]), direction == .right ? self.headRightPunchAnimation! : self.headLeftPunchAnimation! ])
         
         self.head?.run(headSequence)
         
@@ -253,6 +268,8 @@ class Opponent:SKNode
         self.rightArm?.run(leftArmSequence)
         
         self.opponent?.run(SKAction.group([fadeSequence,sequence, SKAction.moveBy(x: (direction == .right ? -moveAmount : moveAmount), y: 0, duration: 0.1)]), withKey: MOVEMENT_KEY )
+        
+        
         
     }
     

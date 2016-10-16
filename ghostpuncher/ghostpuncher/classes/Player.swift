@@ -112,6 +112,19 @@ class Player:SKNode
         self.addChild(self.leftUpperCut!)
         
     }
+    
+    func showDamage(direction:Direction){
+        let node:SKSpriteNode
+        if direction == .right {
+            node = SKSpriteNode(imageNamed: "ghost_slash_left")
+        } else {
+            node = SKSpriteNode(imageNamed: "ghost_slash_right")
+        }
+        node.position = CGPoint(x: self.opponentFrame.midX + CGFloat(arc4random_uniform(300)) - CGFloat(arc4random_uniform(300)), y: self.opponentFrame.midY + CGFloat(arc4random_uniform(100)) - CGFloat(arc4random_uniform(100)))
+        self.addChild(node)
+        node.run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.removeFromParent()]))
+    }
+    
     func blockEnd()->Bool{
         if !blocking {
             return false

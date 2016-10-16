@@ -47,7 +47,11 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         battleManager = BattleManager()
         battleManager?.delegate = self
         
+         dump(frame)
+        
         battleOn = true
+        
+       
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -166,7 +170,8 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         if !(self.player?.blocking)! {
             self.battleManager?.opponentConnect()
             self.room.lunge()
-            self.effectsLayer?.showDamage()
+            self.effectsLayer?.showDamage(direction:.left)
+            self.player?.showDamage(direction:.left)
         }
         
     }
@@ -175,7 +180,8 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         if !(self.player?.blocking)! {
             self.battleManager?.opponentConnect()
             self.room.lunge()
-            self.effectsLayer?.showDamage()
+            self.effectsLayer?.showDamage(direction:.right)
+            self.player?.showDamage(direction:.left)
         }
         
     }
