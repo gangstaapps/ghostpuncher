@@ -21,12 +21,13 @@ class EffectsLayer: SKNode
         self.transparentNode.lineWidth = 0
         self.transparentNode.fillColor = UIColor.red
         self.transparentNode.alpha = 0
+        self.transparentNode.zPosition = 20
         
         self.roomLightNode = SKShapeNode(rect: frame)
         self.roomLightNode.lineWidth = 0
         self.roomLightNode.fillColor = UIColor.black
-        self.roomLightNode.alpha = 0.3
-        
+        self.roomLightNode.alpha = 0.2
+        self.roomLightNode.zPosition = 3
         
         super.init()
         

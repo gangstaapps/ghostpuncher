@@ -55,7 +55,7 @@ class GameViewController: UIViewController {
         let menuScene = MenuScene(frame: self.view.frame, backgroundColor: UIColor.black)
         
         if let view = self.view as! SKView? {
-//            view.ignoresSiblingOrder = true
+            view.showsFPS = true
             view.presentScene(menuScene)
         }
         

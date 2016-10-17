@@ -35,6 +35,7 @@ enum GameEvents:UInt8
     case ghostDodgeLeft
     case ghostGoInvisible
     case ghostComboAttack1
+    
 }
 enum Direction:UInt8
 {
@@ -173,29 +174,41 @@ class Opponent:SKNode
             
             
             let sparkEmmiter = SKEmitterNode(fileNamed: "Smoke.sks")!
-            sparkEmmiter.position = CGPoint(x: 10, y: 150)
+            sparkEmmiter.position = CGPoint(x: 10, y: 200)
             sparkEmmiter.name = "sparkEmmitter"
             sparkEmmiter.particleZPosition = -1
             sparkEmmiter.targetNode = self.opponent!
             sparkEmmiter.alpha = 0.5
+            sparkEmmiter.particlePositionRange = CGVector(dx: 40.0, dy: 40.0)
             self.opponent?.addChild(sparkEmmiter)
             
             let bodyGlow = SKEmitterNode(fileNamed: "Smoke.sks")!
-            bodyGlow.position = CGPoint(x: 0, y: 0)
+            bodyGlow.position = CGPoint(x: 0, y: 10)
             bodyGlow.name = "sparkEmmitter"
             bodyGlow.particleZPosition = -1
             bodyGlow.targetNode = self.opponent!
             bodyGlow.alpha = 0.5
-            bodyGlow.particlePositionRange = CGVector(dx: 300.0, dy: 5.0)
+            bodyGlow.particlePositionRange = CGVector(dx: 240.0, dy: 290.0)
             self.opponent?.addChild(bodyGlow)
         }
     }
     
+    func returnFullPowerHit()->CGFloat
+    {
+        return 5.0
+    }
+    
+    func returnBlockedHit()->CGFloat
+    {
+        return 1.0
+    }
+    
+    
     func doLeftArmAttack(connected:Bool){
         self.leftArm?.run(self.leftArmAttack!, withKey: LEFT_ARM_KEY)
         
-        let scaleUp = SKAction.scale(to: 1.1, duration: 0.2)
-        let scaleDown = SKAction.scale(to: 1.0, duration: 0.1)
+        let scaleUp = SKAction.scale(to: 1.5, duration: 0.1)
+        let scaleDown = SKAction.scale(to: 1.0, duration: 0.05)
         let sequence = SKAction.sequence([scaleUp, scaleDown])
         self.opponent?.run(sequence)
         
@@ -211,8 +224,8 @@ class Opponent:SKNode
     func doRightArmAttack(connected:Bool){
         self.rightArm?.run(self.rightArmAttack!, withKey: RIGHT_ARM_KEY)
         
-        let scaleUp = SKAction.scale(to: 1.1, duration: 0.2)
-        let scaleDown = SKAction.scale(to: 1.0, duration: 0.1)
+        let scaleUp = SKAction.scale(to: 1.5, duration: 0.1)
+        let scaleDown = SKAction.scale(to: 1.0, duration: 0.05)
         let sequence = SKAction.sequence([scaleUp, scaleDown])
         self.opponent?.run(sequence)
         
@@ -228,8 +241,16 @@ class Opponent:SKNode
     func goInvisible() {
         let sequence = SKAction.sequence([SKAction.fadeAlpha(to: 0.1, duration: 0.1),
                                           SKAction.wait(forDuration: 1.0),
+                                          SKAction.run({self.randomAttack()}),
                                           SKAction.fadeAlpha(to: 1.0, duration: 0.1)])
-        self.opponent?.run(sequence)
+        
+        let sequence2 = SKAction.sequence([SKAction.wait(forDuration: 0.25),
+                                           SKAction.scale(to: 0.0, duration: 0.05),
+                                          SKAction.wait(forDuration: 0.5),
+                                          SKAction.scale(to: 1.0, duration: 0.05),
+                                          SKAction.wait(forDuration: 0.25)])
+        
+        self.opponent?.run(SKAction.group([sequence, sequence2]))
         
         self.addEvent(event: .ghostGoInvisible)
     }
@@ -259,7 +280,7 @@ class Opponent:SKNode
         let flashPause = SKAction.wait(forDuration: 0.3)
         
         let flashingLights = SKAction.sequence([SKAction.wait(forDuration: 3.2),lightsOn,flashPause,lightsOff,flashPause,lightsOn,flashPause
-            ,lightsOff,flashPause,lightsOn,flashPause,lightsOff,flashPause,lightsOn,flashPause,lightsOff,flashPause,lightsOn,flashPause,lightsOff,flashPause,lightsOn])
+            ,lightsOff,flashPause,lightsOn,flashPause,lightsOff,flashPause,lightsOn,flashPause,lightsOff,flashPause,lightsOn])
         
         self.opponent.run(attack, withKey:MOVEMENT_KEY)
         
@@ -314,7 +335,7 @@ class Opponent:SKNode
     }
     
     func dodgeLeft(){
-        self.addEvent(event: .ghostDodgeLeft)
+       
         
         let newPos:CGPoint = CGPoint(x: startPosition.x - 200, y: startPosition.y + CGFloat(arc4random_uniform(UInt32(30))) - CGFloat(arc4random_uniform(UInt32(30))))
         
@@ -324,13 +345,13 @@ class Opponent:SKNode
             self.opponent.removeAction(forKey: MOVEMENT_KEY)
         }
         
-        self.opponent.run(movement, withKey: MOVEMENT_KEY)
+        self.opponent.run(SKAction.sequence([ SKAction.wait(forDuration: 0.3) ,movement]), withKey: MOVEMENT_KEY)
         
         self.goInvisible()
     }
     
     func dodgeRight(){
-        self.addEvent(event: .ghostDodgeRight)
+        
         
         let newPos:CGPoint = CGPoint(x: startPosition.x + 200, y: startPosition.y + CGFloat(arc4random_uniform(UInt32(30))) - CGFloat(arc4random_uniform(UInt32(30))))
         
@@ -340,20 +361,21 @@ class Opponent:SKNode
             self.opponent.removeAction(forKey: MOVEMENT_KEY)
         }
         
-        self.opponent.run(movement, withKey: MOVEMENT_KEY)
+        self.opponent.run(SKAction.sequence([ SKAction.wait(forDuration: 0.3) ,movement]) , withKey: MOVEMENT_KEY)
         self.goInvisible()
     }
     
     func checkForAttackTime()->Bool{
         
-        return !self.checkFor(events: [.ghostLeftAttackFail, .ghostRightAttackFail,.ghostLeftAttackConnect, .ghostRightAttackConnect], withinLast: 5)
+        return !self.checkFor(events: [.ghostLeftAttackFail, .ghostRightAttackFail,.ghostLeftAttackConnect, .ghostRightAttackConnect,
+                                       .ghostDodgeLeft, .ghostDodgeRight], withinLast: 5)
         
     }
     
     func checkDodging()->Bool {
         
         if self.checkLast(10, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect, .playerLeftKickConnect, .playerRightKickConnect],
-                          excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail, .playerRightKickFail, .playerLeftKickFail, .ghostDodgeLeft, .ghostDodgeRight, .ghostGoInvisible, .ghostLeftAttackFail, .ghostRightAttackFail]){
+                          excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail, .playerRightKickFail, .playerLeftKickFail, .ghostGoInvisible, .ghostLeftAttackFail, .ghostRightAttackFail]){
             
             self.comboAttack1()
             
@@ -361,22 +383,22 @@ class Opponent:SKNode
         }
         
         if self.checkLast(3, eventsEqual: .playerRightPunchConnect){
-            self.dodgeLeft()
+            self.addEvent(event: .ghostDodgeLeft)
             return true
         }
         
         if self.checkLast(3, eventsEqual: .playerRightKickConnect){
-            self.dodgeLeft()
+           self.addEvent(event: .ghostDodgeLeft)
             return true
         }
         
         if self.checkLast(3, eventsEqual: .playerLeftPunchConnect){
-            self.dodgeRight()
+            self.addEvent(event: .ghostDodgeRight)
             return true
         }
         
         if self.checkLast(3, eventsEqual: .playerLeftKickConnect){
-            self.dodgeRight()
+            self.addEvent(event: .ghostDodgeRight)
             return true
         }
         
@@ -384,11 +406,21 @@ class Opponent:SKNode
                           excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail, .playerRightKickFail, .playerLeftKickFail]){
             
             if self.checkMoreRecent(events: [.playerLeftPunchConnect, .playerRightPunchConnect]) == .playerLeftPunchConnect {
-                self.dodgeRight()
+                self.addEvent(event: .ghostDodgeRight)
             } else {
-                self.dodgeLeft()
+                self.addEvent(event: .ghostDodgeLeft)
             }
             
+            return true
+        }
+        
+        if self.checkLast(1, eventsEqual: .ghostDodgeRight){
+            self.dodgeRight()
+            return true
+        }
+        
+        if self.checkLast(1, eventsEqual: .ghostDodgeLeft){
+            self.dodgeLeft()
             return true
         }
         
@@ -469,7 +501,13 @@ class Opponent:SKNode
         
         self.head?.addChild(sparkEmmiter)
     }
-    
+    func randomAttack(){
+        if Int(arc4random_uniform(UInt32(2))) == 1 {
+            delegate?.opponentAttackLeft()
+        } else {
+            delegate?.opponentAttackRight()
+        }
+    }
     func update(_ currentTime: TimeInterval){
         currentSceneTime = currentTime
         
@@ -490,11 +528,7 @@ class Opponent:SKNode
         
         if self.checkForAttackTime()
         {
-            if Int(arc4random_uniform(UInt32(1))) == 1 {
-                delegate?.opponentAttackLeft()
-            } else {
-                delegate?.opponentAttackRight()
-            }
+            self.randomAttack()
             
             return
         }
@@ -511,12 +545,30 @@ class Opponent:SKNode
         }
     }
     
+    func showDamage(direction:Direction){
+        
+        let node:SKSpriteNode
+        let xPositionAdjust:CGFloat
+        if direction == .right {
+            node = SKSpriteNode(imageNamed: "ghost_slash_right")
+            xPositionAdjust = (self.body?.frame.size.width)!/2
+        } else {
+            node = SKSpriteNode(imageNamed: "ghost_slash_left")
+            xPositionAdjust = -(self.body?.frame.size.width)!/2
+        }
+        node.position = CGPoint(x: self.opponent.position.x + xPositionAdjust, y: 0)
+        node.zPosition = 20
+        self.addChild(node)
+        node.run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.removeFromParent()]))
+    }
+    
     func willRightPunchConnect() ->Bool {
         print(self.opponent.position.x)
         let willConnect = self.opponent?.alpha == 1 && self.opponent.position.x > -5 && self.opponent.position.x < 150
         if willConnect {
             self.addEvent(event: .playerRightPunchConnect)
             self.spark()
+            
         } else {
             self.addEvent(event: .playerRightPunchFail)
         }
@@ -527,6 +579,7 @@ class Opponent:SKNode
         if willConnect {
             self.spark()
             self.addEvent(event: .playerLeftPunchConnect)
+            
         } else {
             self.addEvent(event: .playerLeftPunchFail)
         }

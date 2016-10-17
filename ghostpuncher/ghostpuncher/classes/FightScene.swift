@@ -25,7 +25,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.addChild(self.room)
         
         self.effectsLayer = EffectsLayer(frame: frame)
-        self.effectsLayer?.zPosition = 3
+//        self.effectsLayer?.zPosition = 3
         self.addChild(self.effectsLayer!)
         
         self.opponent = Opponent(frame: frame, name: "Ghost")
@@ -168,20 +168,24 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     func opponentAttackLeft(){
         self.opponent?.doLeftArmAttack(connected:!(self.player?.blocking)!)
         if !(self.player?.blocking)! {
-            self.battleManager?.opponentConnect()
+            self.battleManager?.opponentConnect(power:self.opponent!.returnFullPowerHit())
             self.room.lunge()
             self.effectsLayer?.showDamage(direction:.left)
-            self.player?.showDamage(direction:.left)
+            self.opponent?.showDamage(direction:.left)
+        } else {
+            self.battleManager?.opponentConnect(power:self.opponent!.returnBlockedHit())
         }
         
     }
     func opponentAttackRight(){
         self.opponent?.doRightArmAttack(connected:!(self.player?.blocking)!)
         if !(self.player?.blocking)! {
-            self.battleManager?.opponentConnect()
+            self.battleManager?.opponentConnect(power:self.opponent!.returnFullPowerHit())
             self.room.lunge()
             self.effectsLayer?.showDamage(direction:.right)
-            self.player?.showDamage(direction:.left)
+            self.opponent?.showDamage(direction:.right)
+        }else {
+            self.battleManager?.opponentConnect(power:self.opponent!.returnBlockedHit())
         }
         
     }
