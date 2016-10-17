@@ -516,7 +516,7 @@ class Opponent:SKNode
         }
         
         if self.opponent.action(forKey: MOVEMENT_KEY) == nil {
-            let newPos:CGPoint = CGPoint(x: startPosition.x + CGFloat(arc4random_uniform(UInt32(100))) - CGFloat(arc4random_uniform(UInt32(100))), y: startPosition.y + CGFloat(arc4random_uniform(UInt32(30))) - CGFloat(arc4random_uniform(UInt32(30))))
+            let newPos:CGPoint = CGPoint(x: startPosition.x + CGFloat(arc4random_uniform(UInt32(100))) - CGFloat(arc4random_uniform(UInt32(100))), y: startPosition.y + CGFloat(arc4random_uniform(UInt32(20))) - CGFloat(arc4random_uniform(UInt32(20))))
             
             let movement:SKAction = SKAction.move(to: newPos, duration: 4)
             self.opponent.run(movement, withKey: MOVEMENT_KEY)
@@ -564,7 +564,7 @@ class Opponent:SKNode
     
     func willRightPunchConnect() ->Bool {
         print(self.opponent.position.x)
-        let willConnect = self.opponent?.alpha == 1 && self.opponent.position.x > -5 && self.opponent.position.x < 150
+        let willConnect = self.opponent?.alpha == 1 && self.opponent.position.x > -25 && self.opponent.position.x < 150
         if willConnect {
             self.addEvent(event: .playerRightPunchConnect)
             self.spark()
@@ -575,7 +575,7 @@ class Opponent:SKNode
         return willConnect
     }
     func willLeftPunchConnect() ->Bool {
-        let willConnect = self.opponent?.alpha == 1 && self.opponent.position.x < 5 && self.opponent.position.x > -150
+        let willConnect = self.opponent?.alpha == 1 && self.opponent.position.x < 25 && self.opponent.position.x > -150
         if willConnect {
             self.spark()
             self.addEvent(event: .playerLeftPunchConnect)
@@ -585,23 +585,5 @@ class Opponent:SKNode
         }
         return willConnect
     }
-    func willLeftKickConnect() ->Bool {
-        let willConnect = self.opponent?.alpha == 1 && self.opponent.position.x < 12 && self.opponent.position.x > -12
-        if willConnect {
-            self.addEvent(event: .playerLeftKickConnect)
-        } else {
-            self.addEvent(event: .playerLeftKickFail)
-        }
-        return willConnect
-    }
     
-    func willRightKickConnect() ->Bool {
-        let willConnect = self.opponent?.alpha == 1 && self.opponent.position.x < 12 && self.opponent.position.x > -12
-        if willConnect {
-            self.addEvent(event: .playerRightKickConnect)
-        } else {
-            self.addEvent(event: .playerRightKickFail)
-        }
-        return willConnect
-    }
 }

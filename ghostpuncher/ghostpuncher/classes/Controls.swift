@@ -11,10 +11,9 @@ import SpriteKit
 protocol ControlsDelegate:class {
     func punchRight(power:CGFloat)
     func punchLeft(power:CGFloat)
-    func kickRight()
-    func kickLeft()
     func blockStart()
-    func checkBlockEnd()->Bool
+    func checkBlockEndLeft()->Bool
+    func checkBlockEndRight()->Bool
 }
 
 class Controls:SKNode
@@ -225,7 +224,7 @@ class Controls:SKNode
             if (data["touch"] as! UITouch) === touch {
                 self.leftPunch.isHidden = false
                 self.leftPunch.userData = nil
-                if !(delegate?.checkBlockEnd())! {
+                if !(delegate?.checkBlockEndLeft())! {
                     delegate?.punchLeft(power: leftButtonPower)
                     leftButtonPowerMeter.path = nil
                     leftButtonGainingPower = false
@@ -244,7 +243,7 @@ class Controls:SKNode
             if (data["touch"] as! UITouch) === touch {
                 self.rightPunch.isHidden = false
                 self.rightPunch.userData = nil
-                if !(delegate?.checkBlockEnd())! {
+                if !(delegate?.checkBlockEndRight())! {
                     delegate?.punchRight(power: rightButtonPower)
                     rightButtonPowerMeter.path = nil
                     rightButtonGainingPower = false

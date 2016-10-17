@@ -107,39 +107,28 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     }
     
     func punchRight(power:CGFloat) {
-        self.player?.punchRight()
+        self.player?.punchRight(power)
         if (self.opponent?.willRightPunchConnect())! {
             self.battleManager?.playerConnect(power: power)
             self.opponent?.hitRecoil(.right, power:power)
         }
     }
     func punchLeft(power:CGFloat) {
-        self.player?.punchLeft()
+        self.player?.punchLeft(power)
         if (self.opponent?.willLeftPunchConnect())! {
             self.battleManager?.playerConnect(power: power)
              self.opponent?.hitRecoil(.left, power:power)
         }
     }
-    func kickLeft() {
-        self.player?.kickLeft()
-        if (self.opponent?.willLeftKickConnect())! {
-            self.battleManager?.playerConnect()
-//            self.opponent?.hitRecoil(.left)
-        }
-    }
     
-    func kickRight() {
-        self.player?.kickRight()
-        if (self.opponent?.willRightKickConnect())! {
-            self.battleManager?.playerConnect()
-//            self.opponent?.hitRecoil(.right)
-        }
-    }
     func blockStart(){
         self.player?.blockStart()
     }
-    func checkBlockEnd()->Bool{
-        return (self.player?.blockEnd())!
+    func checkBlockEndLeft()->Bool{
+        return (self.player?.blockEndLeft())!
+    }
+    func checkBlockEndRight()->Bool{
+        return (self.player?.blockEndRight())!
     }
     
     // BattleManagerDelegate functions
@@ -166,8 +155,8 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.view?.presentScene(scene, transition: reveal)
     }
     func opponentAttackLeft(){
-        self.opponent?.doLeftArmAttack(connected:!(self.player?.blocking)!)
-        if !(self.player?.blocking)! {
+        self.opponent?.doLeftArmAttack(connected:!(self.player?.checkBlocking())!)
+        if !(self.player?.checkBlocking())! {
             self.battleManager?.opponentConnect(power:self.opponent!.returnFullPowerHit())
             self.room.lunge()
             self.effectsLayer?.showDamage(direction:.left)
@@ -178,8 +167,8 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         
     }
     func opponentAttackRight(){
-        self.opponent?.doRightArmAttack(connected:!(self.player?.blocking)!)
-        if !(self.player?.blocking)! {
+        self.opponent?.doRightArmAttack(connected:!(self.player?.checkBlocking())!)
+        if !(self.player?.checkBlocking())! {
             self.battleManager?.opponentConnect(power:self.opponent!.returnFullPowerHit())
             self.room.lunge()
             self.effectsLayer?.showDamage(direction:.right)

@@ -10,6 +10,7 @@
 		A20600F61DADC6DF00035330 /* EffectsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20600F51DADC6DF00035330 /* EffectsLayer.swift */; };
 		A20600F91DB1A45900035330 /* ectoPlasm.sks in Resources */ = {isa = PBXBuildFile; fileRef = A20600F71DB1A45800035330 /* ectoPlasm.sks */; };
 		A20600FE1DB1A99700035330 /* ecto.png in Resources */ = {isa = PBXBuildFile; fileRef = A20600FD1DB1A99700035330 /* ecto.png */; };
+		A216F0DD1DB5815A003DD5BB /* fists.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A216F0DC1DB5815A003DD5BB /* fists.atlas */; };
 		A227C79E1DA758A900EFFD7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C79D1DA758A900EFFD7B /* AppDelegate.swift */; };
 		A227C7A61DA758A900EFFD7B /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C7A51DA758A900EFFD7B /* GameViewController.swift */; };
 		A227C7A91DA758A900EFFD7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A227C7A71DA758A900EFFD7B /* Main.storyboard */; };
@@ -31,7 +32,6 @@
 		A2B49AF11DA88EAF00F86F40 /* FightScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AF01DA88EAF00F86F40 /* FightScene.swift */; };
 		A2B49AF41DA89BC900F86F40 /* Ghost.sks in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AF31DA89BC900F86F40 /* Ghost.sks */; };
 		A2B49AF61DA89C1F00F86F40 /* Ghost.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AF51DA89C1F00F86F40 /* Ghost.xcassets */; };
-		A2B49AF91DA8BC3500F86F40 /* Player1.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AF81DA8BC3500F86F40 /* Player1.xcassets */; };
 		A2B49B001DAAB63000F86F40 /* Buttons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AFF1DAAB63000F86F40 /* Buttons.xcassets */; };
 		A2B49B021DAAB6E100F86F40 /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49B011DAAB6E100F86F40 /* Controls.swift */; };
 		A2EB9F201DAB35AF0046CB93 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2EB9F1E1DAB351F0046CB93 /* HockeySDK.framework */; };
@@ -58,6 +58,7 @@
 		A20600F51DADC6DF00035330 /* EffectsLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EffectsLayer.swift; path = classes/EffectsLayer.swift; sourceTree = "<group>"; };
 		A20600F71DB1A45800035330 /* ectoPlasm.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ectoPlasm.sks; sourceTree = "<group>"; };
 		A20600FD1DB1A99700035330 /* ecto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ecto.png; sourceTree = "<group>"; };
+		A216F0DC1DB5815A003DD5BB /* fists.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = fists.atlas; sourceTree = "<group>"; };
 		A227C79A1DA758A900EFFD7B /* ghostpuncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ghostpuncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A227C79D1DA758A900EFFD7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A227C7A51DA758A900EFFD7B /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -85,7 +86,6 @@
 		A2B49AF01DA88EAF00F86F40 /* FightScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FightScene.swift; path = classes/FightScene.swift; sourceTree = "<group>"; };
 		A2B49AF31DA89BC900F86F40 /* Ghost.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Ghost.sks; path = opponents/Ghost.sks; sourceTree = "<group>"; };
 		A2B49AF51DA89C1F00F86F40 /* Ghost.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Ghost.xcassets; path = opponents/Ghost.xcassets; sourceTree = "<group>"; };
-		A2B49AF81DA8BC3500F86F40 /* Player1.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Player1.xcassets; sourceTree = "<group>"; };
 		A2B49AFF1DAAB63000F86F40 /* Buttons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Buttons.xcassets; sourceTree = "<group>"; };
 		A2B49B011DAAB6E100F86F40 /* Controls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Controls.swift; path = classes/Controls.swift; sourceTree = "<group>"; };
 		A2EB9F1E1DAB351F0046CB93 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
@@ -208,7 +208,7 @@
 		A2B49AF71DA8BC2400F86F40 /* players */ = {
 			isa = PBXGroup;
 			children = (
-				A2B49AF81DA8BC3500F86F40 /* Player1.xcassets */,
+				A216F0DC1DB5815A003DD5BB /* fists.atlas */,
 			);
 			name = players;
 			sourceTree = "<group>";
@@ -356,8 +356,8 @@
 				A27117881DB31D5A00B36F06 /* ghostRightArm.atlas in Resources */,
 				A20600FE1DB1A99700035330 /* ecto.png in Resources */,
 				A20600F91DB1A45900035330 /* ectoPlasm.sks in Resources */,
-				A2B49AF91DA8BC3500F86F40 /* Player1.xcassets in Resources */,
 				A2B49B001DAAB63000F86F40 /* Buttons.xcassets in Resources */,
+				A216F0DD1DB5815A003DD5BB /* fists.atlas in Resources */,
 				A271178D1DB405FF00B36F06 /* Smoke.sks in Resources */,
 				A27117861DB31D5A00B36F06 /* ghostHead.atlas in Resources */,
 				A2B49AF61DA89C1F00F86F40 /* Ghost.xcassets in Resources */,
