@@ -42,7 +42,6 @@ class BattleManager
         self.checkForWinner()
     }
     
-    
     func checkForWinner(){
         if opponentHealth! <= 0 {
             delegate?.playerWon()

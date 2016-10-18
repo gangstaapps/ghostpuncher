@@ -70,6 +70,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         
         self.opponent?.update(currentTime)
         self.controls?.update(currentTime)
+        self.player?.update()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -108,14 +109,14 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     
     func punchRight(power:CGFloat) {
         self.player?.punchRight(power)
-        if (self.opponent?.willRightPunchConnect())! {
+        if (self.opponent?.willRightPunchConnect(power))! {
             self.battleManager?.playerConnect(power: power)
             self.opponent?.hitRecoil(.right, power:power)
         }
     }
     func punchLeft(power:CGFloat) {
         self.player?.punchLeft(power)
-        if (self.opponent?.willLeftPunchConnect())! {
+        if (self.opponent?.willLeftPunchConnect(power))! {
             self.battleManager?.playerConnect(power: power)
              self.opponent?.hitRecoil(.left, power:power)
         }

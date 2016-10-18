@@ -490,14 +490,18 @@ class Opponent:SKNode
         return true
     }
     
-    func spark(){
-        return 
+    func spark(_ direction:Direction, _ power:CGFloat){
+        
         let sparkEmmiter = SKEmitterNode(fileNamed: "ectoPlasm.sks")!
-        sparkEmmiter.position = CGPoint(x: -8, y: 100)
+        sparkEmmiter.position = CGPoint(x: (direction == .right ? -30 : 30), y: 25)
         sparkEmmiter.name = "sparkEmmitter"
         sparkEmmiter.zPosition = 200
-        sparkEmmiter.targetNode = self.head!
-        sparkEmmiter.particleLifetime = 1
+        sparkEmmiter.targetNode = self
+        sparkEmmiter.particleLifetime = 3
+        sparkEmmiter.emissionAngle = (CGFloat(direction == .right ? 180.0.radiansToDegrees : 0.0.radiansToDegrees))
+        sparkEmmiter.xAcceleration = (direction == .right ? -900 : 900)
+        sparkEmmiter.numParticlesToEmit = Int(power.multiplied(by: 10))
+        
         
         self.head?.addChild(sparkEmmiter)
     }
@@ -562,22 +566,22 @@ class Opponent:SKNode
         node.run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.removeFromParent()]))
     }
     
-    func willRightPunchConnect() ->Bool {
+    func willRightPunchConnect(_ power:CGFloat) ->Bool {
         print(self.opponent.position.x)
         let willConnect = self.opponent?.alpha == 1 && self.opponent.position.x > -25 && self.opponent.position.x < 150
         if willConnect {
             self.addEvent(event: .playerRightPunchConnect)
-            self.spark()
+            self.spark(.right, power)
             
         } else {
             self.addEvent(event: .playerRightPunchFail)
         }
         return willConnect
     }
-    func willLeftPunchConnect() ->Bool {
+    func willLeftPunchConnect(_ power:CGFloat) ->Bool {
         let willConnect = self.opponent?.alpha == 1 && self.opponent.position.x < 25 && self.opponent.position.x > -150
         if willConnect {
-            self.spark()
+            self.spark(.left, power)
             self.addEvent(event: .playerLeftPunchConnect)
             
         } else {

@@ -23,8 +23,6 @@ class Room: SKNode
         self.background.position = CGPoint(x: frame.midX, y: frame.midY)
         self.addChild(self.background)
         
-        
-        
         self.foreground.size = CGSize(width: self.roomFrame.size.width * 1.5,
                                       height: ((self.roomFrame.size.width * 1.5) / self.foreground.frame.size.width) * self.roomFrame.size.height )
         self.foreground.position = CGPoint(x: frame.midX, y: frame.size.height * 0.25)

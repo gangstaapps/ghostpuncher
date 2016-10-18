@@ -13,8 +13,6 @@ class Player:SKNode
     
     let leftFist:SKSpriteNode
     let rightFist:SKSpriteNode
-//    var leftFistReady:SKSpriteNode?
-//    var rightFistReady:SKSpriteNode?
    
     let fistAtlas:SKTextureAtlas
     var leftJab:SKAction?
@@ -27,6 +25,10 @@ class Player:SKNode
     var blockingLeft:Bool = false
     var blockingRight:Bool = false
     
+    let MOVEMENT_KEY  = "movementKey"
+    
+    let fistMovementDegree = 10
+    
     init(frame: CGRect) {
         self.opponentFrame = frame
         fistAtlas = SKTextureAtlas(named: "fists.atlas")
@@ -36,28 +38,20 @@ class Player:SKNode
             fistAtlas.textureNamed("left_head2.png"),
             fistAtlas.textureNamed("left_head1.png")]
         
-        
-        
         let leftHaymakerJabFrames:[SKTexture] = [
             fistAtlas.textureNamed("left_haymaker1.png"),
             fistAtlas.textureNamed("left_haymaker2.png"),
             fistAtlas.textureNamed("left_haymaker1.png")]
-        
-        
         
         let rightJabFrames:[SKTexture] = [
             fistAtlas.textureNamed("right_head1.png"),
             fistAtlas.textureNamed("right_head2.png"),
             fistAtlas.textureNamed("right_head1.png")]
         
-        
-        
         let rightHaymakerJabFrames:[SKTexture] = [
             fistAtlas.textureNamed("right_haymaker1.png"),
             fistAtlas.textureNamed("right_haymaker2.png"),
             fistAtlas.textureNamed("right_haymaker1.png")]
-        
-        
         
         leftFist = SKSpriteNode(texture: fistAtlas.textureNamed("left_upper2.png"))
         leftFist.anchorPoint = CGPoint(x:0.5, y:0)
@@ -104,47 +98,20 @@ class Player:SKNode
         
         self.addChild(leftFist)
         self.addChild(rightFist)
-        
-//        self.leftPunch = SKSpriteNode(texture: fistAtlas.textureNamed("right_upper2.png"))
-//        self.rightPunch = SKSpriteNode(texture: fistAtlas.textureNamed("right_upper2.png"))
-//        self.leftFistReady = SKSpriteNode(texture: fistAtlas.textureNamed("left_upper2.png"))
-//        self.rightFistReady = SKSpriteNode(texture: fistAtlas.textureNamed("right_upper2.png"))
-//        
-//        
-//        self.leftFistReady?.position = CGPoint(x: frame.size.width * 0.4, y: 0)
-//        self.leftFistReady?.anchorPoint = CGPoint(x:0.5, y:0)
-//        
-//        self.rightFistReady?.position = CGPoint(x: frame.size.width * 0.6, y: 0)
-//        self.rightFistReady?.anchorPoint = CGPoint(x:0.5, y:0)
-//        
-//        self.rightPunch?.position = CGPoint(x: frame.size.width * 0.75, y: 0)
-//        self.rightPunch?.anchorPoint = CGPoint(x:0.5, y:0)
-//        
-//        self.leftPunch?.position = CGPoint(x: frame.size.width * 0.25, y: 0)
-//        self.leftPunch?.anchorPoint = CGPoint(x:0.5, y:0)
-
+    
     }
     
     func punchRight(_ power:CGFloat = 1.0){
         if self.checkBlocking() {
             return
         }
-        if self.rightFist.position.y == 0 {
-            return
+        
+        if self.rightFist.action(forKey: MOVEMENT_KEY) != nil {
+            self.rightFist.removeAction(forKey: MOVEMENT_KEY)
         }
         
-        
-//        rightFist.position.y = 0
-        rightFist.run(power > 5 ? rightHaymaker! : rightJab!)
-        
-//        if self.rightPunch?.parent != nil {
-//            return
-//        }
-//        self.addChild(self.rightPunch!)
-//        let pause = SKAction.wait(forDuration: 0.1)
-//        let sequence = SKAction.sequence([pause, SKAction.removeFromParent()])
-//        self.rightPunch?.run(sequence)
-        
+        rightFist.run(power > 5 ? rightHaymaker! : rightJab!, withKey: MOVEMENT_KEY)
+
     }
     
     func punchLeft(_ power:CGFloat = 1.0){
@@ -152,34 +119,44 @@ class Player:SKNode
             return
         }
         
-        if self.leftFist.position.y == 0 {
-            return
+        if self.leftFist.action(forKey: MOVEMENT_KEY) != nil {
+            self.leftFist.removeAction(forKey: MOVEMENT_KEY)
         }
         
-//        leftFist.position.y = 0
-        leftFist.run(power > 5 ? leftHaymaker! : leftJab!)
-//        if self.leftPunch?.parent != nil {
-//            return
-//        }
-//        self.addChild(self.leftPunch!)
-//        let pause = SKAction.wait(forDuration: 0.1)
-//        let sequence = SKAction.sequence([pause, SKAction.removeFromParent()])
-//        self.leftPunch?.run(sequence)
-        
+        leftFist.run(power > 5 ? leftHaymaker! : leftJab!, withKey: MOVEMENT_KEY)
     }
     
+    func update(){
+        if self.checkBlocking() {
+            return
+        }
+        if self.leftFist.action(forKey: MOVEMENT_KEY) == nil {
+            let newPos:CGPoint = CGPoint(x: self.opponentFrame.size.width * 0.4 + CGFloat(arc4random_uniform(UInt32(fistMovementDegree))) - CGFloat(arc4random_uniform(UInt32(fistMovementDegree))), y: (-self.leftFist.frame.size.height * 0.35) + CGFloat(arc4random_uniform(UInt32(fistMovementDegree))) - CGFloat(arc4random_uniform(UInt32(fistMovementDegree))))
+            
+            let movement:SKAction = SKAction.move(to: newPos, duration: 4)
+            self.leftFist.run(movement, withKey: MOVEMENT_KEY)
+        }
+        if self.rightFist.action(forKey: MOVEMENT_KEY) == nil {
+            let newPos:CGPoint = CGPoint(x: self.opponentFrame.size.width * 0.6 + CGFloat(arc4random_uniform(UInt32(fistMovementDegree))) - CGFloat(arc4random_uniform(UInt32(fistMovementDegree))), y: (-self.rightFist.frame.size.height * 0.35) + CGFloat(arc4random_uniform(UInt32(fistMovementDegree))) - CGFloat(arc4random_uniform(UInt32(fistMovementDegree))))
+            
+            let movement:SKAction = SKAction.move(to: newPos, duration: 4)
+            self.rightFist.run(movement, withKey: MOVEMENT_KEY)
+        }
+    }
     
     func blockStart(){
-//        if self.rightFist.position.y == 0 {
-//            return
-//        }
+        if self.leftFist.action(forKey: MOVEMENT_KEY) != nil {
+            self.leftFist.removeAction(forKey: MOVEMENT_KEY)
+        }
+        if self.rightFist.action(forKey: MOVEMENT_KEY) != nil {
+            self.rightFist.removeAction(forKey: MOVEMENT_KEY)
+        }
+        self.leftFist.texture = self.fistAtlas.textureNamed("left_upper2.png")
+        self.rightFist.texture = self.fistAtlas.textureNamed("right_upper2.png")
         blockingLeft = true
         blockingRight = true;
         self.leftFist.position.y = 0
         self.rightFist.position.y = 0
-//        self.addChild(self.rightFistReady!)
-//        self.addChild(self.leftFistReady!)
-        
     }
     
     func checkBlocking() -> Bool{
