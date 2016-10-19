@@ -13,12 +13,13 @@ protocol OpponentDelegate: class {
     func opponentAttackRight()
     func turnOffLights()
     func turnOnLights()
+    func ghostIsGone()
 }
 
 enum GameEvents:UInt8
 {
     case empty
-    case nothing
+    case  nothing
     case playerRightPunchConnect
     case playerRightPunchFail
     case playerLeftPunchConnect
@@ -45,12 +46,17 @@ enum Direction:UInt8
 
 class Opponent:SKNode
 {
+    
+    
     var opponent:SKNode!
     var opponentName:String
     var opponentFrame:CGRect
     var rightArmAttack:SKAction?
     var leftArmAttack:SKAction?
     var headAnimation:SKAction?
+    
+    let ghostDeathCycle:SKAction
+    let ghostDeath:SKSpriteNode
     
     var headRightPunchAnimation:SKAction?
     var headLeftPunchAnimation:SKAction?
@@ -80,6 +86,12 @@ class Opponent:SKNode
     
     var ghostMemory:[GameEvents] = Array(repeating: .empty, count: LENGTH_OF_MEMORY)
     
+   
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        print()
+    }
+    
     func addEvent(event:GameEvents){
         let count = Opponent.LENGTH_OF_MEMORY - 1
         var prev:GameEvents = event
@@ -105,6 +117,15 @@ class Opponent:SKNode
         blurFilter = CIFilter(name: "CIBoxBlur")
         blurFilter?.setDefaults()
         blurFilter?.setValue(7, forKey: "inputRadius")
+        
+        let deathAtlas = SKTextureAtlas(named: "ghost_portal.atlas")
+        var deathFrames:[SKTexture] = []
+        for i in 1...3 {
+            deathFrames.append(deathAtlas.textureNamed("ghost\(i).png"))
+        }
+        
+        ghostDeathCycle = SKAction.repeatForever(SKAction.animate(with: deathFrames, timePerFrame: 0.2))
+        ghostDeath = SKSpriteNode(texture: deathFrames[0])
         
         super.init()
         
@@ -203,6 +224,19 @@ class Opponent:SKNode
         return 1.0
     }
     
+    func defeated(){
+        self.ghostDeath.position = self.opponent!.position
+        self.opponent?.removeFromParent()
+        self.addChild(self.ghostDeath)
+        self.ghostDeath.run(self.ghostDeathCycle)
+        
+        let scaleMoveGroup:SKAction = SKAction.group([SKAction.scale(to: 0.0, duration: 2.0), SKAction.move(to: CGPoint(x:0, y:0), duration: 2.0)])
+        
+        self.ghostDeath.run(SKAction.sequence([
+            SKAction.wait(forDuration: 1.0),
+            scaleMoveGroup, SKAction.run({self.delegate?.ghostIsGone()})
+            ]))
+    }
     
     func doLeftArmAttack(connected:Bool){
         self.leftArm?.run(self.leftArmAttack!, withKey: LEFT_ARM_KEY)
@@ -513,7 +547,8 @@ class Opponent:SKNode
         }
     }
     func update(_ currentTime: TimeInterval){
-        currentSceneTime = currentTime
+        
+       currentSceneTime = currentTime
         
         if self.checkDodging() {
             return

@@ -18,6 +18,8 @@ protocol ControlsDelegate:class {
 
 class Controls:SKNode
 {
+    
+    
     let roomFrame:CGRect
     
     let leftPunch:SKSpriteNode

@@ -16,7 +16,8 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     var controls:Controls?
     var battleManager:BattleManager?
     var effectsLayer:EffectsLayer?
-    var battleOn = false
+//    var battleOn = false
+    var gameMode = GameMode()
     
     init(frame: CGRect, backgroundColor : UIColor) {
         self.room = Room(frame:frame)
@@ -49,7 +50,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         
          dump(frame)
         
-        battleOn = true
+        self.gameMode.setGame(mode: .ready)
         
        
     }
@@ -63,8 +64,9 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     }
     override func update(_ currentTime: TimeInterval) {
         //
-        if !battleOn {
-           return
+        if self.gameMode.current != .ready
+        {
+            return
         }
         
         
@@ -74,7 +76,8 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if !battleOn {
+        if self.gameMode.current != .ready
+        {
             return
         }
         
@@ -100,7 +103,8 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     }
     
     func touchUp(atPoint pos : CGPoint, touch:UITouch) {
-        if !battleOn {
+        if self.gameMode.current == .locked
+        {
             return
         }
         
@@ -141,19 +145,26 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.controls?.setOpponentHealth(percent:newAmount)
     }
     func playerWon(){
-        battleOn = false
+        self.gameMode.setGame(mode: .locked)
+        self.room.openPortal()
+        self.opponent?.defeated()
+
+        
+    }
+    func ghostIsGone(){
+        self.room.closePortal()
         
         let reveal = SKTransition.crossFade(withDuration: 1.0)
         let scene = MenuScene(frame: frame, backgroundColor: UIColor.black, text:"You win")
         self.view?.presentScene(scene, transition: reveal)
-        
     }
     func playerLost(){
-        battleOn = false
+        self.playerWon()
+//        self.gameMode.setGame(mode: .locked)
         
-        let reveal = SKTransition.crossFade(withDuration: 1.0)
-        let scene = MenuScene(frame: frame, backgroundColor: UIColor.black, text:"You lose")
-        self.view?.presentScene(scene, transition: reveal)
+//        let reveal = SKTransition.crossFade(withDuration: 1.0)
+//        let scene = MenuScene(frame: frame, backgroundColor: UIColor.black, text:"You lose")
+//        self.view?.presentScene(scene, transition: reveal)
     }
     func opponentAttackLeft(){
         self.opponent?.doLeftArmAttack(connected:!(self.player?.checkBlocking())!)

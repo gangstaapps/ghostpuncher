@@ -12,6 +12,9 @@
 		A20600FE1DB1A99700035330 /* ecto.png in Resources */ = {isa = PBXBuildFile; fileRef = A20600FD1DB1A99700035330 /* ecto.png */; };
 		A216F0DD1DB5815A003DD5BB /* fists.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A216F0DC1DB5815A003DD5BB /* fists.atlas */; };
 		A216F0E11DB5D780003DD5BB /* ectoParticle.png in Resources */ = {isa = PBXBuildFile; fileRef = A216F0E01DB5D780003DD5BB /* ectoParticle.png */; };
+		A216F0E61DB6EE18003DD5BB /* portal.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A216F0E51DB6EE18003DD5BB /* portal.atlas */; };
+		A216F0E81DB70894003DD5BB /* GameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A216F0E71DB70894003DD5BB /* GameMode.swift */; };
+		A216F0EE1DB71D64003DD5BB /* ghost_portal.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A216F0ED1DB71D64003DD5BB /* ghost_portal.atlas */; };
 		A227C79E1DA758A900EFFD7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C79D1DA758A900EFFD7B /* AppDelegate.swift */; };
 		A227C7A61DA758A900EFFD7B /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C7A51DA758A900EFFD7B /* GameViewController.swift */; };
 		A227C7A91DA758A900EFFD7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A227C7A71DA758A900EFFD7B /* Main.storyboard */; };
@@ -61,6 +64,9 @@
 		A20600FD1DB1A99700035330 /* ecto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ecto.png; sourceTree = "<group>"; };
 		A216F0DC1DB5815A003DD5BB /* fists.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = fists.atlas; sourceTree = "<group>"; };
 		A216F0E01DB5D780003DD5BB /* ectoParticle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ectoParticle.png; sourceTree = "<group>"; };
+		A216F0E51DB6EE18003DD5BB /* portal.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = portal.atlas; sourceTree = "<group>"; };
+		A216F0E71DB70894003DD5BB /* GameMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameMode.swift; sourceTree = "<group>"; };
+		A216F0ED1DB71D64003DD5BB /* ghost_portal.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ghost_portal.atlas; sourceTree = "<group>"; };
 		A227C79A1DA758A900EFFD7B /* ghostpuncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ghostpuncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A227C79D1DA758A900EFFD7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A227C7A51DA758A900EFFD7B /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -120,6 +126,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A216F0E21DB6DD6C003DD5BB /* Effects */ = {
+			isa = PBXGroup;
+			children = (
+				A216F0E51DB6EE18003DD5BB /* portal.atlas */,
+				A216F0E01DB5D780003DD5BB /* ectoParticle.png */,
+				A20600F71DB1A45800035330 /* ectoPlasm.sks */,
+				A271178B1DB405FF00B36F06 /* Smoke.sks */,
+				A271178C1DB405FF00B36F06 /* spark.png */,
+			);
+			name = Effects;
+			sourceTree = "<group>";
+		};
 		A227C7911DA758A900EFFD7B = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +162,7 @@
 		A227C79C1DA758A900EFFD7B /* ghostpuncher */ = {
 			isa = PBXGroup;
 			children = (
+				A216F0E21DB6DD6C003DD5BB /* Effects */,
 				A2B49AFE1DAAB61E00F86F40 /* UI */,
 				A2B49AF71DA8BC2400F86F40 /* players */,
 				A2B49AF21DA89B9800F86F40 /* opponents */,
@@ -181,13 +200,12 @@
 				A2B49AF01DA88EAF00F86F40 /* FightScene.swift */,
 				A2B49AEA1DA88C1900F86F40 /* Room.swift */,
 				A2B49AEC1DA88CB600F86F40 /* Opponent.swift */,
-				A271178B1DB405FF00B36F06 /* Smoke.sks */,
-				A271178C1DB405FF00B36F06 /* spark.png */,
 				A2B49AEE1DA88CE400F86F40 /* Player.swift */,
 				A2B49B011DAAB6E100F86F40 /* Controls.swift */,
 				A25615F51DAC207D00BA3DF8 /* MenuScene.swift */,
 				A25615F71DAD561C00BA3DF8 /* BattleManager.swift */,
 				A20600F51DADC6DF00035330 /* EffectsLayer.swift */,
+				A216F0E71DB70894003DD5BB /* GameMode.swift */,
 			);
 			name = classes;
 			sourceTree = "<group>";
@@ -195,8 +213,7 @@
 		A2B49AF21DA89B9800F86F40 /* opponents */ = {
 			isa = PBXGroup;
 			children = (
-				A216F0E01DB5D780003DD5BB /* ectoParticle.png */,
-				A20600F71DB1A45800035330 /* ectoPlasm.sks */,
+				A216F0ED1DB71D64003DD5BB /* ghost_portal.atlas */,
 				A2B49AF31DA89BC900F86F40 /* Ghost.sks */,
 				A27117891DB3E55200B36F06 /* Ghost_blur.sks */,
 				A27117831DB31D5A00B36F06 /* ghostHead.atlas */,
@@ -355,6 +372,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A227C7A91DA758A900EFFD7B /* Main.storyboard in Resources */,
+				A216F0E61DB6EE18003DD5BB /* portal.atlas in Resources */,
 				A271178A1DB3E55200B36F06 /* Ghost_blur.sks in Resources */,
 				A216F0E11DB5D780003DD5BB /* ectoParticle.png in Resources */,
 				A27117881DB31D5A00B36F06 /* ghostRightArm.atlas in Resources */,
@@ -370,6 +388,7 @@
 				A271178E1DB405FF00B36F06 /* spark.png in Resources */,
 				A227C7AB1DA758AA00EFFD7B /* Assets.xcassets in Resources */,
 				A227C7AE1DA758AA00EFFD7B /* LaunchScreen.storyboard in Resources */,
+				A216F0EE1DB71D64003DD5BB /* ghost_portal.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,6 +436,7 @@
 				A2B49AF11DA88EAF00F86F40 /* FightScene.swift in Sources */,
 				A2B49AEB1DA88C1900F86F40 /* Room.swift in Sources */,
 				A2B49B021DAAB6E100F86F40 /* Controls.swift in Sources */,
+				A216F0E81DB70894003DD5BB /* GameMode.swift in Sources */,
 				A25615F61DAC207D00BA3DF8 /* MenuScene.swift in Sources */,
 				A2B49AEF1DA88CE400F86F40 /* Player.swift in Sources */,
 				A227C79E1DA758A900EFFD7B /* AppDelegate.swift in Sources */,
