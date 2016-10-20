@@ -14,18 +14,15 @@ protocol ControlsDelegate:class {
     func blockStart()
     func checkBlockEndLeft()->Bool
     func checkBlockEndRight()->Bool
+    func comboBreaker()
 }
 
 class Controls:SKNode
 {
-    
-    
     let roomFrame:CGRect
     
     let leftPunch:SKSpriteNode
-    let leftKick:SKSpriteNode
     let rightPunch:SKSpriteNode
-    let rightKick:SKSpriteNode
     
     let energyBarHolderPlayer:SKSpriteNode
     let energyBarHolderOpponent:SKSpriteNode
@@ -43,12 +40,36 @@ class Controls:SKNode
     
     weak var delegate:ControlsDelegate?
     
+    static let LENGTH_OF_MEMORY = 100
+    let INACTIVITY_TIME_TO_CHECK = 0.25
+    
+    var lastActivityCheck = 0.0
+    var currentSceneTime = 0.0
+    
+    var buttonHistory:[Button] = Array(repeating: .nothing, count: LENGTH_OF_MEMORY)
+    
     enum Button:UInt32 {
         case punchLeft = 1
         case punchRight = 2
-        case kickLeft = 4
-        case kickRight = 8
+        case nothing = 4
+        case combo = 8
     }
+    
+    func addEvent(event:Button){
+        let count = Controls.LENGTH_OF_MEMORY - 1
+        var prev:Button = event
+        var current:Button = event
+        for index in stride(from: count, to: 0, by: -1) {
+            current = buttonHistory[index]
+            buttonHistory[index] = prev
+            prev = current
+        }
+        lastActivityCheck = currentSceneTime
+        
+        self.checkForCombo()
+    }
+    
+    
     
     
     init(frame: CGRect) {
@@ -56,9 +77,7 @@ class Controls:SKNode
         
         self.leftPunch  = SKSpriteNode(imageNamed: "punch_reg")
         self.rightPunch   = SKSpriteNode(imageNamed: "punch_reg")
-        self.leftKick = SKSpriteNode(imageNamed: "kick_reg")
-        self.rightKick  = SKSpriteNode(imageNamed: "kick_reg")
-        
+       
         self.energyBarHolderPlayer = SKSpriteNode(imageNamed: "control_bar")
         self.energyBarHolderOpponent = SKSpriteNode(imageNamed: "control_bar")
         
@@ -77,14 +96,12 @@ class Controls:SKNode
         leftPunchRoll.position = CGPoint(x: self.roomFrame.size.width * 0.1, y: self.roomFrame.size.height * 0.15)
         self.leftPunch.position = leftPunchRoll.position
         
-        
         leftButtonPowerMeter = SKShapeNode()
         
         rightButtonPowerMeter = SKShapeNode()
         
         super.init()
         
-//        leftButtonPower = SKShapeNode(path: self.circlePathWith(angle: 0, forButton: self.leftPunch), centered: false)
         leftButtonPowerMeter.fillColor = SKColor.clear
         leftButtonPowerMeter.strokeColor = SKColor.red
         leftButtonPowerMeter.lineWidth = 4
@@ -101,33 +118,12 @@ class Controls:SKNode
         
         self.addChild(self.leftPunch)
         
-        
-        
         let rightPunchRoll = SKSpriteNode(imageNamed: "punch_roll")
         rightPunchRoll.position = CGPoint(x: self.roomFrame.size.width * 0.9, y: self.roomFrame.size.height * 0.15)
         self.addChild(rightPunchRoll)
         
         self.rightPunch.position = CGPoint(x: self.roomFrame.size.width * 0.9, y: self.roomFrame.size.height * 0.15)
         self.addChild(self.rightPunch)
-        
-//        rightButtonPower = SKShapeNode(path: self.circlePathWith(angle: 0, forButton: self.rightPunch), centered: false)
-        
-        
-        let leftKickRoll = SKSpriteNode(imageNamed: "kick_roll")
-        leftKickRoll.position = CGPoint(x: self.roomFrame.size.width * 0.2, y: self.roomFrame.size.height * 0.15)
-//        self.addChild(leftKickRoll)
-        
-        self.leftKick.position = CGPoint(x: self.roomFrame.size.width * 0.2, y: self.roomFrame.size.height * 0.15)
-//        self.addChild(self.leftKick)
-        
-        let rightKickRoll = SKSpriteNode(imageNamed: "kick_roll")
-        rightKickRoll.position = CGPoint(x: self.roomFrame.size.width * 0.8, y: self.roomFrame.size.height * 0.15)
-//        self.addChild(rightKickRoll)
-        
-        self.rightKick.position = CGPoint(x: self.roomFrame.size.width * 0.8, y: self.roomFrame.size.height * 0.15)
-//        self.addChild(self.rightKick)
-        
-        
         
         self.addChild(self.energyBarHolderPlayer)
         self.addChild(self.energyBarHolderOpponent)
@@ -171,30 +167,21 @@ class Controls:SKNode
                 
                 self.leftPunch.userData = ["touch":touch]
                 self.leftPunch.isHidden = true
-                
+                self.addEvent(event: .punchLeft)
             } else if self.leftPunch.isHidden {
                 hitBitMask |= Button.punchLeft.rawValue
             }
-            if self.leftKick.contains(location) {
-                hitBitMask |= Button.kickLeft.rawValue
-                self.leftKick.userData = ["touch":touch]
-                self.leftKick.isHidden = true
-                
-            }
+            
             if self.rightPunch.contains(location) {
                 hitBitMask |= Button.punchRight.rawValue
                 self.rightPunch.userData = ["touch":touch]
                 self.rightPunch.isHidden = true
+                self.addEvent(event: .punchRight)
                 
             }  else if self.rightPunch.isHidden {
                 hitBitMask |= Button.punchRight.rawValue
             }
-            if self.rightKick.contains(location) {
-                hitBitMask |= Button.kickRight.rawValue
-                self.rightKick.userData = ["touch":touch]
-                self.rightKick.isHidden = true
-                
-            }
+            
         }
         
         switch hitBitMask {
@@ -204,16 +191,19 @@ class Controls:SKNode
             leftButtonGainingPower = false
             rightButtonPowerMeter.path = nil
             leftButtonPowerMeter.path = nil
+            
+            let userInfo = ["sfxType": SFX.BUTTON_CLICK] as [String: Any]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: SFXManager.PLAY_SFX),
+                                            object: nil,
+                                            userInfo: userInfo)
         case Button.punchRight.rawValue:
             rightButtonGainingPower = true
             rightButtonPower = 1
+            
         case Button.punchLeft.rawValue:
             leftButtonGainingPower = true
             leftButtonPower = 1
-//        case Button.kickRight.rawValue:
-//            delegate?.kickRight()
-//        case Button.kickLeft.rawValue:
-//            delegate?.kickLeft()
+            
         default:
             break
         }
@@ -234,13 +224,7 @@ class Controls:SKNode
                 }
             }
         }
-        if let data = self.leftKick.userData {
-            if (data["touch"] as! UITouch) === touch {
-                self.leftKick.isHidden = false
-                self.leftKick.userData = nil
-//                delegate?.checkBlockEnd()
-            }
-        }
+       
         if let data = self.rightPunch.userData {
             if (data["touch"] as! UITouch) === touch {
                 self.rightPunch.isHidden = false
@@ -252,14 +236,11 @@ class Controls:SKNode
                 }
             }
         }
-        if let data = self.rightKick.userData {
-            if (data["touch"] as! UITouch) === touch {
-                self.rightKick.isHidden = false
-                self.rightKick.userData = nil
-            }
-        }
+        
     }
     func update(_ currentTime: TimeInterval){
+        currentSceneTime = currentTime
+        
         if rightButtonGainingPower {
             rightButtonPower += 0.1
             let degrees = (rightButtonPower/10.0) * 360
@@ -285,6 +266,34 @@ class Controls:SKNode
                 leftButtonPowerMeter.path = nil
             }
         }
+        if currentSceneTime - lastActivityCheck > INACTIVITY_TIME_TO_CHECK {
+            self.addEvent(event: .nothing)
+        }
+    }
+    
+    func checkForCombo(){
+        if self.checkFor(combo: [.punchRight, .punchRight, .punchLeft]) {
+            self.addEvent(event: .combo)
+            self.delegate?.comboBreaker()
+        }
+        
+        if self.checkFor(combo: [.punchLeft, .punchLeft, .punchRight]) {
+            self.addEvent(event: .combo)
+            self.delegate?.comboBreaker()
+        }
+
+    }
+    
+    func checkFor(combo:[Button] )->Bool{
+        
+        let count = Controls.LENGTH_OF_MEMORY - 1
+        for index in stride(from: count, to: count - (combo.count - 1), by: -1) {
+            if buttonHistory[index] != combo[index - (count - (combo.count - 1))] {
+                return false
+            }
+        }
+        
+        return true
     }
     
     required init?(coder aDecoder: NSCoder) {

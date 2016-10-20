@@ -16,8 +16,11 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     var controls:Controls?
     var battleManager:BattleManager?
     var effectsLayer:EffectsLayer?
-//    var battleOn = false
+    let sfxManager = SFXManager()
     var gameMode = GameMode()
+    
+    let punchSound = SKAction.playSoundFileNamed("SFX_buttonclick.mp3",
+                                    waitForCompletion: false)
     
     init(frame: CGRect, backgroundColor : UIColor) {
         self.room = Room(frame:frame)
@@ -117,6 +120,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
             self.battleManager?.playerConnect(power: power)
             self.opponent?.hitRecoil(.right, power:power)
         }
+        self.run(punchSound)
     }
     func punchLeft(power:CGFloat) {
         self.player?.punchLeft(power)
@@ -124,6 +128,22 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
             self.battleManager?.playerConnect(power: power)
              self.opponent?.hitRecoil(.left, power:power)
         }
+        self.run(punchSound)
+    }
+    
+    func comboBreaker(){
+        let willItWork:(Bool, Direction) = (self.opponent?.willComboBreakerConnect())!
+        
+        if willItWork.0 {
+            if willItWork.1 == .right {
+                self.player?.punchRight(10)
+            } else {
+                self.player?.punchLeft(10)
+            }
+            self.battleManager?.playerConnect(power: 10)
+            self.opponent?.hitRecoil(willItWork.1, power:10)
+        }
+        
     }
     
     func blockStart(){
@@ -159,12 +179,12 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.view?.presentScene(scene, transition: reveal)
     }
     func playerLost(){
-        self.playerWon()
-//        self.gameMode.setGame(mode: .locked)
+//        self.playerWon()
+        self.gameMode.setGame(mode: .locked)
         
-//        let reveal = SKTransition.crossFade(withDuration: 1.0)
-//        let scene = MenuScene(frame: frame, backgroundColor: UIColor.black, text:"You lose")
-//        self.view?.presentScene(scene, transition: reveal)
+        let reveal = SKTransition.crossFade(withDuration: 1.0)
+        let scene = MenuScene(frame: frame, backgroundColor: UIColor.black, text:"You lose")
+        self.view?.presentScene(scene, transition: reveal)
     }
     func opponentAttackLeft(){
         self.opponent?.doLeftArmAttack(connected:!(self.player?.checkBlocking())!)
@@ -190,6 +210,8 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         }
         
     }
+    
+    
     
     func turnOffLights(){
         self.effectsLayer?.turnOffLights()

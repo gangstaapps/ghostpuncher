@@ -17,8 +17,8 @@ protocol BattleManagerDelegate: class {
 
 class BattleManager
 {
-    var playerHealth:CGFloat?
-    var opponentHealth:CGFloat?
+    static var playerHealth:CGFloat?
+    static var opponentHealth:CGFloat?
     
     let opponentHealthStart:CGFloat = 100.0
     let playerHealthStart:CGFloat = 100.0
@@ -26,26 +26,27 @@ class BattleManager
     weak var delegate:BattleManagerDelegate?
     
     init(opponentHealth:CGFloat = 100.0, playerHealth:CGFloat = 100.0){
-        self.playerHealth = playerHealth
-        self.opponentHealth = opponentHealth
+        BattleManager.playerHealth = playerHealth
+        BattleManager.opponentHealth = opponentHealth
     }
     
     func playerConnect(power:CGFloat = 5.0){
-        opponentHealth = max(opponentHealth! - power, 0.0)
-        delegate?.opponentHealthUpdated(newAmount: opponentHealth!/opponentHealthStart)
+//        print("playerConnect")
+        BattleManager.opponentHealth = max(BattleManager.opponentHealth! - power, 0.0)
+        delegate?.opponentHealthUpdated(newAmount: BattleManager.opponentHealth!/opponentHealthStart)
         self.checkForWinner()
     }
     
     func opponentConnect(power:CGFloat = 5.0){
-        playerHealth = max(playerHealth! - power, 0.0)
-        delegate?.playerHealthUpdated(newAmount: playerHealth!/playerHealthStart)
+        BattleManager.playerHealth = max(BattleManager.playerHealth! - power, 0.0)
+        delegate?.playerHealthUpdated(newAmount: BattleManager.playerHealth!/playerHealthStart)
         self.checkForWinner()
     }
     
     func checkForWinner(){
-        if opponentHealth! <= 0 {
+        if BattleManager.opponentHealth! <= 0 {
             delegate?.playerWon()
-        } else if playerHealth! <= 0 {
+        } else if BattleManager.playerHealth! <= 0 {
             delegate?.playerLost()
         }
     }
