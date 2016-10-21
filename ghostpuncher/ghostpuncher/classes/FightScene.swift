@@ -182,12 +182,23 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     }
     func playerLost(){
 //        self.playerWon()
-        self.gameMode.setGame(mode: .locked)
         
+        self.controls?.removeFromParent()
+        self.player?.removeFromParent()
+        
+        self.gameMode.setGame(mode: .locked)
+//        self.room.openPortal()
+        self.opponent?.victory()
+        
+    }
+    
+    func youAreDead(){
         let reveal = SKTransition.crossFade(withDuration: 1.0)
         let scene = MenuScene(frame: frame, backgroundColor: UIColor.black, text:"You lose")
-        self.view?.presentScene(scene, transition: reveal)
+        self.view?.presentScene(scene)
+
     }
+    
     func opponentAttackLeft(){
         self.opponent?.doLeftArmAttack(connected:!(self.player?.checkBlocking())!)
         if !(self.player?.checkBlocking())! {

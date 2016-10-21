@@ -43,7 +43,7 @@ class MenuScene: SKScene
         
         fightButton = SKSpriteNode(imageNamed: "fight_reg")
         fightButton?.setScale(0)
-        fightButton?.position = CGPoint(x: frame.size.width * 0.2, y: frame.size.height * 0.2)
+        fightButton?.position = CGPoint(x: frame.size.width * 0.27, y: frame.size.height * 0.15)
         
         fightButton?.run(SKAction.sequence([
             SKAction.wait(forDuration: 0.9),
@@ -53,7 +53,7 @@ class MenuScene: SKScene
         
         let fightButtonRol = SKSpriteNode(imageNamed: "fight_rol")
         fightButtonRol.setScale(0)
-        fightButtonRol.position = CGPoint(x: frame.size.width * 0.2, y: frame.size.height * 0.2)
+        fightButtonRol.position = CGPoint(x: frame.size.width * 0.27, y: frame.size.height * 0.15)
         self.addChild(fightButtonRol)
         fightButtonRol.run(SKAction.sequence([
             SKAction.wait(forDuration: 0.9),

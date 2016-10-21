@@ -14,6 +14,7 @@ protocol OpponentDelegate: class {
     func turnOffLights()
     func turnOnLights()
     func ghostIsGone()
+    func youAreDead()
 }
 
 enum GameEvents:UInt8
@@ -36,6 +37,7 @@ enum GameEvents:UInt8
     case ghostDodgeLeft
     case ghostGoInvisible
     case ghostComboAttack1
+    case ghostBlock
     
 }
 enum Direction:UInt8
@@ -70,6 +72,12 @@ class Opponent:SKNode
     var rightArm:SKNode?
     var head:SKSpriteNode?
     var body:SKNode?
+    var block:SKSpriteNode?
+    
+    var sparkEmmiter:SKEmitterNode?
+    var bodyGlow:SKEmitterNode?
+    
+    var isBlocking = false
     
     var ghostEffectNode:SKEffectNode
     
@@ -144,11 +152,11 @@ class Opponent:SKNode
                 leftArmAtlas.textureNamed("ghost_left2.png"),
                 leftArmAtlas.textureNamed("ghost_left3.png"),
                 leftArmAtlas.textureNamed("ghost_left4.png"),
-                leftArmAtlas.textureNamed("ghost_left2.png"),
+                leftArmAtlas.textureNamed("ghost_left5.png"),
                 leftArmAtlas.textureNamed("ghost_left1.png")]
             
             
-            self.leftArmAttack = SKAction.animate(with: armFrames, timePerFrame: 0.1)
+            self.leftArmAttack = SKAction.animate(with: armFrames, timePerFrame: 0.09)
             self.leftArm =  self.opponent.childNode(withName: "body")?.childNode(withName: "leftarm")
             
             
@@ -158,11 +166,11 @@ class Opponent:SKNode
                 rightArmAtlas.textureNamed("ghost_right2.png"),
                 rightArmAtlas.textureNamed("ghost_right3.png"),
                 rightArmAtlas.textureNamed("ghost_right4.png"),
-                rightArmAtlas.textureNamed("ghost_right2.png"),
+                rightArmAtlas.textureNamed("ghost_right5.png"),
                 rightArmAtlas.textureNamed("ghost_right1.png")]
             
             
-            self.rightArmAttack = SKAction.animate(with: rightarmFrames, timePerFrame: 0.1)
+            self.rightArmAttack = SKAction.animate(with: rightarmFrames, timePerFrame: 0.09)
             self.rightArm =  self.opponent.childNode(withName: "body")?.childNode(withName: "rightarm")
             
             let headAtlas = SKTextureAtlas(named: "ghostHead.atlas")
@@ -194,27 +202,32 @@ class Opponent:SKNode
             self.headFrontPunchAnimation = SKAction.animate(with: headFrontPunchFrames, timePerFrame: 0.4)
             self.headFrontPunchAnimationSlow = SKAction.animate(with: headFrontPunchFrames, timePerFrame: 1.0)
             
-            self.head =  self.opponent.childNode(withName: "body")?.childNode(withName: "head") as! SKSpriteNode?
             self.body =  self.opponent.childNode(withName: "body")
             
+            self.head =  self.body?.childNode(withName: "head") as! SKSpriteNode?
+            self.block = self.body?.childNode(withName: "block") as! SKSpriteNode?
+            self.block?.isHidden = true
             
-            let sparkEmmiter = SKEmitterNode(fileNamed: "Smoke.sks")!
-            sparkEmmiter.position = CGPoint(x: 10, y: 200)
-            sparkEmmiter.name = "sparkEmmitter"
-            sparkEmmiter.particleZPosition = -1
-            sparkEmmiter.targetNode = self.opponent!
-            sparkEmmiter.alpha = 0.5
-            sparkEmmiter.particlePositionRange = CGVector(dx: 40.0, dy: 40.0)
-            self.opponent?.addChild(sparkEmmiter)
             
-            let bodyGlow = SKEmitterNode(fileNamed: "Smoke.sks")!
-            bodyGlow.position = CGPoint(x: 0, y: 10)
-            bodyGlow.name = "sparkEmmitter"
-            bodyGlow.particleZPosition = -1
-            bodyGlow.targetNode = self.opponent!
-            bodyGlow.alpha = 0.5
-            bodyGlow.particlePositionRange = CGVector(dx: 240.0, dy: 290.0)
-            self.opponent?.addChild(bodyGlow)
+            sparkEmmiter = SKEmitterNode(fileNamed: "Smoke.sks")!
+            sparkEmmiter?.position = CGPoint(x: 10, y: 200)
+            sparkEmmiter?.name = "sparkEmmitter"
+            sparkEmmiter?.particleZPosition = -1
+            sparkEmmiter?.targetNode = self.opponent!
+            sparkEmmiter?.alpha = 0.5
+            sparkEmmiter?.particlePositionRange = CGVector(dx: 40.0, dy: 40.0)
+            
+            self.opponent?.addChild(sparkEmmiter!)
+            
+            bodyGlow = SKEmitterNode(fileNamed: "Smoke.sks")!
+            bodyGlow?.position = CGPoint(x: 0, y: 10)
+            bodyGlow?.name = "sparkEmmitter"
+            bodyGlow?.particleZPosition = -1
+            bodyGlow?.targetNode = self.opponent!
+            bodyGlow?.alpha = 0.5
+            bodyGlow?.particlePositionRange = CGVector(dx: 240.0, dy: 290.0)
+            
+            self.opponent?.addChild(bodyGlow!)
         }
     }
     
@@ -242,10 +255,43 @@ class Opponent:SKNode
             ]))
     }
     
+    func victory(){
+        self.opponent?.removeAllActions()
+        self.head?.removeAllActions()
+//        self.sparkEmmiter?.particleColor = SKColor.red
+//        self.sparkEmmiter?.particleColorBlendFactor = 1.0
+//        self.sparkEmmiter?.particleColorSequence = nil
+////        self.sparkEmmiter?.particlePositionRange = CGVector(dx: 60.0, dy: 60.0)
+//        self.bodyGlow?.particleColor = SKColor.red
+//        self.bodyGlow?.particleColorBlendFactor = 1.0
+//        self.bodyGlow?.particleColorSequence = nil
+//        self.bodyGlow?.particlePositionRange = CGVector(dx: 300.0, dy: 350.0)
+        
+        let sequence = SKAction.sequence([
+            SKAction.wait(forDuration: 0.5),
+            SKAction.run({
+                self.head?.texture = SKTextureAtlas(named: "ghostHead.atlas").textureNamed("ghost_head_frontopen_punch.png")
+            }),
+            SKAction.wait(forDuration: 1.0),
+            SKAction.run({
+                self.block?.texture = SKTexture(imageNamed: "grapple")
+                self.isBlocking = true
+                self.block?.isHidden = false
+                self.leftArm?.isHidden = true
+                self.rightArm?.isHidden = true
+            }),
+            SKAction.wait(forDuration: 1.0),
+            SKAction.group([SKAction.sequence([SKAction.wait(forDuration: 0.5),SKAction.run({self.delegate?.youAreDead()})]), SKAction.move(to: CGPoint(x: 0, y: -self.opponentFrame.size.height * 0.8), duration: 0.6) ,SKAction.scale(to: 2.0, duration: 0.6), SKAction.fadeAlpha(to: 0.4, duration: 0.6)])
+            ])
+        
+        self.opponent?.run(sequence)
+        
+    }
+    
     func doLeftArmAttack(connected:Bool){
         self.leftArm?.run(self.leftArmAttack!, withKey: LEFT_ARM_KEY)
         
-        let scaleUp = SKAction.scale(to: 1.5, duration: 0.1)
+        let scaleUp = SKAction.scale(to: 1.5, duration: 0.2)
         let scaleDown = SKAction.scale(to: 1.0, duration: 0.05)
         let sequence = SKAction.sequence([scaleUp, scaleDown])
         self.opponent?.run(sequence)
@@ -262,7 +308,7 @@ class Opponent:SKNode
     func doRightArmAttack(connected:Bool){
         self.rightArm?.run(self.rightArmAttack!, withKey: RIGHT_ARM_KEY)
         
-        let scaleUp = SKAction.scale(to: 1.5, duration: 0.1)
+        let scaleUp = SKAction.scale(to: 1.5, duration: 0.2)
         let scaleDown = SKAction.scale(to: 1.0, duration: 0.05)
         let sequence = SKAction.sequence([scaleUp, scaleDown])
         self.opponent?.run(sequence)
@@ -274,6 +320,36 @@ class Opponent:SKNode
         } else {
             self.addEvent(event: .ghostRightAttackFail)
         }
+    }
+    
+    func blockAttack(){
+        
+        if self.checkFor(events: [.ghostBlock], withinLast: 10) {
+            return
+        }
+        
+        self.isBlocking = true
+        self.block?.isHidden = false
+        self.leftArm?.isHidden = true
+        self.rightArm?.isHidden = true
+        self.addEvent(event: .ghostBlock)
+        
+        let newPos:CGPoint = CGPoint(x: startPosition.x + CGFloat(arc4random_uniform(UInt32(200))) - CGFloat(arc4random_uniform(UInt32(200))), y: startPosition.y + CGFloat(arc4random_uniform(UInt32(20))) - CGFloat(arc4random_uniform(UInt32(20))))
+        
+        let movement:SKAction = SKAction.move(to: newPos, duration: 1.5)
+        self.opponent.run(movement, withKey: MOVEMENT_KEY)
+        
+        self.opponent.run(SKAction.group([
+            SKAction.sequence([
+            SKAction.wait(forDuration: 1.5),
+            SKAction.run({
+                self.block?.isHidden = true
+                self.leftArm?.isHidden = false
+                self.rightArm?.isHidden = false
+                self.isBlocking = false
+            })
+            ]), movement
+        ]), withKey: MOVEMENT_KEY)
     }
     
     func goInvisible() {
@@ -458,34 +534,21 @@ class Opponent:SKNode
             return true
         }
         
-        if self.checkLast(3, eventsEqual: .playerRightPunchConnect){
-            self.addEvent(event: .ghostDodgeLeft)
-            return true
-        }
-        
-        if self.checkLast(3, eventsEqual: .playerRightKickConnect){
-           self.addEvent(event: .ghostDodgeLeft)
-            return true
-        }
-        
-        if self.checkLast(3, eventsEqual: .playerLeftPunchConnect){
-            self.addEvent(event: .ghostDodgeRight)
-            return true
-        }
-        
-        if self.checkLast(3, eventsEqual: .playerLeftKickConnect){
-            self.addEvent(event: .ghostDodgeRight)
-            return true
-        }
-        
-        if self.checkLast(3, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect, .playerLeftKickConnect, .playerRightKickConnect],
-                          excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail, .playerRightKickFail, .playerLeftKickFail]){
+        if self.checkLast(3, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect],
+                          excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail]){
             
-            if self.checkMoreRecent(events: [.playerLeftPunchConnect, .playerRightPunchConnect]) == .playerLeftPunchConnect {
-                self.addEvent(event: .ghostDodgeRight)
+            
+            if Int(arc4random_uniform(UInt32(2))) == 1 {
+                self.blockAttack()
             } else {
-                self.addEvent(event: .ghostDodgeLeft)
+                if self.checkMoreRecent(events: [.playerLeftPunchConnect, .playerRightPunchConnect]) == .playerLeftPunchConnect {
+                    self.addEvent(event: .ghostDodgeRight)
+                } else {
+                    self.addEvent(event: .ghostDodgeLeft)
+                }
             }
+        
+            
             
             return true
         }
@@ -599,6 +662,10 @@ class Opponent:SKNode
         
        currentSceneTime = currentTime
         
+        if self.isBlocking {
+            return
+        }
+        
         if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil {
             return
         }
@@ -620,10 +687,15 @@ class Opponent:SKNode
         
         if self.checkForAttackTime()
         {
-            let amount = max(arc4random_uniform(UInt32(2)), 1)
             
-            for _ in 0...amount {
-                self.randomAttack()
+            if Int(arc4random_uniform(UInt32(2))) == 1 {
+                self.blockAttack()
+            }else {
+                let amount = max(arc4random_uniform(UInt32(2)), 1)
+                
+                for _ in 0...amount {
+                    self.randomAttack()
+                }
             }
             return
         }
@@ -646,10 +718,10 @@ class Opponent:SKNode
         let xPositionAdjust:CGFloat
         if direction == .right {
             node = SKSpriteNode(imageNamed: "ghost_slash_right")
-            xPositionAdjust = (self.body?.frame.size.width)!/2
+            xPositionAdjust = (self.body?.frame.size.width)!/3
         } else {
             node = SKSpriteNode(imageNamed: "ghost_slash_left")
-            xPositionAdjust = -(self.body?.frame.size.width)!/2
+            xPositionAdjust = -(self.body?.frame.size.width)!/3
         }
         node.position = CGPoint(x: self.opponent.position.x + xPositionAdjust, y: 0)
         node.zPosition = 20
@@ -658,7 +730,7 @@ class Opponent:SKNode
     }
     
     func willRightPunchConnect(_ power:CGFloat) ->Bool {
-        let willConnect = self.opponent?.alpha == 1 && self.opponent.position.x > -45 && self.opponent.position.x < 150 && self.opponent.action(forKey: COMBO_ATTACK_KEY) == nil
+        let willConnect = self.opponent?.alpha == 1 && self.opponent.position.x > -45 && self.opponent.position.x < 150 && self.opponent.action(forKey: COMBO_ATTACK_KEY) == nil && !self.isBlocking
         if willConnect {
             self.addEvent(event: .playerRightPunchConnect)
             self.spark(.right, power)
@@ -669,7 +741,7 @@ class Opponent:SKNode
         return willConnect
     }
     func willLeftPunchConnect(_ power:CGFloat) ->Bool {
-        let willConnect = self.opponent?.alpha == 1 && self.opponent.position.x < 25 && self.opponent.position.x > -150 && self.opponent.action(forKey: COMBO_ATTACK_KEY) == nil
+        let willConnect = self.opponent?.alpha == 1 && self.opponent.position.x < 25 && self.opponent.position.x > -150 && self.opponent.action(forKey: COMBO_ATTACK_KEY) == nil && !self.isBlocking
         if willConnect {
             self.spark(.left, power)
             self.addEvent(event: .playerLeftPunchConnect)
@@ -680,7 +752,7 @@ class Opponent:SKNode
         return willConnect
     }
     func willLeftComboConnect() -> Bool {
-        let willConnect = self.opponent.position.x < 25
+        let willConnect = self.opponent.position.x < 25 && !self.isBlocking
         
         if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil && willConnect {
             self.delegate?.turnOnLights()
@@ -701,7 +773,7 @@ class Opponent:SKNode
         return willConnect
     }
     func willRightComboConnect() -> Bool {
-        let willConnect = self.opponent.position.x > -45 
+        let willConnect = self.opponent.position.x > -45 && !self.isBlocking
         
         if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil && willConnect {
             self.delegate?.turnOnLights()
