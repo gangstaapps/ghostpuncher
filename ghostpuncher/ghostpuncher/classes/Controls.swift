@@ -277,7 +277,7 @@ class Controls:SKNode
     func checkForCombo(event:Button) -> Bool{
         self.addEvent(event: event)
         
-        if self.checkFor(combo: [.punchLeft, .punchLeft, .punchRight, .punchLeft]) {
+        if self.checkFor(combo: [.punchLeft, .punchLeft, .punchRight, .punchLeft]) && !self.checkFor(events: [.combo], withinLast: 10)  {
             self.addEvent(event: .combo)
             self.delegate?.comboLeft()
             
@@ -301,7 +301,7 @@ class Controls:SKNode
             return true
         }
         
-        if self.checkFor(combo: [.punchRight, .punchRight, .punchLeft, .punchRight]) {
+        if self.checkFor(combo: [.punchRight, .punchRight, .punchLeft, .punchRight]) && !self.checkFor(events: [.combo], withinLast: 10) {
             self.addEvent(event: .combo)
             self.delegate?.comboRight()
             
@@ -337,6 +337,20 @@ class Controls:SKNode
         }
         
         return true
+    }
+    
+    func checkFor(events:[Button], withinLast amount:Int)->Bool {
+        let count = Opponent.LENGTH_OF_MEMORY - 1
+        let lower = count - amount
+        
+        for index in stride(from: count, to: lower, by: -1) {
+            
+            if events.contains(buttonHistory[index]){
+                return true
+            }
+        }
+        
+        return false
     }
     
     required init?(coder aDecoder: NSCoder) {

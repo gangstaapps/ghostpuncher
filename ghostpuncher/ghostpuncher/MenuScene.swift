@@ -13,6 +13,56 @@ class MenuScene: SKScene
     
     var fightButton:SKSpriteNode?
 
+    init(frame:CGRect) {
+        super.init(size: frame.size)
+        
+        let bkg = SKSpriteNode(imageNamed: "background_menu")
+        bkg.size = frame.size
+        bkg.position = CGPoint(x: frame.midX, y: frame.midY)
+        self.addChild(bkg)
+        
+        let fist = SKSpriteNode(imageNamed: "fist")
+        fist.anchorPoint = CGPoint(x:0.3,y:0.4)
+        fist.position = CGPoint(x:-fist.frame.size.width,y:0)
+        
+        self.addChild(fist)
+        
+        let logo = SKSpriteNode(imageNamed: "logo")
+        logo.size = frame.size
+        logo.position = CGPoint(x: -frame.midX, y: frame.midY)
+        self.addChild(logo)
+        
+        fist.run(SKAction.sequence([
+             SKAction.moveTo(x: 0, duration: 0.2)
+        ]))
+        
+        logo.run(SKAction.sequence([
+            SKAction.wait(forDuration: 0.4),
+            SKAction.moveTo(x: frame.midX, duration: 0.0)
+            ]))
+        
+        fightButton = SKSpriteNode(imageNamed: "fight_reg")
+        fightButton?.setScale(0)
+        fightButton?.position = CGPoint(x: frame.size.width * 0.2, y: frame.size.height * 0.2)
+        
+        fightButton?.run(SKAction.sequence([
+            SKAction.wait(forDuration: 0.9),
+            SKAction.scale(to: 1.2, duration: 0.1),
+            SKAction.scale(to: 1, duration: 0.1)
+            ]))
+        
+        let fightButtonRol = SKSpriteNode(imageNamed: "fight_rol")
+        fightButtonRol.setScale(0)
+        fightButtonRol.position = CGPoint(x: frame.size.width * 0.2, y: frame.size.height * 0.2)
+        self.addChild(fightButtonRol)
+        fightButtonRol.run(SKAction.sequence([
+            SKAction.wait(forDuration: 0.9),
+            SKAction.scale(to: 1.2, duration: 0.1),
+            SKAction.scale(to: 1, duration: 0.1)
+            ]))
+        
+        self.addChild(fightButton!)
+    }
     
     init(frame: CGRect, backgroundColor : UIColor) {
         
@@ -25,7 +75,7 @@ class MenuScene: SKScene
         self.addChild(logo)
         logo.run(SKAction.moveTo(x: frame.size.width/2, duration: 0.5))
         
-        fightButton = SKSpriteNode(imageNamed: "start_reg")
+        fightButton = SKSpriteNode(imageNamed: "fight_reg")
         fightButton?.setScale(0.5)
         fightButton?.position = CGPoint(x: -frame.size.width * 1.5, y: frame.size.height * 0.25)
         self.addChild(fightButton!)
@@ -41,7 +91,7 @@ class MenuScene: SKScene
         
         self.addChild(myLabel)
         
-        fightButton = SKSpriteNode(imageNamed: "start_reg")
+        fightButton = SKSpriteNode(imageNamed: "fight_reg")
         fightButton?.setScale(0.5)
         fightButton?.position = CGPoint(x: frame.midX, y: frame.size.height * 0.25)
         self.addChild(fightButton!)
@@ -70,9 +120,7 @@ class MenuScene: SKScene
     
     func touchDown(atPoint pos : CGPoint, touch:UITouch) {
         if (self.fightButton?.contains(pos))! {
-//            let reveal = SKTransition.push(with: SKTransitionDirection.right, duration: 2.0)
-            let scene = FightScene(frame: frame, backgroundColor: UIColor.black)
-            self.view?.presentScene(scene)
+            self.fightButton!.isHidden = true
         }
     }
     
@@ -81,6 +129,11 @@ class MenuScene: SKScene
     }
     
     func touchUp(atPoint pos : CGPoint, touch:UITouch) {
-        
+        if (self.fightButton?.contains(pos))! {
+            //            let reveal = SKTransition.push(with: SKTransitionDirection.right, duration: 2.0)
+            let scene = FightScene(frame: frame, backgroundColor: UIColor.black)
+            self.view?.presentScene(scene)
+        }
+        self.fightButton!.isHidden = false
     }
 }

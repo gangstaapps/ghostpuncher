@@ -52,7 +52,7 @@ class GameViewController: UIViewController {
 //            }
 //        }
         
-        let menuScene = MenuScene(frame: self.view.frame, backgroundColor: UIColor.black)
+        let menuScene = MenuScene(frame: self.view.frame)
         
         if let view = self.view as! SKView? {
             view.showsFPS = true
