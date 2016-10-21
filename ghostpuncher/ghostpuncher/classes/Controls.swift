@@ -14,7 +14,8 @@ protocol ControlsDelegate:class {
     func blockStart()
     func checkBlockEndLeft()->Bool
     func checkBlockEndRight()->Bool
-    func comboBreaker()
+    func comboRight()
+    func comboLeft()
 }
 
 class Controls:SKNode
@@ -66,7 +67,7 @@ class Controls:SKNode
         }
         lastActivityCheck = currentSceneTime
         
-        self.checkForCombo()
+//        self.checkForCombo()
     }
     
     
@@ -164,10 +165,9 @@ class Controls:SKNode
             
             if self.leftPunch.contains(location) {
                 hitBitMask |= Button.punchLeft.rawValue
-                
                 self.leftPunch.userData = ["touch":touch]
-                self.leftPunch.isHidden = true
-                self.addEvent(event: .punchLeft)
+                
+//                self.addEvent(event: .punchLeft)
             } else if self.leftPunch.isHidden {
                 hitBitMask |= Button.punchLeft.rawValue
             }
@@ -175,8 +175,8 @@ class Controls:SKNode
             if self.rightPunch.contains(location) {
                 hitBitMask |= Button.punchRight.rawValue
                 self.rightPunch.userData = ["touch":touch]
-                self.rightPunch.isHidden = true
-                self.addEvent(event: .punchRight)
+//                self.rightPunch.isHidden = true
+//                self.addEvent(event: .punchRight)
                 
             }  else if self.rightPunch.isHidden {
                 hitBitMask |= Button.punchRight.rawValue
@@ -191,19 +191,22 @@ class Controls:SKNode
             leftButtonGainingPower = false
             rightButtonPowerMeter.path = nil
             leftButtonPowerMeter.path = nil
-            
-            let userInfo = ["sfxType": SFX.BUTTON_CLICK] as [String: Any]
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: SFXManager.PLAY_SFX),
-                                            object: nil,
-                                            userInfo: userInfo)
-        case Button.punchRight.rawValue:
+         case Button.punchRight.rawValue:
+            if self.checkForCombo(event: .punchRight){
+                self.rightPunch.userData = nil
+                return
+            }
+            self.rightPunch.isHidden = true
             rightButtonGainingPower = true
             rightButtonPower = 1
-            
         case Button.punchLeft.rawValue:
+            if self.checkForCombo(event: .punchLeft){
+                self.leftPunch.userData = nil
+                return
+            }
+            self.leftPunch.isHidden = true
             leftButtonGainingPower = true
             leftButtonPower = 1
-            
         default:
             break
         }
@@ -271,17 +274,57 @@ class Controls:SKNode
         }
     }
     
-    func checkForCombo(){
-        if self.checkFor(combo: [.punchRight, .punchRight, .punchLeft]) {
+    func checkForCombo(event:Button) -> Bool{
+        self.addEvent(event: event)
+        
+        if self.checkFor(combo: [.punchLeft, .punchLeft, .punchRight, .punchLeft]) {
             self.addEvent(event: .combo)
-            self.delegate?.comboBreaker()
+            self.delegate?.comboLeft()
+            
+            leftButtonPowerMeter.removeAllActions()
+            
+            leftButtonPowerMeter.strokeColor = SKColor.green
+            leftButtonPowerMeter.lineWidth = 14
+            leftButtonPowerMeter.glowWidth = 15
+            leftButtonPowerMeter.path = self.circlePathWith(angle: CGFloat(360), forButton: self.leftPunch)
+            
+            leftButtonPowerMeter.run(SKAction.sequence([
+                SKAction.wait(forDuration: 0.5),
+                SKAction.run({
+                    self.leftButtonPowerMeter.path = nil
+                    self.leftButtonPowerMeter.strokeColor = SKColor.red
+                    self.leftButtonPowerMeter.lineWidth = 4
+                    self.leftButtonPowerMeter.glowWidth = 5
+                })
+                ]))
+            
+            return true
         }
         
-        if self.checkFor(combo: [.punchLeft, .punchLeft, .punchRight]) {
+        if self.checkFor(combo: [.punchRight, .punchRight, .punchLeft, .punchRight]) {
             self.addEvent(event: .combo)
-            self.delegate?.comboBreaker()
+            self.delegate?.comboRight()
+            
+            rightButtonPowerMeter.removeAllActions()
+            
+            rightButtonPowerMeter.strokeColor = SKColor.green
+            rightButtonPowerMeter.lineWidth = 14
+            rightButtonPowerMeter.glowWidth = 15
+            rightButtonPowerMeter.path = self.circlePathWith(angle: CGFloat(360), forButton: self.rightPunch)
+            
+            rightButtonPowerMeter.run(SKAction.sequence([
+                SKAction.wait(forDuration: 0.5),
+                SKAction.run({
+                    self.rightButtonPowerMeter.path = nil
+                    self.rightButtonPowerMeter.strokeColor = SKColor.red
+                    self.rightButtonPowerMeter.lineWidth = 4
+                    self.rightButtonPowerMeter.glowWidth = 5
+                })
+            ]))
+            
+            return true
         }
-
+        return false
     }
     
     func checkFor(combo:[Button] )->Bool{

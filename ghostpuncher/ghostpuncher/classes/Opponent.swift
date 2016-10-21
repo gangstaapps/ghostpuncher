@@ -334,7 +334,7 @@ class Opponent:SKNode
     }
     
     func hitRecoil(_ direction:Direction, power:CGFloat){
-        print(power)
+        
         let moveAmount = power * 2
         
         if self.opponent.action(forKey: MOVEMENT_KEY) != nil {
@@ -442,7 +442,6 @@ class Opponent:SKNode
             attackDeficit = CGFloat(arc4random_uniform(UInt32(10))) + 10
         }
         
-        print("attackDeficit = \(attackDeficit)")
         
         return !self.checkFor(events: [.ghostLeftAttackFail, .ghostRightAttackFail,.ghostLeftAttackConnect, .ghostRightAttackConnect,
                                        .ghostDodgeLeft, .ghostDodgeRight], withinLast: Int(attackDeficit))
@@ -680,16 +679,46 @@ class Opponent:SKNode
         }
         return willConnect
     }
-    func willComboBreakerConnect() -> (Bool, Direction) {
+    func willLeftComboConnect() -> Bool {
+        let willConnect = self.opponent.position.x < 25
         
-        if self.opponent.action(forKey: COMBO_ATTACK_KEY) == nil {
-            return (false, .right)
+        if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil && willConnect {
+            self.delegate?.turnOnLights()
+            self.opponent?.setScale(1.0)
+            self.opponent?.alpha = 1.0
         }
-        self.opponent.removeAllActions()
-        self.delegate?.turnOnLights()
-        self.opponent?.setScale(1.0)
-        self.opponent?.alpha = 1.0
-//        self.spark(self.opponent.position.x < 0 ? .left : .right, 10)
-        return (true, self.opponent.position.x < 0 ? .left : .right)
+        
+        
+        if willConnect {
+            self.opponent.removeAllActions()
+            self.spark(.left, 10)
+            self.addEvent(event: .playerLeftPunchConnect)
+            
+        } else {
+            self.addEvent(event: .playerLeftPunchFail)
+        }
+
+        return willConnect
+    }
+    func willRightComboConnect() -> Bool {
+        let willConnect = self.opponent.position.x > -45 
+        
+        if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil && willConnect {
+            self.delegate?.turnOnLights()
+            self.opponent?.setScale(1.0)
+            self.opponent?.alpha = 1.0
+        }
+        
+        
+        if willConnect {
+            self.opponent.removeAllActions()
+            self.spark(.right, 10)
+            self.addEvent(event: .playerRightPunchConnect)
+            
+        } else {
+            self.addEvent(event: .playerRightPunchFail)
+        }
+        
+        return willConnect
     }
 }

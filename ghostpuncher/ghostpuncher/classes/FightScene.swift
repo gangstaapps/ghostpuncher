@@ -131,19 +131,23 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.run(punchSound)
     }
     
-    func comboBreaker(){
-        let willItWork:(Bool, Direction) = (self.opponent?.willComboBreakerConnect())!
-        
-        if willItWork.0 {
-            if willItWork.1 == .right {
-                self.player?.punchRight(10)
-            } else {
-                self.player?.punchLeft(10)
-            }
+    func comboRight() {
+        let willItWork = (self.opponent?.willRightComboConnect())!
+        self.player?.punchRight(10)
+        if willItWork {
             self.battleManager?.playerConnect(power: 10)
-            self.opponent?.hitRecoil(willItWork.1, power:10)
+            self.opponent?.hitRecoil(.right, power:10)
         }
         
+    }
+    
+    func comboLeft() {
+        let willItWork = (self.opponent?.willLeftComboConnect())!
+        self.player?.punchLeft(10)
+        if willItWork {
+            self.battleManager?.playerConnect(power: 10)
+            self.opponent?.hitRecoil(.left, power:10)
+        }
     }
     
     func blockStart(){
@@ -168,8 +172,6 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.gameMode.setGame(mode: .locked)
         self.room.openPortal()
         self.opponent?.defeated()
-
-        
     }
     func ghostIsGone(){
         self.room.closePortal()
