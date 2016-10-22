@@ -127,7 +127,21 @@ class Player:SKNode
     }
     
     func update(){
-        if self.checkBlocking() {
+        if blockingLeft && blockingRight {
+            
+            if self.leftFist.action(forKey: MOVEMENT_KEY) == nil {
+                let newPos:CGPoint = CGPoint(x: self.opponentFrame.size.width * 0.4 + CGFloat(arc4random_uniform(UInt32(fistMovementDegree))) - CGFloat(arc4random_uniform(UInt32(fistMovementDegree))), y: -CGFloat(arc4random_uniform(UInt32(fistMovementDegree))))
+                
+                let movement:SKAction = SKAction.move(to: newPos, duration: 4)
+                self.leftFist.run(movement, withKey: MOVEMENT_KEY)
+            }
+            if self.rightFist.action(forKey: MOVEMENT_KEY) == nil {
+                let newPos:CGPoint = CGPoint(x: self.opponentFrame.size.width * 0.6 + CGFloat(arc4random_uniform(UInt32(fistMovementDegree))) - CGFloat(arc4random_uniform(UInt32(fistMovementDegree))), y: -CGFloat(arc4random_uniform(UInt32(fistMovementDegree))))
+                
+                let movement:SKAction = SKAction.move(to: newPos, duration: 4)
+                self.rightFist.run(movement, withKey: MOVEMENT_KEY)
+            }
+            
             return
         }
         if self.leftFist.action(forKey: MOVEMENT_KEY) == nil {
@@ -166,7 +180,10 @@ class Player:SKNode
         if !blockingRight {
             return false
         }
+        self.leftFist.removeAllActions()
+        self.rightFist.removeAllActions()
         blockingRight = false
+//        blockingLeft = false
         self.leftFist.position.y = -self.leftFist.frame.size.height * 0.35
         self.rightFist.position.y = -self.rightFist.frame.size.height * 0.35
         return true
@@ -175,6 +192,9 @@ class Player:SKNode
         if !blockingLeft {
             return false
         }
+        self.leftFist.removeAllActions()
+        self.rightFist.removeAllActions()
+//        blockingRight = false
         blockingLeft = false
         self.leftFist.position.y = -self.leftFist.frame.size.height * 0.35
         self.rightFist.position.y = -self.rightFist.frame.size.height * 0.35

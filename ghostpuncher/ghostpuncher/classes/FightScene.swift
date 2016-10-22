@@ -19,10 +19,17 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     let sfxManager = SFXManager()
     var gameMode = GameMode()
     
-    let punchSound = SKAction.playSoundFileNamed("SFX_buttonclick.mp3",
-                                    waitForCompletion: false)
+    let lightPunchSound = SKAction.playSoundFileNamed("light_punch.wav", waitForCompletion: false)
+    let mediumPunchSound = SKAction.playSoundFileNamed("med_punch.wav", waitForCompletion: false)
+    let heavyPunchSound = SKAction.playSoundFileNamed("hard_punch.wav", waitForCompletion: false)
+    let goInvisibleSound = SKAction.playSoundFileNamed("phaser.wav", waitForCompletion: false)
+    let startSound = SKAction.playSoundFileNamed("start.wav", waitForCompletion: false)
+    let lightsOutSound = SKAction.playSoundFileNamed("soulgrab.wav", waitForCompletion: false)
+    let superAttackSound = SKAction.playSoundFileNamed("laugh_reverse.wav", waitForCompletion: false)
+    let youLoseSound = SKAction.playSoundFileNamed("deathblow.wav", waitForCompletion: false)
+    let youWinSound = SKAction.playSoundFileNamed("ghostshock.wav", waitForCompletion: false)
     
-    init(frame: CGRect, backgroundColor : UIColor) {
+    init(frame: CGRect, backgroundColor : UIColor, opponent:String = "ghost") {
         self.room = Room(frame:frame)
         super.init(size: frame.size)
         self.backgroundColor = backgroundColor
@@ -32,7 +39,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
 //        self.effectsLayer?.zPosition = 3
         self.addChild(self.effectsLayer!)
         
-        self.opponent = Opponent(frame: frame, name: "Ghost")
+        self.opponent = Opponent(frame: frame, name: opponent)
         self.addChild(self.opponent!)
         
         self.opponent?.position = CGPoint(x:frame.size.width/2, y:frame.size.height/2)
@@ -55,7 +62,15 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         
         self.gameMode.setGame(mode: .ready)
         
-       
+        let backgroundMusic = SKAudioNode(fileNamed: "atmos_loop1.wav")
+        backgroundMusic.run(SKAction.changeVolume(to: 0.25, duration: 0))
+        self.addChild(backgroundMusic)
+        
+        let backgroundMusic2 = SKAudioNode(fileNamed: "atmos_loop2.wav")
+        backgroundMusic2.run(SKAction.changeVolume(to: 0.25, duration: 0))
+        self.addChild(backgroundMusic2)
+        
+        self.run(SKAction.sequence([SKAction.wait(forDuration: 1.0), startSound]))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -117,24 +132,39 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     func punchRight(power:CGFloat) {
         self.player?.punchRight(power)
         if (self.opponent?.willRightPunchConnect(power))! {
+            if power < 3 {
+                self.run(lightPunchSound)
+            } else if power < 7 {
+                self.run(mediumPunchSound)
+            } else {
+                self.run(heavyPunchSound)
+            }
             self.battleManager?.playerConnect(power: power)
             self.opponent?.hitRecoil(.right, power:power)
         }
-        self.run(punchSound)
+//        self.run(punchSound)
     }
     func punchLeft(power:CGFloat) {
         self.player?.punchLeft(power)
         if (self.opponent?.willLeftPunchConnect(power))! {
+            if power < 3 {
+                self.run(lightPunchSound)
+            } else if power < 7 {
+                self.run(mediumPunchSound)
+            } else {
+                self.run(heavyPunchSound)
+            }
             self.battleManager?.playerConnect(power: power)
              self.opponent?.hitRecoil(.left, power:power)
         }
-        self.run(punchSound)
+//        self.run(punchSound)
     }
     
     func comboRight() {
         let willItWork = (self.opponent?.willRightComboConnect())!
         self.player?.punchRight(10)
         if willItWork {
+            self.run(heavyPunchSound)
             self.battleManager?.playerConnect(power: 10)
             self.opponent?.hitRecoil(.right, power:10)
         }
@@ -145,6 +175,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         let willItWork = (self.opponent?.willLeftComboConnect())!
         self.player?.punchLeft(10)
         if willItWork {
+            self.run(heavyPunchSound)
             self.battleManager?.playerConnect(power: 10)
             self.opponent?.hitRecoil(.left, power:10)
         }
@@ -172,12 +203,13 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.gameMode.setGame(mode: .locked)
         self.room.openPortal()
         self.opponent?.defeated()
+        self.run(youWinSound)
     }
     func ghostIsGone(){
         self.room.closePortal()
         
         let reveal = SKTransition.crossFade(withDuration: 1.0)
-        let scene = MenuScene(frame: frame, backgroundColor: UIColor.black, text:"You win")
+        let scene = MenuScene(frame: frame, opponents:["ghost", "witch"])
         self.view?.presentScene(scene, transition: reveal)
     }
     func playerLost(){
@@ -185,7 +217,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         
         self.controls?.removeFromParent()
         self.player?.removeFromParent()
-        
+        self.run(youLoseSound)
         self.gameMode.setGame(mode: .locked)
 //        self.room.openPortal()
         self.opponent?.victory()
@@ -194,7 +226,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     
     func youAreDead(){
         let reveal = SKTransition.crossFade(withDuration: 1.0)
-        let scene = MenuScene(frame: frame, backgroundColor: UIColor.black, text:"You lose")
+        let scene = MenuScene(frame: frame, opponents:["ghost", "witch"])
         self.view?.presentScene(scene)
 
     }
@@ -224,9 +256,20 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         
     }
     
+    func goingInvisible(){
+        self.run(goInvisibleSound)
+    }
     
+    func superAttack(){
+        self.run(superAttackSound)
+    }
+    
+    func playerPunchBlocked(){
+        self.run(lightPunchSound)
+    }
     
     func turnOffLights(){
+        self.run(lightsOutSound)
         self.effectsLayer?.turnOffLights()
     }
     func turnOnLights(){

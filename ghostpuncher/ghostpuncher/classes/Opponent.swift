@@ -8,6 +8,14 @@
 
 import SpriteKit
 
+extension SKColor {
+    convenience init(hex: Int, alpha: CGFloat = 1.0) {
+        let red = CGFloat((hex & 0xFF0000) >> 16) / 255.0
+        let green = CGFloat((hex & 0xFF00) >> 8) / 255.0
+        let blue = CGFloat((hex & 0xFF)) / 255.0
+        self.init(red:red, green:green, blue:blue, alpha:alpha)
+}}
+
 protocol OpponentDelegate: class {
     func opponentAttackLeft()
     func opponentAttackRight()
@@ -15,6 +23,9 @@ protocol OpponentDelegate: class {
     func turnOnLights()
     func ghostIsGone()
     func youAreDead()
+    func goingInvisible()
+    func superAttack()
+    func playerPunchBlocked()
 }
 
 enum GameEvents:UInt8
@@ -120,10 +131,10 @@ class Opponent:SKNode
 //        blurFilter?.setDefaults()
 //        blurFilter?.setValue(7, forKey: "inputRadius")
         
-        let deathAtlas = SKTextureAtlas(named: "ghost_portal.atlas")
+        let deathAtlas = SKTextureAtlas(named: "\(self.opponentName)_portal.atlas")
         var deathFrames:[SKTexture] = []
         for i in 1...3 {
-            deathFrames.append(deathAtlas.textureNamed("ghost\(i).png"))
+            deathFrames.append(deathAtlas.textureNamed("\(self.opponentName)\(i).png"))
         }
         
         ghostDeathCycle = SKAction.repeatForever(SKAction.animate(with: deathFrames, timePerFrame: 0.2))
@@ -131,7 +142,7 @@ class Opponent:SKNode
         
         super.init()
         
-        if let ghostScene:SKScene = SKScene(fileNamed: self.opponentName){
+        if let ghostScene:SKScene = SKScene(fileNamed: self.opponentName.capitalized){
             self.opponent = ghostScene.childNode(withName: "opponent")!
             
             self.opponent.removeFromParent();
@@ -146,58 +157,58 @@ class Opponent:SKNode
             
             self.addChild(self.opponent)
             
-            let leftArmAtlas = SKTextureAtlas(named: "ghostLeftArm.atlas")
+            let leftArmAtlas = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas")
             let armFrames:[SKTexture] = [
-                leftArmAtlas.textureNamed("ghost_left1.png"),
-                leftArmAtlas.textureNamed("ghost_left2.png"),
-                leftArmAtlas.textureNamed("ghost_left3.png"),
-                leftArmAtlas.textureNamed("ghost_left4.png"),
-                leftArmAtlas.textureNamed("ghost_left5.png"),
-                leftArmAtlas.textureNamed("ghost_left1.png")]
+                leftArmAtlas.textureNamed("\(self.opponentName)_left1.png"),
+                leftArmAtlas.textureNamed("\(self.opponentName)_left2.png"),
+                leftArmAtlas.textureNamed("\(self.opponentName)_left3.png"),
+                leftArmAtlas.textureNamed("\(self.opponentName)_left4.png"),
+                leftArmAtlas.textureNamed("\(self.opponentName)_left5.png"),
+                leftArmAtlas.textureNamed("\(self.opponentName)_left1.png")]
             
             
             self.leftArmAttack = SKAction.animate(with: armFrames, timePerFrame: 0.09)
             self.leftArm =  self.opponent.childNode(withName: "body")?.childNode(withName: "leftarm")
             
             
-            let rightArmAtlas = SKTextureAtlas(named: "ghostRightArm.atlas")
+            let rightArmAtlas = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas")
             let rightarmFrames:[SKTexture] = [
-                rightArmAtlas.textureNamed("ghost_right1.png"),
-                rightArmAtlas.textureNamed("ghost_right2.png"),
-                rightArmAtlas.textureNamed("ghost_right3.png"),
-                rightArmAtlas.textureNamed("ghost_right4.png"),
-                rightArmAtlas.textureNamed("ghost_right5.png"),
-                rightArmAtlas.textureNamed("ghost_right1.png")]
+                rightArmAtlas.textureNamed("\(self.opponentName)_right1.png"),
+                rightArmAtlas.textureNamed("\(self.opponentName)_right2.png"),
+                rightArmAtlas.textureNamed("\(self.opponentName)_right3.png"),
+                rightArmAtlas.textureNamed("\(self.opponentName)_right4.png"),
+                rightArmAtlas.textureNamed("\(self.opponentName)_right5.png"),
+                rightArmAtlas.textureNamed("\(self.opponentName)_right1.png")]
             
             
             self.rightArmAttack = SKAction.animate(with: rightarmFrames, timePerFrame: 0.09)
             self.rightArm =  self.opponent.childNode(withName: "body")?.childNode(withName: "rightarm")
             
-            let headAtlas = SKTextureAtlas(named: "ghostHead.atlas")
+            let headAtlas = SKTextureAtlas(named: "\(self.opponentName)Head.atlas")
             let headFrames:[SKTexture] = [
-                headAtlas.textureNamed("ghost_head_frontopen_punch.png"),
-                headAtlas.textureNamed("ghost_head_front.png")]
+                headAtlas.textureNamed("\(self.opponentName)_head_frontopen_punch.png"),
+                headAtlas.textureNamed("\(self.opponentName)_head_front.png")]
             
             self.headAnimation = SKAction.animate(with: headFrames, timePerFrame: 0.4)
             
             let headLeftPunchFrames:[SKTexture] = [
-                headAtlas.textureNamed("ghost_head_leftpunch.png"),
-                headAtlas.textureNamed("ghost_head_front.png")]
+                headAtlas.textureNamed("\(self.opponentName)_head_leftpunch.png"),
+                headAtlas.textureNamed("\(self.opponentName)_head_front.png")]
             
             self.headLeftPunchAnimation = SKAction.animate(with: headLeftPunchFrames, timePerFrame: 0.4)
             self.headLeftPunchAnimationSlow = SKAction.animate(with: headLeftPunchFrames, timePerFrame: 1.0)
             
             let headRightPunchFrames:[SKTexture] = [
-                headAtlas.textureNamed("ghost_head_rightpunch.png"),
-                headAtlas.textureNamed("ghost_head_front.png")]
+                headAtlas.textureNamed("\(self.opponentName)_head_rightpunch.png"),
+                headAtlas.textureNamed("\(self.opponentName)_head_front.png")]
             
             self.headRightPunchAnimation = SKAction.animate(with: headRightPunchFrames, timePerFrame: 0.4)
             self.headRightPunchAnimationSlow = SKAction.animate(with: headRightPunchFrames, timePerFrame: 1.0)
             
             
             let headFrontPunchFrames:[SKTexture] = [
-                headAtlas.textureNamed("ghost_head_uppercut.png"),
-                headAtlas.textureNamed("ghost_head_front.png")]
+                headAtlas.textureNamed("\(self.opponentName)_head_uppercut.png"),
+                headAtlas.textureNamed("\(self.opponentName)_head_front.png")]
             
             self.headFrontPunchAnimation = SKAction.animate(with: headFrontPunchFrames, timePerFrame: 0.4)
             self.headFrontPunchAnimationSlow = SKAction.animate(with: headFrontPunchFrames, timePerFrame: 1.0)
@@ -215,6 +226,9 @@ class Opponent:SKNode
             sparkEmmiter?.particleZPosition = -1
             sparkEmmiter?.targetNode = self.opponent!
             sparkEmmiter?.alpha = 0.5
+            sparkEmmiter?.particleColor = self.returnGlowColor(self.opponentName)
+            sparkEmmiter?.particleColorBlendFactor = 1.0
+            sparkEmmiter?.particleColorSequence = nil
             sparkEmmiter?.particlePositionRange = CGVector(dx: 40.0, dy: 40.0)
             
             self.opponent?.addChild(sparkEmmiter!)
@@ -225,10 +239,23 @@ class Opponent:SKNode
             bodyGlow?.particleZPosition = -1
             bodyGlow?.targetNode = self.opponent!
             bodyGlow?.alpha = 0.5
+            bodyGlow?.particleColor = self.returnGlowColor(self.opponentName)
+            bodyGlow?.particleColorBlendFactor = 1.0
+            bodyGlow?.particleColorSequence = nil
             bodyGlow?.particlePositionRange = CGVector(dx: 240.0, dy: 290.0)
             
             self.opponent?.addChild(bodyGlow!)
         }
+    }
+    
+    func returnGlowColor(_ name:String)->SKColor {
+        switch name {
+        case "ghost":
+            return SKColor.init(hex: 0xCCFF66)
+        default:
+            return SKColor.blue
+        }
+        
     }
     
     func returnFullPowerHit()->CGFloat
@@ -270,11 +297,11 @@ class Opponent:SKNode
         let sequence = SKAction.sequence([
             SKAction.wait(forDuration: 0.5),
             SKAction.run({
-                self.head?.texture = SKTextureAtlas(named: "ghostHead.atlas").textureNamed("ghost_head_frontopen_punch.png")
+                self.head?.texture = SKTextureAtlas(named: "\(self.opponentName)Head.atlas").textureNamed("\(self.opponentName)_head_frontopen_punch.png")
             }),
             SKAction.wait(forDuration: 1.0),
             SKAction.run({
-                self.block?.texture = SKTexture(imageNamed: "grapple")
+                self.block?.texture = SKTexture(imageNamed: "\(self.opponentName)_grapple")
                 self.isBlocking = true
                 self.block?.isHidden = false
                 self.leftArm?.isHidden = true
@@ -367,6 +394,8 @@ class Opponent:SKNode
         self.opponent?.run(SKAction.group([sequence, sequence2]))
         
         self.addEvent(event: .ghostGoInvisible)
+        
+        self.delegate?.goingInvisible()
     }
     
     func comboAttack1(){
@@ -390,7 +419,8 @@ class Opponent:SKNode
         let scaleUp = SKAction.scale(to: 2.0, duration: 0.2)
         let fadeUp = SKAction.fadeAlpha(to: 0.9, duration: 0.3)
         let moveIn = SKAction.moveBy(x: startPosition.x, y: startPosition.y - 100, duration: 0.2)
-        let group1 = SKAction.group([SKAction.run({ self.head?.texture = SKTextureAtlas(named: "ghostHead.atlas").textureNamed("ghost_head_uppercut.png") }),scaleUp, fadeUp,moveIn])
+        let group1 = SKAction.group([SKAction.run({ self.head?.texture = SKTextureAtlas(named: "\(self.opponentName)Head.atlas").textureNamed("\(self.opponentName)_head_uppercut.png") }),scaleUp, fadeUp,moveIn,
+                                     SKAction.run({ self.delegate?.superAttack() })])
         
         let attackLeft = SKAction.sequence([SKAction.run({ self.delegate?.opponentAttackLeft() }), SKAction.wait(forDuration: 0.3)])
         let attackRight = SKAction.sequence([SKAction.run({ self.delegate?.opponentAttackRight() }), SKAction.wait(forDuration: 0.3)])
@@ -407,6 +437,10 @@ class Opponent:SKNode
         self.opponent.run(attack, withKey:COMBO_ATTACK_KEY)
         
 //        self.run(flashingLights)
+        
+        
+        
+        
     }
     
     func hitRecoil(_ direction:Direction, power:CGFloat){
@@ -656,7 +690,7 @@ class Opponent:SKNode
         } else {
             delegate?.opponentAttackRight()
         }
-        
+        self.isBlocking = false
     }
     func update(_ currentTime: TimeInterval){
         
@@ -731,6 +765,11 @@ class Opponent:SKNode
     
     func willRightPunchConnect(_ power:CGFloat) ->Bool {
         let willConnect = self.opponent?.alpha == 1 && self.opponent.position.x > -45 && self.opponent.position.x < 150 && self.opponent.action(forKey: COMBO_ATTACK_KEY) == nil && !self.isBlocking
+        
+        if self.isBlocking {
+            self.delegate?.playerPunchBlocked()
+        }
+        
         if willConnect {
             self.addEvent(event: .playerRightPunchConnect)
             self.spark(.right, power)
@@ -742,6 +781,11 @@ class Opponent:SKNode
     }
     func willLeftPunchConnect(_ power:CGFloat) ->Bool {
         let willConnect = self.opponent?.alpha == 1 && self.opponent.position.x < 25 && self.opponent.position.x > -150 && self.opponent.action(forKey: COMBO_ATTACK_KEY) == nil && !self.isBlocking
+        
+        if self.isBlocking {
+            self.delegate?.playerPunchBlocked()
+        }
+        
         if willConnect {
             self.spark(.left, power)
             self.addEvent(event: .playerLeftPunchConnect)

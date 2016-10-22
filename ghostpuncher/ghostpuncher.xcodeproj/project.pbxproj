@@ -16,9 +16,6 @@
 		A216F0E81DB70894003DD5BB /* GameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A216F0E71DB70894003DD5BB /* GameMode.swift */; };
 		A216F0EE1DB71D64003DD5BB /* ghost_portal.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A216F0ED1DB71D64003DD5BB /* ghost_portal.atlas */; };
 		A216F0F01DB739A6003DD5BB /* SFXManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A216F0EF1DB739A6003DD5BB /* SFXManager.swift */; };
-		A216F0F31DB73D21003DD5BB /* SFX_buttonclick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A216F0F21DB73D21003DD5BB /* SFX_buttonclick.mp3 */; };
-		A216F0F51DB74B0C003DD5BB /* SFX_tilesenter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A216F0F41DB74B0C003DD5BB /* SFX_tilesenter.mp3 */; };
-		A216F0F71DB75122003DD5BB /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = A216F0F61DB75122003DD5BB /* click.wav */; };
 		A227C79E1DA758A900EFFD7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C79D1DA758A900EFFD7B /* AppDelegate.swift */; };
 		A227C7A61DA758A900EFFD7B /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C7A51DA758A900EFFD7B /* GameViewController.swift */; };
 		A227C7A91DA758A900EFFD7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A227C7A71DA758A900EFFD7B /* Main.storyboard */; };
@@ -34,6 +31,7 @@
 		A271178A1DB3E55200B36F06 /* Ghost_blur.sks in Resources */ = {isa = PBXBuildFile; fileRef = A27117891DB3E55200B36F06 /* Ghost_blur.sks */; };
 		A271178D1DB405FF00B36F06 /* Smoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = A271178B1DB405FF00B36F06 /* Smoke.sks */; };
 		A271178E1DB405FF00B36F06 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = A271178C1DB405FF00B36F06 /* spark.png */; };
+		A28A10991DBAC21800029818 /* splashloop.wav in Resources */ = {isa = PBXBuildFile; fileRef = A28A10961DBAC21800029818 /* splashloop.wav */; };
 		A2B49AEB1DA88C1900F86F40 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEA1DA88C1900F86F40 /* Room.swift */; };
 		A2B49AED1DA88CB600F86F40 /* Opponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEC1DA88CB600F86F40 /* Opponent.swift */; };
 		A2B49AEF1DA88CE400F86F40 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEE1DA88CE400F86F40 /* Player.swift */; };
@@ -42,6 +40,24 @@
 		A2B49AF61DA89C1F00F86F40 /* Ghost.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AF51DA89C1F00F86F40 /* Ghost.xcassets */; };
 		A2B49B001DAAB63000F86F40 /* Buttons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AFF1DAAB63000F86F40 /* Buttons.xcassets */; };
 		A2B49B021DAAB6E100F86F40 /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49B011DAAB6E100F86F40 /* Controls.swift */; };
+		A2D7B9A41DBB0F6800DC2DD9 /* atmos_loop1.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9971DBB0F6800DC2DD9 /* atmos_loop1.wav */; };
+		A2D7B9A51DBB0F6800DC2DD9 /* atmos_loop2.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9981DBB0F6800DC2DD9 /* atmos_loop2.wav */; };
+		A2D7B9A61DBB0F6800DC2DD9 /* deathblow.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9991DBB0F6800DC2DD9 /* deathblow.wav */; };
+		A2D7B9A71DBB0F6800DC2DD9 /* ghostshock.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B99A1DBB0F6800DC2DD9 /* ghostshock.wav */; };
+		A2D7B9A81DBB0F6800DC2DD9 /* hard_punch.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B99B1DBB0F6800DC2DD9 /* hard_punch.wav */; };
+		A2D7B9A91DBB0F6800DC2DD9 /* laugh_reverse.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B99C1DBB0F6800DC2DD9 /* laugh_reverse.wav */; };
+		A2D7B9AA1DBB0F6800DC2DD9 /* light_punch.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B99D1DBB0F6800DC2DD9 /* light_punch.wav */; };
+		A2D7B9AB1DBB0F6800DC2DD9 /* med_punch.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B99E1DBB0F6800DC2DD9 /* med_punch.wav */; };
+		A2D7B9AC1DBB0F6800DC2DD9 /* phaser.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B99F1DBB0F6800DC2DD9 /* phaser.wav */; };
+		A2D7B9AD1DBB0F6800DC2DD9 /* select.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9A01DBB0F6800DC2DD9 /* select.wav */; };
+		A2D7B9AE1DBB0F6800DC2DD9 /* soulgrab.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9A11DBB0F6800DC2DD9 /* soulgrab.wav */; };
+		A2D7B9AF1DBB0F6800DC2DD9 /* start.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9A21DBB0F6800DC2DD9 /* start.wav */; };
+		A2D7B9B01DBB0F6800DC2DD9 /* witchtalk.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9A31DBB0F6800DC2DD9 /* witchtalk.wav */; };
+		A2D7B9B21DBBBF0500DC2DD9 /* Witch.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9B11DBBBF0500DC2DD9 /* Witch.xcassets */; };
+		A2D7B9B71DBBBFA000DC2DD9 /* witchLeftArm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9B41DBBBFA000DC2DD9 /* witchLeftArm.atlas */; };
+		A2D7B9B81DBBBFA000DC2DD9 /* witchRightArm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9B51DBBBFA000DC2DD9 /* witchRightArm.atlas */; };
+		A2D7B9BA1DBBBFC300DC2DD9 /* Witch.sks in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9B91DBBBFC300DC2DD9 /* Witch.sks */; };
+		A2D7B9BC1DBBC25F00DC2DD9 /* witchHead.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9BB1DBBC25F00DC2DD9 /* witchHead.atlas */; };
 		A2EB9F201DAB35AF0046CB93 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2EB9F1E1DAB351F0046CB93 /* HockeySDK.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,9 +88,6 @@
 		A216F0E71DB70894003DD5BB /* GameMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameMode.swift; sourceTree = "<group>"; };
 		A216F0ED1DB71D64003DD5BB /* ghost_portal.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ghost_portal.atlas; sourceTree = "<group>"; };
 		A216F0EF1DB739A6003DD5BB /* SFXManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SFXManager.swift; path = classes/SFXManager.swift; sourceTree = "<group>"; };
-		A216F0F21DB73D21003DD5BB /* SFX_buttonclick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = SFX_buttonclick.mp3; sourceTree = "<group>"; };
-		A216F0F41DB74B0C003DD5BB /* SFX_tilesenter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = SFX_tilesenter.mp3; sourceTree = "<group>"; };
-		A216F0F61DB75122003DD5BB /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.wav; sourceTree = "<group>"; };
 		A227C79A1DA758A900EFFD7B /* ghostpuncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ghostpuncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A227C79D1DA758A900EFFD7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A227C7A51DA758A900EFFD7B /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -96,6 +109,7 @@
 		A27117891DB3E55200B36F06 /* Ghost_blur.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Ghost_blur.sks; path = opponents/Ghost_blur.sks; sourceTree = "<group>"; };
 		A271178B1DB405FF00B36F06 /* Smoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Smoke.sks; path = opponents/Smoke.sks; sourceTree = "<group>"; };
 		A271178C1DB405FF00B36F06 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = opponents/spark.png; sourceTree = "<group>"; };
+		A28A10961DBAC21800029818 /* splashloop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = splashloop.wav; sourceTree = "<group>"; };
 		A2B49AEA1DA88C1900F86F40 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Room.swift; path = classes/Room.swift; sourceTree = "<group>"; };
 		A2B49AEC1DA88CB600F86F40 /* Opponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Opponent.swift; path = classes/Opponent.swift; sourceTree = "<group>"; };
 		A2B49AEE1DA88CE400F86F40 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Player.swift; path = classes/Player.swift; sourceTree = "<group>"; };
@@ -104,6 +118,24 @@
 		A2B49AF51DA89C1F00F86F40 /* Ghost.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Ghost.xcassets; path = opponents/Ghost.xcassets; sourceTree = "<group>"; };
 		A2B49AFF1DAAB63000F86F40 /* Buttons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Buttons.xcassets; sourceTree = "<group>"; };
 		A2B49B011DAAB6E100F86F40 /* Controls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Controls.swift; path = classes/Controls.swift; sourceTree = "<group>"; };
+		A2D7B9971DBB0F6800DC2DD9 /* atmos_loop1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = atmos_loop1.wav; sourceTree = "<group>"; };
+		A2D7B9981DBB0F6800DC2DD9 /* atmos_loop2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = atmos_loop2.wav; sourceTree = "<group>"; };
+		A2D7B9991DBB0F6800DC2DD9 /* deathblow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = deathblow.wav; sourceTree = "<group>"; };
+		A2D7B99A1DBB0F6800DC2DD9 /* ghostshock.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ghostshock.wav; sourceTree = "<group>"; };
+		A2D7B99B1DBB0F6800DC2DD9 /* hard_punch.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hard_punch.wav; sourceTree = "<group>"; };
+		A2D7B99C1DBB0F6800DC2DD9 /* laugh_reverse.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laugh_reverse.wav; sourceTree = "<group>"; };
+		A2D7B99D1DBB0F6800DC2DD9 /* light_punch.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = light_punch.wav; sourceTree = "<group>"; };
+		A2D7B99E1DBB0F6800DC2DD9 /* med_punch.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = med_punch.wav; sourceTree = "<group>"; };
+		A2D7B99F1DBB0F6800DC2DD9 /* phaser.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = phaser.wav; sourceTree = "<group>"; };
+		A2D7B9A01DBB0F6800DC2DD9 /* select.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = select.wav; sourceTree = "<group>"; };
+		A2D7B9A11DBB0F6800DC2DD9 /* soulgrab.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = soulgrab.wav; sourceTree = "<group>"; };
+		A2D7B9A21DBB0F6800DC2DD9 /* start.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = start.wav; sourceTree = "<group>"; };
+		A2D7B9A31DBB0F6800DC2DD9 /* witchtalk.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = witchtalk.wav; sourceTree = "<group>"; };
+		A2D7B9B11DBBBF0500DC2DD9 /* Witch.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Witch.xcassets; sourceTree = "<group>"; };
+		A2D7B9B41DBBBFA000DC2DD9 /* witchLeftArm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = witchLeftArm.atlas; sourceTree = "<group>"; };
+		A2D7B9B51DBBBFA000DC2DD9 /* witchRightArm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = witchRightArm.atlas; sourceTree = "<group>"; };
+		A2D7B9B91DBBBFC300DC2DD9 /* Witch.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Witch.sks; sourceTree = "<group>"; };
+		A2D7B9BB1DBBC25F00DC2DD9 /* witchHead.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = witchHead.atlas; sourceTree = "<group>"; };
 		A2EB9F1E1DAB351F0046CB93 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		A2EB9F1F1DAB351F0046CB93 /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -137,7 +169,8 @@
 		A216F0E21DB6DD6C003DD5BB /* Effects */ = {
 			isa = PBXGroup;
 			children = (
-				A216F0F11DB73D13003DD5BB /* sfx */,
+				A2D7B9961DBB0F6800DC2DD9 /* sound_fx */,
+				A28A10931DBAC21800029818 /* gp_audio 2 */,
 				A216F0E51DB6EE18003DD5BB /* portal.atlas */,
 				A216F0E01DB5D780003DD5BB /* ectoParticle.png */,
 				A20600F71DB1A45800035330 /* ectoPlasm.sks */,
@@ -145,16 +178,6 @@
 				A271178C1DB405FF00B36F06 /* spark.png */,
 			);
 			name = Effects;
-			sourceTree = "<group>";
-		};
-		A216F0F11DB73D13003DD5BB /* sfx */ = {
-			isa = PBXGroup;
-			children = (
-				A216F0F41DB74B0C003DD5BB /* SFX_tilesenter.mp3 */,
-				A216F0F21DB73D21003DD5BB /* SFX_buttonclick.mp3 */,
-				A216F0F61DB75122003DD5BB /* click.wav */,
-			);
-			name = sfx;
 			sourceTree = "<group>";
 		};
 		A227C7911DA758A900EFFD7B = {
@@ -213,6 +236,14 @@
 			path = ghostpuncherUITests;
 			sourceTree = "<group>";
 		};
+		A28A10931DBAC21800029818 /* gp_audio 2 */ = {
+			isa = PBXGroup;
+			children = (
+				A28A10961DBAC21800029818 /* splashloop.wav */,
+			);
+			path = "gp_audio 2";
+			sourceTree = "<group>";
+		};
 		A2B49AE91DA88ACC00F86F40 /* classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,6 +264,9 @@
 		A2B49AF21DA89B9800F86F40 /* opponents */ = {
 			isa = PBXGroup;
 			children = (
+				A2D7B9BB1DBBC25F00DC2DD9 /* witchHead.atlas */,
+				A2D7B9B41DBBBFA000DC2DD9 /* witchLeftArm.atlas */,
+				A2D7B9B51DBBBFA000DC2DD9 /* witchRightArm.atlas */,
 				A216F0ED1DB71D64003DD5BB /* ghost_portal.atlas */,
 				A2B49AF31DA89BC900F86F40 /* Ghost.sks */,
 				A27117891DB3E55200B36F06 /* Ghost_blur.sks */,
@@ -241,6 +275,8 @@
 				A27117851DB31D5A00B36F06 /* ghostRightArm.atlas */,
 				A20600FD1DB1A99700035330 /* ecto.png */,
 				A2B49AF51DA89C1F00F86F40 /* Ghost.xcassets */,
+				A2D7B9B11DBBBF0500DC2DD9 /* Witch.xcassets */,
+				A2D7B9B91DBBBFC300DC2DD9 /* Witch.sks */,
 			);
 			name = opponents;
 			sourceTree = "<group>";
@@ -260,6 +296,26 @@
 				A2B49AFF1DAAB63000F86F40 /* Buttons.xcassets */,
 			);
 			name = UI;
+			sourceTree = "<group>";
+		};
+		A2D7B9961DBB0F6800DC2DD9 /* sound_fx */ = {
+			isa = PBXGroup;
+			children = (
+				A2D7B9971DBB0F6800DC2DD9 /* atmos_loop1.wav */,
+				A2D7B9981DBB0F6800DC2DD9 /* atmos_loop2.wav */,
+				A2D7B9991DBB0F6800DC2DD9 /* deathblow.wav */,
+				A2D7B99A1DBB0F6800DC2DD9 /* ghostshock.wav */,
+				A2D7B99B1DBB0F6800DC2DD9 /* hard_punch.wav */,
+				A2D7B99C1DBB0F6800DC2DD9 /* laugh_reverse.wav */,
+				A2D7B99D1DBB0F6800DC2DD9 /* light_punch.wav */,
+				A2D7B99E1DBB0F6800DC2DD9 /* med_punch.wav */,
+				A2D7B99F1DBB0F6800DC2DD9 /* phaser.wav */,
+				A2D7B9A01DBB0F6800DC2DD9 /* select.wav */,
+				A2D7B9A11DBB0F6800DC2DD9 /* soulgrab.wav */,
+				A2D7B9A21DBB0F6800DC2DD9 /* start.wav */,
+				A2D7B9A31DBB0F6800DC2DD9 /* witchtalk.wav */,
+			);
+			path = sound_fx;
 			sourceTree = "<group>";
 		};
 		A2EB9F1C1DAB351F0046CB93 /* Frameworks */ = {
@@ -394,22 +450,38 @@
 				A227C7A91DA758A900EFFD7B /* Main.storyboard in Resources */,
 				A216F0E61DB6EE18003DD5BB /* portal.atlas in Resources */,
 				A271178A1DB3E55200B36F06 /* Ghost_blur.sks in Resources */,
+				A2D7B9A61DBB0F6800DC2DD9 /* deathblow.wav in Resources */,
+				A2D7B9AD1DBB0F6800DC2DD9 /* select.wav in Resources */,
 				A216F0E11DB5D780003DD5BB /* ectoParticle.png in Resources */,
 				A27117881DB31D5A00B36F06 /* ghostRightArm.atlas in Resources */,
+				A2D7B9AE1DBB0F6800DC2DD9 /* soulgrab.wav in Resources */,
 				A20600FE1DB1A99700035330 /* ecto.png in Resources */,
+				A2D7B9A41DBB0F6800DC2DD9 /* atmos_loop1.wav in Resources */,
 				A20600F91DB1A45900035330 /* ectoPlasm.sks in Resources */,
-				A216F0F51DB74B0C003DD5BB /* SFX_tilesenter.mp3 in Resources */,
+				A2D7B9BA1DBBBFC300DC2DD9 /* Witch.sks in Resources */,
+				A2D7B9A81DBB0F6800DC2DD9 /* hard_punch.wav in Resources */,
+				A2D7B9AC1DBB0F6800DC2DD9 /* phaser.wav in Resources */,
+				A2D7B9B71DBBBFA000DC2DD9 /* witchLeftArm.atlas in Resources */,
+				A2D7B9B81DBBBFA000DC2DD9 /* witchRightArm.atlas in Resources */,
+				A2D7B9B01DBB0F6800DC2DD9 /* witchtalk.wav in Resources */,
 				A2B49B001DAAB63000F86F40 /* Buttons.xcassets in Resources */,
 				A216F0DD1DB5815A003DD5BB /* fists.atlas in Resources */,
-				A216F0F31DB73D21003DD5BB /* SFX_buttonclick.mp3 in Resources */,
 				A271178D1DB405FF00B36F06 /* Smoke.sks in Resources */,
+				A2D7B9AB1DBB0F6800DC2DD9 /* med_punch.wav in Resources */,
 				A27117861DB31D5A00B36F06 /* ghostHead.atlas in Resources */,
+				A28A10991DBAC21800029818 /* splashloop.wav in Resources */,
 				A2B49AF61DA89C1F00F86F40 /* Ghost.xcassets in Resources */,
+				A2D7B9AF1DBB0F6800DC2DD9 /* start.wav in Resources */,
 				A2B49AF41DA89BC900F86F40 /* Ghost.sks in Resources */,
-				A216F0F71DB75122003DD5BB /* click.wav in Resources */,
+				A2D7B9A91DBB0F6800DC2DD9 /* laugh_reverse.wav in Resources */,
+				A2D7B9AA1DBB0F6800DC2DD9 /* light_punch.wav in Resources */,
+				A2D7B9A51DBB0F6800DC2DD9 /* atmos_loop2.wav in Resources */,
 				A27117871DB31D5A00B36F06 /* ghostLeftArm.atlas in Resources */,
+				A2D7B9A71DBB0F6800DC2DD9 /* ghostshock.wav in Resources */,
 				A271178E1DB405FF00B36F06 /* spark.png in Resources */,
 				A227C7AB1DA758AA00EFFD7B /* Assets.xcassets in Resources */,
+				A2D7B9BC1DBBC25F00DC2DD9 /* witchHead.atlas in Resources */,
+				A2D7B9B21DBBBF0500DC2DD9 /* Witch.xcassets in Resources */,
 				A227C7AE1DA758AA00EFFD7B /* LaunchScreen.storyboard in Resources */,
 				A216F0EE1DB71D64003DD5BB /* ghost_portal.atlas in Resources */,
 			);
