@@ -30,7 +30,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     let youWinSound = SKAction.playSoundFileNamed("ghostshock.wav", waitForCompletion: false)
     
     init(frame: CGRect, backgroundColor : UIColor, opponent:String = "ghost") {
-        self.room = Room(frame:frame)
+        self.room = Room(frame:frame, name:opponent)
         super.init(size: frame.size)
         self.backgroundColor = backgroundColor
         self.addChild(self.room)
@@ -39,7 +39,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
 //        self.effectsLayer?.zPosition = 3
         self.addChild(self.effectsLayer!)
         
-        self.opponent = Opponent(frame: frame, name: opponent)
+        self.opponent = Opponent.makeOpponent(frame: frame, named: opponent)
         self.addChild(self.opponent!)
         
         self.opponent?.position = CGPoint(x:frame.size.width/2, y:frame.size.height/2)
@@ -254,6 +254,12 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
             self.battleManager?.opponentConnect(power:self.opponent!.returnBlockedHit())
         }
         
+    }
+    
+    func explosion() {
+        self.battleManager?.opponentConnect(power:self.opponent!.returnFullPowerHit())
+        self.room.lunge()
+        self.effectsLayer?.showExplosion()
     }
     
     func goingInvisible(){

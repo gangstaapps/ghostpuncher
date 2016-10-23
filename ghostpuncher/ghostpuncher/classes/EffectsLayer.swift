@@ -12,6 +12,7 @@ class EffectsLayer: SKNode
 {
     let roomFrame:CGRect
     let transparentNode:SKShapeNode
+    let explosionNode:SKShapeNode
     let roomLightNode:SKShapeNode
     
     
@@ -29,18 +30,29 @@ class EffectsLayer: SKNode
         self.roomLightNode.alpha = 0.2
         self.roomLightNode.zPosition = 3
         
+        self.explosionNode = SKShapeNode(rect: frame)
+        self.explosionNode.lineWidth = 0
+        self.explosionNode.fillColor = UIColor.orange
+        self.explosionNode.alpha = 0
+        self.explosionNode.zPosition = 20
+        
         super.init()
         
         self.addChild(self.roomLightNode)
-
+        self.addChild(self.explosionNode)
         self.addChild(self.transparentNode)
         
     }
     
     func showDamage(direction:Direction){
-        self.transparentNode.run(SKAction.sequence([SKAction.fadeAlpha(to: 0.3, duration: 0.2),
+        self.transparentNode.run(SKAction.sequence([SKAction.fadeAlpha(to: 0.5, duration: 0.2),
                                                     SKAction.fadeAlpha(to: 0.0, duration: 0.1)]))
         
+    }
+    
+    func showExplosion(){
+        self.explosionNode.run(SKAction.sequence([SKAction.fadeAlpha(to: 0.6, duration: 0.2),
+                                                    SKAction.fadeAlpha(to: 0.0, duration: 0.1)]))
     }
     
     func turnOffLights(){

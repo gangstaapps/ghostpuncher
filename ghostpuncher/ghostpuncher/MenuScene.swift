@@ -137,9 +137,40 @@ class MenuScene: SKScene
     }
     
     func touchDown(atPoint pos : CGPoint, touch:UITouch) {
-//        if (self.fightButton?.contains(pos))! {
-//            self.fightButton!.isHidden = true
-//        }
+        self.fightButton?.isHidden = false
+        if self.checkFightPressed(atPoint: pos) {
+            self.run(selectSound)
+            //            let reveal = SKTransition.push(with: SKTransitionDirection.right, duration: 2.0)
+            self.fightButtonRol?.isHidden = true
+            logo?.run(SKAction.moveBy(x: -self.frame.size.width/2, y: 0, duration: 0.2))
+            fightButton?.run(SKAction.sequence([SKAction.moveBy(x: -self.frame.size.width/2, y: 0, duration: 0.2),
+                                                SKAction.run({
+                                                    let scene = MenuScene(frame: self.frame, opponents:["ghost", "witch"])
+                                                    self.view?.presentScene(scene)
+                                                })]))
+            return
+        }
+        
+        self.opponents?.forEach({button in
+            if button.contains(pos){
+                button.texture = SKTexture(imageNamed: "\(button.userData?["name"] as! String)_head_frontopen_punch")
+                
+                button.run(SKAction.sequence([SKAction.moveTo(x: self.frame.midX, duration: 0.5), SKAction.run({ 
+                        let scene = FightScene(frame: self.frame, backgroundColor: UIColor.black, opponent: button.userData?["name"] as! String)
+                    
+                        self.view?.presentScene(scene)
+                })]) )
+                
+                 self.opponents?.forEach({innerbutton in
+                    if button != innerbutton {
+                        innerbutton.run(SKAction.moveTo(y: -self.frame.midY, duration: 0.5))
+                    }
+                 })
+                
+//                let scene = FightScene(frame: self.frame, backgroundColor: UIColor.black, opponent: button.userData?["name"] as! String)
+//                self.view?.presentScene(scene)
+            }
+        })
     }
     
     func touchMoved(toPoint pos : CGPoint) {
@@ -154,26 +185,7 @@ class MenuScene: SKScene
     }
     
     func touchUp(atPoint pos : CGPoint, touch:UITouch) {
-        self.fightButton?.isHidden = false
-        if self.checkFightPressed(atPoint: pos) {
-            self.run(selectSound)
-            //            let reveal = SKTransition.push(with: SKTransitionDirection.right, duration: 2.0)
-            self.fightButtonRol?.isHidden = true
-            logo?.run(SKAction.moveBy(x: -self.frame.size.width/2, y: 0, duration: 0.2))
-            fightButton?.run(SKAction.sequence([SKAction.moveBy(x: -self.frame.size.width/2, y: 0, duration: 0.2),
-                             SKAction.run({
-                                let scene = MenuScene(frame: self.frame, opponents:["ghost", "witch"])
-                                self.view?.presentScene(scene)
-                             })]))
-            return
-        }
         
-        self.opponents?.forEach({button in
-            if button.contains(pos){
-                let scene = FightScene(frame: self.frame, backgroundColor: UIColor.black, opponent: button.userData?["name"] as! String)
-                self.view?.presentScene(scene)
-            }
-        })
         
         
     }

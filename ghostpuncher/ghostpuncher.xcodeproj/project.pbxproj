@@ -58,6 +58,9 @@
 		A2D7B9B81DBBBFA000DC2DD9 /* witchRightArm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9B51DBBBFA000DC2DD9 /* witchRightArm.atlas */; };
 		A2D7B9BA1DBBBFC300DC2DD9 /* Witch.sks in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9B91DBBBFC300DC2DD9 /* Witch.sks */; };
 		A2D7B9BC1DBBC25F00DC2DD9 /* witchHead.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9BB1DBBC25F00DC2DD9 /* witchHead.atlas */; };
+		A2D7B9BE1DBC428D00DC2DD9 /* Ghost.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D7B9BD1DBC428D00DC2DD9 /* Ghost.swift */; };
+		A2D7B9C01DBC42B300DC2DD9 /* Witch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D7B9BF1DBC42B300DC2DD9 /* Witch.swift */; };
+		A2D7B9C21DBC47CA00DC2DD9 /* FireBall.sks in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9C11DBC47CA00DC2DD9 /* FireBall.sks */; };
 		A2EB9F201DAB35AF0046CB93 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2EB9F1E1DAB351F0046CB93 /* HockeySDK.framework */; };
 /* End PBXBuildFile section */
 
@@ -136,6 +139,9 @@
 		A2D7B9B51DBBBFA000DC2DD9 /* witchRightArm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = witchRightArm.atlas; sourceTree = "<group>"; };
 		A2D7B9B91DBBBFC300DC2DD9 /* Witch.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Witch.sks; sourceTree = "<group>"; };
 		A2D7B9BB1DBBC25F00DC2DD9 /* witchHead.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = witchHead.atlas; sourceTree = "<group>"; };
+		A2D7B9BD1DBC428D00DC2DD9 /* Ghost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Ghost.swift; path = opponents/Ghost.swift; sourceTree = "<group>"; };
+		A2D7B9BF1DBC42B300DC2DD9 /* Witch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Witch.swift; path = opponents/Witch.swift; sourceTree = "<group>"; };
+		A2D7B9C11DBC47CA00DC2DD9 /* FireBall.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = FireBall.sks; path = opponents/FireBall.sks; sourceTree = "<group>"; };
 		A2EB9F1E1DAB351F0046CB93 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		A2EB9F1F1DAB351F0046CB93 /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -257,6 +263,8 @@
 				A20600F51DADC6DF00035330 /* EffectsLayer.swift */,
 				A216F0E71DB70894003DD5BB /* GameMode.swift */,
 				A216F0EF1DB739A6003DD5BB /* SFXManager.swift */,
+				A2D7B9BD1DBC428D00DC2DD9 /* Ghost.swift */,
+				A2D7B9BF1DBC42B300DC2DD9 /* Witch.swift */,
 			);
 			name = classes;
 			sourceTree = "<group>";
@@ -277,6 +285,7 @@
 				A2B49AF51DA89C1F00F86F40 /* Ghost.xcassets */,
 				A2D7B9B11DBBBF0500DC2DD9 /* Witch.xcassets */,
 				A2D7B9B91DBBBFC300DC2DD9 /* Witch.sks */,
+				A2D7B9C11DBC47CA00DC2DD9 /* FireBall.sks */,
 			);
 			name = opponents;
 			sourceTree = "<group>";
@@ -476,6 +485,7 @@
 				A2D7B9A91DBB0F6800DC2DD9 /* laugh_reverse.wav in Resources */,
 				A2D7B9AA1DBB0F6800DC2DD9 /* light_punch.wav in Resources */,
 				A2D7B9A51DBB0F6800DC2DD9 /* atmos_loop2.wav in Resources */,
+				A2D7B9C21DBC47CA00DC2DD9 /* FireBall.sks in Resources */,
 				A27117871DB31D5A00B36F06 /* ghostLeftArm.atlas in Resources */,
 				A2D7B9A71DBB0F6800DC2DD9 /* ghostshock.wav in Resources */,
 				A271178E1DB405FF00B36F06 /* spark.png in Resources */,
@@ -533,8 +543,10 @@
 				A2B49B021DAAB6E100F86F40 /* Controls.swift in Sources */,
 				A216F0E81DB70894003DD5BB /* GameMode.swift in Sources */,
 				A25615F61DAC207D00BA3DF8 /* MenuScene.swift in Sources */,
+				A2D7B9C01DBC42B300DC2DD9 /* Witch.swift in Sources */,
 				A2B49AEF1DA88CE400F86F40 /* Player.swift in Sources */,
 				A227C79E1DA758A900EFFD7B /* AppDelegate.swift in Sources */,
+				A2D7B9BE1DBC428D00DC2DD9 /* Ghost.swift in Sources */,
 				A216F0F01DB739A6003DD5BB /* SFXManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

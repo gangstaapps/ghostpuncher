@@ -26,6 +26,7 @@ protocol OpponentDelegate: class {
     func goingInvisible()
     func superAttack()
     func playerPunchBlocked()
+    func explosion()
 }
 
 enum GameEvents:UInt8
@@ -56,6 +57,7 @@ enum Direction:UInt8
     case left
     case right
 }
+
 
 class Opponent:SKNode
 {
@@ -109,6 +111,18 @@ class Opponent:SKNode
     
     var ghostMemory:[GameEvents] = Array(repeating: .empty, count: LENGTH_OF_MEMORY)
     
+    static func makeOpponent(frame: CGRect, named:String)->Opponent {
+        
+        switch named {
+        case "ghost":
+            return Ghost(frame: frame)
+        case "witch":
+            return Witch(frame: frame)
+        default:
+            return Opponent(frame: frame, name: named)
+        }
+    }
+    
    func addEvent(event:GameEvents){
         let count = Opponent.LENGTH_OF_MEMORY - 1
         var prev:GameEvents = event
@@ -127,9 +141,6 @@ class Opponent:SKNode
         startPosition = CGPoint(x: 0, y: -self.opponentFrame.size.height * 0.3)
         ghostEffectNode = SKEffectNode()
         
-//        blurFilter = CIFilter(name: "CIBoxBlur")
-//        blurFilter?.setDefaults()
-//        blurFilter?.setValue(7, forKey: "inputRadius")
         
         let deathAtlas = SKTextureAtlas(named: "\(self.opponentName)_portal.atlas")
         var deathFrames:[SKTexture] = []
@@ -148,12 +159,6 @@ class Opponent:SKNode
             self.opponent.removeFromParent();
             self.opponent.position = startPosition
             
-            
-            
-//            ghostEffectNode.filter = self.blurFilter
-//            ghostEffectNode.addChild(self.opponent)
-//            
-//            self.addChild(ghostEffectNode)
             
             self.addChild(self.opponent)
             
@@ -226,7 +231,7 @@ class Opponent:SKNode
             sparkEmmiter?.particleZPosition = -1
             sparkEmmiter?.targetNode = self.opponent!
             sparkEmmiter?.alpha = 0.5
-            sparkEmmiter?.particleColor = self.returnGlowColor(self.opponentName)
+            sparkEmmiter?.particleColor = self.returnGlowColor()
             sparkEmmiter?.particleColorBlendFactor = 1.0
             sparkEmmiter?.particleColorSequence = nil
             sparkEmmiter?.particlePositionRange = CGVector(dx: 40.0, dy: 40.0)
@@ -239,7 +244,7 @@ class Opponent:SKNode
             bodyGlow?.particleZPosition = -1
             bodyGlow?.targetNode = self.opponent!
             bodyGlow?.alpha = 0.5
-            bodyGlow?.particleColor = self.returnGlowColor(self.opponentName)
+            bodyGlow?.particleColor = self.returnGlowColor()
             bodyGlow?.particleColorBlendFactor = 1.0
             bodyGlow?.particleColorSequence = nil
             bodyGlow?.particlePositionRange = CGVector(dx: 240.0, dy: 290.0)
@@ -248,14 +253,8 @@ class Opponent:SKNode
         }
     }
     
-    func returnGlowColor(_ name:String)->SKColor {
-        switch name {
-        case "ghost":
-            return SKColor.init(hex: 0xCCFF66)
-        default:
-            return SKColor.blue
-        }
-        
+    func returnGlowColor()->SKColor {
+        return SKColor.init(hex: 0xCCFF66)
     }
     
     func returnFullPowerHit()->CGFloat
@@ -285,14 +284,6 @@ class Opponent:SKNode
     func victory(){
         self.opponent?.removeAllActions()
         self.head?.removeAllActions()
-//        self.sparkEmmiter?.particleColor = SKColor.red
-//        self.sparkEmmiter?.particleColorBlendFactor = 1.0
-//        self.sparkEmmiter?.particleColorSequence = nil
-////        self.sparkEmmiter?.particlePositionRange = CGVector(dx: 60.0, dy: 60.0)
-//        self.bodyGlow?.particleColor = SKColor.red
-//        self.bodyGlow?.particleColorBlendFactor = 1.0
-//        self.bodyGlow?.particleColorSequence = nil
-//        self.bodyGlow?.particlePositionRange = CGVector(dx: 300.0, dy: 350.0)
         
         let sequence = SKAction.sequence([
             SKAction.wait(forDuration: 0.5),
@@ -405,7 +396,7 @@ class Opponent:SKNode
             self.opponent.removeAction(forKey: MOVEMENT_KEY)
         }
         if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil {
-            self.opponent.removeAction(forKey: MOVEMENT_KEY)
+            self.opponent.removeAction(forKey: COMBO_ATTACK_KEY)
         }
 
         
@@ -563,9 +554,11 @@ class Opponent:SKNode
         if self.checkLast(10, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect, .playerLeftKickConnect, .playerRightKickConnect],
                           excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail, .playerRightKickFail, .playerLeftKickFail, .ghostGoInvisible, .ghostLeftAttackFail, .ghostRightAttackFail]){
             
-            self.addEvent(event: .ghostComboAttack1)
-            
-            return true
+            if !self.checkFor(events: [.ghostComboAttack1], withinLast: 10){
+                self.addEvent(event: .ghostComboAttack1)
+                
+                return true
+            }
         }
         
         if self.checkLast(3, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect],

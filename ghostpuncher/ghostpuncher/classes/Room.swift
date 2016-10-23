@@ -17,9 +17,9 @@ class Room: SKNode
     let portal:SKSpriteNode
     var targetPortalScale:CGSize?
     
-    init(frame: CGRect) {
+    init(frame: CGRect, name:String) {
         self.roomFrame = frame
-        self.background = SKSpriteNode(imageNamed:"background")
+        self.background = SKSpriteNode(imageNamed:"\(name)_background")
 //        self.foreground = SKSpriteNode(imageNamed:"foreground")
         
         let portalAtlas = SKTextureAtlas(named: "portal.atlas")
