@@ -74,23 +74,19 @@ class MenuScene: SKScene
         
     }
     
-    init(frame: CGRect, opponents : [String] = ["ghost", "witch"]) {
+    init(frame: CGRect, opponents : [String] = ["ghost", "witch", "devil"]) {
         
         super.init(size: frame.size)
         
-        let bkg = SKSpriteNode(imageNamed: "background_menu")
+        let bkg = SKSpriteNode(imageNamed: "select_bkg")
         bkg.size = frame.size
         bkg.position = CGPoint(x: frame.midX, y: frame.midY)
         self.addChild(bkg)
         
-        let fist = SKSpriteNode(imageNamed: "fist")
-        fist.anchorPoint = CGPoint(x:0.3,y:0.4)
-        fist.position = CGPoint(x:0,y:0)
-        
-        self.addChild(fist)
+       
         self.opponents = []
         for i in 0..<opponents.count {
-            let button = SKSpriteNode(imageNamed: "\(opponents[i])_head_front")
+            let button = SKSpriteNode(imageNamed: "\(opponents[i])_rol")
             button.userData = ["name":opponents[i]]
             button.position = CGPoint(x: (frame.size.width/CGFloat(opponents.count + 1)) * CGFloat(i + 1), y: frame.size.height * 0.5)
             self.addChild(button)
@@ -98,6 +94,46 @@ class MenuScene: SKScene
         }
         
         
+    }
+    
+    init(frame: CGRect, opponents : [String] = ["ghost", "witch", "devil"], startWith:Int) {
+        
+        super.init(size: frame.size)
+        
+        let bkg = SKSpriteNode(imageNamed: "select_bkg")
+        bkg.size = frame.size
+        bkg.position = CGPoint(x: frame.midX, y: frame.midY)
+        self.addChild(bkg)
+        
+        
+        self.opponents = []
+        for i in 0..<opponents.count {
+            let button = SKSpriteNode(imageNamed: "\(opponents[i])_rol")
+            button.userData = ["name":opponents[i]]
+            button.position = CGPoint(x: (frame.size.width/CGFloat(opponents.count + 1)) * CGFloat(i + 1), y: frame.size.height * 0.5)
+            self.addChild(button)
+            self.opponents?.append(button)
+        }
+        
+        let button = self.opponents?[startWith]
+        
+        
+        
+        button?.run(SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.run({
+            button?.texture = SKTexture(imageNamed: "\(button?.userData?["name"] as! String)_reg")
+        }),SKAction.wait(forDuration: 0.5), SKAction.run({
+            button?.texture = SKTexture(imageNamed: "\(button?.userData?["name"] as! String)_rol")
+        }),SKAction.wait(forDuration: 0.1), SKAction.run({
+            button?.texture = SKTexture(imageNamed: "\(button?.userData?["name"] as! String)_reg")
+        }),SKAction.wait(forDuration: 0.2), SKAction.run({
+            button?.texture = SKTexture(imageNamed: "\(button?.userData?["name"] as! String)_rol")
+        }),SKAction.wait(forDuration: 0.1), SKAction.run({
+            button?.texture = SKTexture(imageNamed: "\(button?.userData?["name"] as! String)_reg")
+        }), SKAction.wait(forDuration: 1.0), SKAction.run({
+            let scene = FightScene(frame: self.frame, backgroundColor: UIColor.black, opponent: button?.userData?["name"] as! String)
+            
+            self.view?.presentScene(scene)
+        })]) )
     }
     
     init(frame:CGRect, backgroundColor:UIColor, text:String){
@@ -137,6 +173,8 @@ class MenuScene: SKScene
     }
     
     func touchDown(atPoint pos : CGPoint, touch:UITouch) {
+
+        
         self.fightButton?.isHidden = false
         if self.checkFightPressed(atPoint: pos) {
             self.run(selectSound)
@@ -145,32 +183,26 @@ class MenuScene: SKScene
             logo?.run(SKAction.moveBy(x: -self.frame.size.width/2, y: 0, duration: 0.2))
             fightButton?.run(SKAction.sequence([SKAction.moveBy(x: -self.frame.size.width/2, y: 0, duration: 0.2),
                                                 SKAction.run({
-                                                    let scene = MenuScene(frame: self.frame, opponents:["ghost", "witch"])
+                                                    let scene = MenuScene(frame: self.frame, opponents:["ghost", "witch", "devil"], startWith:0)
                                                     self.view?.presentScene(scene)
                                                 })]))
             return
         }
         
-        self.opponents?.forEach({button in
-            if button.contains(pos){
-                button.texture = SKTexture(imageNamed: "\(button.userData?["name"] as! String)_head_frontopen_punch")
-                
-                button.run(SKAction.sequence([SKAction.moveTo(x: self.frame.midX, duration: 0.5), SKAction.run({ 
-                        let scene = FightScene(frame: self.frame, backgroundColor: UIColor.black, opponent: button.userData?["name"] as! String)
-                    
-                        self.view?.presentScene(scene)
-                })]) )
-                
-                 self.opponents?.forEach({innerbutton in
-                    if button != innerbutton {
-                        innerbutton.run(SKAction.moveTo(y: -self.frame.midY, duration: 0.5))
-                    }
-                 })
-                
-//                let scene = FightScene(frame: self.frame, backgroundColor: UIColor.black, opponent: button.userData?["name"] as! String)
-//                self.view?.presentScene(scene)
-            }
-        })
+        
+        
+//        self.opponents?.forEach({button in
+//            if button.contains(pos){
+//                button.texture = SKTexture(imageNamed: "\(button.userData?["name"] as! String)_reg")
+//                
+//                button.run(SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.run({
+//                        let scene = FightScene(frame: self.frame, backgroundColor: UIColor.black, opponent: button.userData?["name"] as! String)
+//                    
+//                        self.view?.presentScene(scene)
+//                })]) )
+//
+//            }
+//        })
     }
     
     func touchMoved(toPoint pos : CGPoint) {

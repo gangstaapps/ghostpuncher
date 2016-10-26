@@ -25,6 +25,12 @@
 		A227C7C41DA758AA00EFFD7B /* ghostpuncherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C7C31DA758AA00EFFD7B /* ghostpuncherUITests.swift */; };
 		A25615F61DAC207D00BA3DF8 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25615F51DAC207D00BA3DF8 /* MenuScene.swift */; };
 		A25615F81DAD561C00BA3DF8 /* BattleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25615F71DAD561C00BA3DF8 /* BattleManager.swift */; };
+		A25C9FE11DBF29E7006CDA73 /* Devil.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A25C9FE01DBF29E7006CDA73 /* Devil.xcassets */; };
+		A25C9FE51DBF2A83006CDA73 /* devilHead.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A25C9FE21DBF2A83006CDA73 /* devilHead.atlas */; };
+		A25C9FE61DBF2A83006CDA73 /* devilLeftArm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A25C9FE31DBF2A83006CDA73 /* devilLeftArm.atlas */; };
+		A25C9FE71DBF2A83006CDA73 /* devilRightArm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A25C9FE41DBF2A83006CDA73 /* devilRightArm.atlas */; };
+		A25C9FE91DBF2AB2006CDA73 /* Devil.sks in Resources */ = {isa = PBXBuildFile; fileRef = A25C9FE81DBF2AB2006CDA73 /* Devil.sks */; };
+		A25C9FEB1DBF2BD5006CDA73 /* Devil.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25C9FEA1DBF2BD5006CDA73 /* Devil.swift */; };
 		A27117861DB31D5A00B36F06 /* ghostHead.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A27117831DB31D5A00B36F06 /* ghostHead.atlas */; };
 		A27117871DB31D5A00B36F06 /* ghostLeftArm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A27117841DB31D5A00B36F06 /* ghostLeftArm.atlas */; };
 		A27117881DB31D5A00B36F06 /* ghostRightArm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A27117851DB31D5A00B36F06 /* ghostRightArm.atlas */; };
@@ -106,6 +112,12 @@
 		A227C7C51DA758AA00EFFD7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A25615F51DAC207D00BA3DF8 /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		A25615F71DAD561C00BA3DF8 /* BattleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BattleManager.swift; path = classes/BattleManager.swift; sourceTree = "<group>"; };
+		A25C9FE01DBF29E7006CDA73 /* Devil.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Devil.xcassets; sourceTree = "<group>"; };
+		A25C9FE21DBF2A83006CDA73 /* devilHead.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = devilHead.atlas; sourceTree = "<group>"; };
+		A25C9FE31DBF2A83006CDA73 /* devilLeftArm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = devilLeftArm.atlas; sourceTree = "<group>"; };
+		A25C9FE41DBF2A83006CDA73 /* devilRightArm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = devilRightArm.atlas; sourceTree = "<group>"; };
+		A25C9FE81DBF2AB2006CDA73 /* Devil.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Devil.sks; sourceTree = "<group>"; };
+		A25C9FEA1DBF2BD5006CDA73 /* Devil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Devil.swift; path = classes/Devil.swift; sourceTree = "<group>"; };
 		A27117831DB31D5A00B36F06 /* ghostHead.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ghostHead.atlas; sourceTree = "<group>"; };
 		A27117841DB31D5A00B36F06 /* ghostLeftArm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ghostLeftArm.atlas; sourceTree = "<group>"; };
 		A27117851DB31D5A00B36F06 /* ghostRightArm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ghostRightArm.atlas; sourceTree = "<group>"; };
@@ -265,6 +277,7 @@
 				A216F0EF1DB739A6003DD5BB /* SFXManager.swift */,
 				A2D7B9BD1DBC428D00DC2DD9 /* Ghost.swift */,
 				A2D7B9BF1DBC42B300DC2DD9 /* Witch.swift */,
+				A25C9FEA1DBF2BD5006CDA73 /* Devil.swift */,
 			);
 			name = classes;
 			sourceTree = "<group>";
@@ -272,6 +285,9 @@
 		A2B49AF21DA89B9800F86F40 /* opponents */ = {
 			isa = PBXGroup;
 			children = (
+				A25C9FE21DBF2A83006CDA73 /* devilHead.atlas */,
+				A25C9FE31DBF2A83006CDA73 /* devilLeftArm.atlas */,
+				A25C9FE41DBF2A83006CDA73 /* devilRightArm.atlas */,
 				A2D7B9BB1DBBC25F00DC2DD9 /* witchHead.atlas */,
 				A2D7B9B41DBBBFA000DC2DD9 /* witchLeftArm.atlas */,
 				A2D7B9B51DBBBFA000DC2DD9 /* witchRightArm.atlas */,
@@ -286,6 +302,8 @@
 				A2D7B9B11DBBBF0500DC2DD9 /* Witch.xcassets */,
 				A2D7B9B91DBBBFC300DC2DD9 /* Witch.sks */,
 				A2D7B9C11DBC47CA00DC2DD9 /* FireBall.sks */,
+				A25C9FE01DBF29E7006CDA73 /* Devil.xcassets */,
+				A25C9FE81DBF2AB2006CDA73 /* Devil.sks */,
 			);
 			name = opponents;
 			sourceTree = "<group>";
@@ -461,13 +479,17 @@
 				A271178A1DB3E55200B36F06 /* Ghost_blur.sks in Resources */,
 				A2D7B9A61DBB0F6800DC2DD9 /* deathblow.wav in Resources */,
 				A2D7B9AD1DBB0F6800DC2DD9 /* select.wav in Resources */,
+				A25C9FE91DBF2AB2006CDA73 /* Devil.sks in Resources */,
 				A216F0E11DB5D780003DD5BB /* ectoParticle.png in Resources */,
 				A27117881DB31D5A00B36F06 /* ghostRightArm.atlas in Resources */,
 				A2D7B9AE1DBB0F6800DC2DD9 /* soulgrab.wav in Resources */,
+				A25C9FE51DBF2A83006CDA73 /* devilHead.atlas in Resources */,
 				A20600FE1DB1A99700035330 /* ecto.png in Resources */,
+				A25C9FE11DBF29E7006CDA73 /* Devil.xcassets in Resources */,
 				A2D7B9A41DBB0F6800DC2DD9 /* atmos_loop1.wav in Resources */,
 				A20600F91DB1A45900035330 /* ectoPlasm.sks in Resources */,
 				A2D7B9BA1DBBBFC300DC2DD9 /* Witch.sks in Resources */,
+				A25C9FE61DBF2A83006CDA73 /* devilLeftArm.atlas in Resources */,
 				A2D7B9A81DBB0F6800DC2DD9 /* hard_punch.wav in Resources */,
 				A2D7B9AC1DBB0F6800DC2DD9 /* phaser.wav in Resources */,
 				A2D7B9B71DBBBFA000DC2DD9 /* witchLeftArm.atlas in Resources */,
@@ -493,6 +515,7 @@
 				A2D7B9BC1DBBC25F00DC2DD9 /* witchHead.atlas in Resources */,
 				A2D7B9B21DBBBF0500DC2DD9 /* Witch.xcassets in Resources */,
 				A227C7AE1DA758AA00EFFD7B /* LaunchScreen.storyboard in Resources */,
+				A25C9FE71DBF2A83006CDA73 /* devilRightArm.atlas in Resources */,
 				A216F0EE1DB71D64003DD5BB /* ghost_portal.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -542,6 +565,7 @@
 				A2B49AEB1DA88C1900F86F40 /* Room.swift in Sources */,
 				A2B49B021DAAB6E100F86F40 /* Controls.swift in Sources */,
 				A216F0E81DB70894003DD5BB /* GameMode.swift in Sources */,
+				A25C9FEB1DBF2BD5006CDA73 /* Devil.swift in Sources */,
 				A25615F61DAC207D00BA3DF8 /* MenuScene.swift in Sources */,
 				A2D7B9C01DBC42B300DC2DD9 /* Witch.swift in Sources */,
 				A2B49AEF1DA88CE400F86F40 /* Player.swift in Sources */,

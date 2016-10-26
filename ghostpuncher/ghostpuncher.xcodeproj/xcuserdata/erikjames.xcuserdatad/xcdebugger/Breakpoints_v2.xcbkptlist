@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ghostpuncher/classes/FightScene.swift"
-            timestampString = "498884719.409208"
+            timestampString = "499158714.717842"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
+            startingLineNumber = "291"
+            endingLineNumber = "291"
             landmarkName = "superAttack()"
             landmarkType = "7">
          </BreakpointContent>
@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ghostpuncher/classes/Opponent.swift"
-            timestampString = "498885235.474293"
+            timestampString = "499067951.669144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "799"
-            endingLineNumber = "799"
+            startingLineNumber = "813"
+            endingLineNumber = "813"
             landmarkName = "willLeftComboConnect()"
             landmarkType = "7">
          </BreakpointContent>
@@ -234,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ghostpuncher/classes/Opponent.swift"
-            timestampString = "498885675.520588"
+            timestampString = "499067951.669144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "558"
-            endingLineNumber = "558"
+            startingLineNumber = "566"
+            endingLineNumber = "566"
             landmarkName = "checkDodging()"
             landmarkType = "7">
          </BreakpointContent>

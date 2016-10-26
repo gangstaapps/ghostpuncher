@@ -209,7 +209,18 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.room.closePortal()
         
         let reveal = SKTransition.crossFade(withDuration: 1.0)
-        let scene = MenuScene(frame: frame, opponents:["ghost", "witch"])
+        
+        let scene:MenuScene
+        
+        if (self.opponent as? Ghost) != nil {
+            scene = MenuScene(frame: frame, opponents:["ghost", "witch", "devil"], startWith:1)
+        } else {
+            scene = MenuScene(frame: frame, opponents:["ghost", "witch", "devil"], startWith:2)
+        }
+        
+        
+//        self.view?.presentScene(scene)
+        
         self.view?.presentScene(scene, transition: reveal)
     }
     func playerLost(){
@@ -225,8 +236,19 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     }
     
     func youAreDead(){
-        let reveal = SKTransition.crossFade(withDuration: 1.0)
-        let scene = MenuScene(frame: frame, opponents:["ghost", "witch"])
+//        let reveal = SKTransition.crossFade(withDuration: 1.0)
+        
+        let scene:MenuScene
+        
+        if (self.opponent as? Ghost) != nil {
+            scene = MenuScene(frame: frame, opponents:["ghost", "witch", "devil"], startWith:0)
+        } else if (self.opponent as? Witch) != nil {
+            scene = MenuScene(frame: frame, opponents:["ghost", "witch", "devil"], startWith:1)
+        } else {
+            scene = MenuScene(frame: frame, opponents:["ghost", "witch", "devil"], startWith:2)
+        }
+        
+        
         self.view?.presentScene(scene)
 
     }
@@ -272,6 +294,10 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     
     func playerPunchBlocked(){
         self.run(lightPunchSound)
+    }
+    
+    func fireBall(){
+        self.run(lightsOutSound)
     }
     
     func turnOffLights(){

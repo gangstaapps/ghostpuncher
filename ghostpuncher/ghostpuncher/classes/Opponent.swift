@@ -27,6 +27,7 @@ protocol OpponentDelegate: class {
     func superAttack()
     func playerPunchBlocked()
     func explosion()
+    func fireBall()
 }
 
 enum GameEvents:UInt8
@@ -49,6 +50,7 @@ enum GameEvents:UInt8
     case ghostDodgeLeft
     case ghostGoInvisible
     case ghostComboAttack1
+    case ghostComboAttack2
     case ghostBlock
     
 }
@@ -81,8 +83,8 @@ class Opponent:SKNode
     var headFrontPunchAnimation:SKAction?
     var headFrontPunchAnimationSlow:SKAction?
     
-    var leftArm:SKNode?
-    var rightArm:SKNode?
+    var leftArm:SKSpriteNode?
+    var rightArm:SKSpriteNode?
     var head:SKSpriteNode?
     var body:SKNode?
     var block:SKSpriteNode?
@@ -118,6 +120,8 @@ class Opponent:SKNode
             return Ghost(frame: frame)
         case "witch":
             return Witch(frame: frame)
+        case "devil":
+            return Devil(frame: frame)
         default:
             return Opponent(frame: frame, name: named)
         }
@@ -173,7 +177,7 @@ class Opponent:SKNode
             
             
             self.leftArmAttack = SKAction.animate(with: armFrames, timePerFrame: 0.09)
-            self.leftArm =  self.opponent.childNode(withName: "body")?.childNode(withName: "leftarm")
+            self.leftArm =  self.opponent.childNode(withName: "body")?.childNode(withName: "leftarm") as! SKSpriteNode?
             
             
             let rightArmAtlas = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas")
@@ -187,7 +191,7 @@ class Opponent:SKNode
             
             
             self.rightArmAttack = SKAction.animate(with: rightarmFrames, timePerFrame: 0.09)
-            self.rightArm =  self.opponent.childNode(withName: "body")?.childNode(withName: "rightarm")
+            self.rightArm =  self.opponent.childNode(withName: "body")?.childNode(withName: "rightarm") as! SKSpriteNode?
             
             let headAtlas = SKTextureAtlas(named: "\(self.opponentName)Head.atlas")
             let headFrames:[SKTexture] = [
@@ -225,32 +229,36 @@ class Opponent:SKNode
             self.block?.isHidden = true
             
             
-            sparkEmmiter = SKEmitterNode(fileNamed: "Smoke.sks")!
-            sparkEmmiter?.position = CGPoint(x: 10, y: 200)
-            sparkEmmiter?.name = "sparkEmmitter"
-            sparkEmmiter?.particleZPosition = -1
-            sparkEmmiter?.targetNode = self.opponent!
-            sparkEmmiter?.alpha = 0.5
-            sparkEmmiter?.particleColor = self.returnGlowColor()
-            sparkEmmiter?.particleColorBlendFactor = 1.0
-            sparkEmmiter?.particleColorSequence = nil
-            sparkEmmiter?.particlePositionRange = CGVector(dx: 40.0, dy: 40.0)
-            
-            self.opponent?.addChild(sparkEmmiter!)
-            
-            bodyGlow = SKEmitterNode(fileNamed: "Smoke.sks")!
-            bodyGlow?.position = CGPoint(x: 0, y: 10)
-            bodyGlow?.name = "sparkEmmitter"
-            bodyGlow?.particleZPosition = -1
-            bodyGlow?.targetNode = self.opponent!
-            bodyGlow?.alpha = 0.5
-            bodyGlow?.particleColor = self.returnGlowColor()
-            bodyGlow?.particleColorBlendFactor = 1.0
-            bodyGlow?.particleColorSequence = nil
-            bodyGlow?.particlePositionRange = CGVector(dx: 240.0, dy: 290.0)
-            
-            self.opponent?.addChild(bodyGlow!)
+            self.addGlows()
         }
+    }
+    
+    func addGlows(){
+        sparkEmmiter = SKEmitterNode(fileNamed: "Smoke.sks")!
+        sparkEmmiter?.position = CGPoint(x: 10, y: 200)
+        sparkEmmiter?.name = "sparkEmmitter"
+        sparkEmmiter?.particleZPosition = -1
+        sparkEmmiter?.targetNode = self.opponent!
+        sparkEmmiter?.alpha = 0.5
+        sparkEmmiter?.particleColor = self.returnGlowColor()
+        sparkEmmiter?.particleColorBlendFactor = 1.0
+        sparkEmmiter?.particleColorSequence = nil
+        sparkEmmiter?.particlePositionRange = CGVector(dx: 40.0, dy: 40.0)
+        
+        self.opponent?.addChild(sparkEmmiter!)
+        
+        bodyGlow = SKEmitterNode(fileNamed: "Smoke.sks")!
+        bodyGlow?.position = CGPoint(x: 0, y: 10)
+        bodyGlow?.name = "sparkEmmitter"
+        bodyGlow?.particleZPosition = -1
+        bodyGlow?.targetNode = self.opponent!
+        bodyGlow?.alpha = 0.5
+        bodyGlow?.particleColor = self.returnGlowColor()
+        bodyGlow?.particleColorBlendFactor = 1.0
+        bodyGlow?.particleColorSequence = nil
+        bodyGlow?.particlePositionRange = CGVector(dx: 240.0, dy: 290.0)
+        
+        self.opponent?.addChild(bodyGlow!)
     }
     
     func returnGlowColor()->SKColor {
@@ -690,14 +698,17 @@ class Opponent:SKNode
        currentSceneTime = currentTime
         
         if self.isBlocking {
+            print("BREAK: is blocking")
             return
         }
         
         if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil {
+            print("BREAK: combo attack")
             return
         }
         
         if self.checkDodging() {
+            print("BREAK: is dodging")
             return
         }
         
@@ -709,6 +720,7 @@ class Opponent:SKNode
         }
         
         if self.opponent.alpha < 1.0 {
+            print("BREAK: alpha < 1")
             return
         }
         
@@ -725,6 +737,8 @@ class Opponent:SKNode
                 }
             }
             return
+        } else {
+            print("BREAK: not attack time")
         }
         
         if !self.checkFor(events: [.ghostComboAttack1], withinLast: 40){
