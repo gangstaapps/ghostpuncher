@@ -96,7 +96,7 @@ class MenuScene: SKScene
         
     }
     
-    init(frame: CGRect, opponents : [String] = ["ghost", "witch", "devil"], startWith:Int) {
+    init(frame: CGRect, opponents : [String] = ["ghost", "witch", "devil"], startWith:Int, _ animateIn:Bool = false) {
         
         super.init(size: frame.size)
         
@@ -108,11 +108,53 @@ class MenuScene: SKScene
         
         self.opponents = []
         for i in 0..<opponents.count {
-            let button = SKSpriteNode(imageNamed: "\(opponents[i])_rol")
-            button.userData = ["name":opponents[i]]
-            button.position = CGPoint(x: (frame.size.width/CGFloat(opponents.count + 1)) * CGFloat(i + 1), y: frame.size.height * 0.5)
-            self.addChild(button)
+            let button:SKSpriteNode
+            
+            if i >= startWith {
+                button = SKSpriteNode(imageNamed: "\(opponents[i])_rol")
+                button.userData = ["name":opponents[i]]
+                button.position = CGPoint(x: (frame.size.width/CGFloat(opponents.count + 1)) * CGFloat(i + 1), y: frame.size.height * 0.5)
+                
+                self.addChild(button)
+                
+            } else {
+                button = SKSpriteNode(imageNamed: "stone\(i+1)")
+                let slash1 = SKSpriteNode(imageNamed: "slash\(i+1)_1")
+                slash1.position = CGPoint(x: frame.midX, y: frame.midY)
+                let slash2 = SKSpriteNode(imageNamed: "slash\(i+1)_2")
+                slash2.position = CGPoint(x: frame.midX, y: frame.midY)
+                if animateIn && i == (startWith - 1) {
+                    button.position = CGPoint(x: frame.midX, y: frame.midY + frame.size.height)
+                    button.run(SKAction.sequence([SKAction.moveTo(y: frame.midY, duration: 0.3),SKAction.wait(forDuration: 0.3),SKAction.run({
+                        self.addChild(slash1)
+                    }),SKAction.wait(forDuration: 0.2),SKAction.run({
+                        self.addChild(slash2)
+                    }) ])  )
+                    
+                    self.addChild(button)
+                } else {
+                    button.position = CGPoint(x: frame.midX, y: frame.midY)
+                    self.addChild(button)
+                    self.addChild(slash1)
+                    self.addChild(slash2)
+                }
+                
+            }
+            
+            
+            
+            
             self.opponents?.append(button)
+        }
+        
+        if startWith == self.opponents?.count {
+            
+            self.run(SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.run {
+                let scene = MenuScene(frame: self.frame)
+                self.view?.presentScene(scene)
+                }]))
+            
+            return
         }
         
         let button = self.opponents?[startWith]

@@ -237,7 +237,7 @@ class Opponent:SKNode
         sparkEmmiter = SKEmitterNode(fileNamed: "Smoke.sks")!
         sparkEmmiter?.position = CGPoint(x: 10, y: 200)
         sparkEmmiter?.name = "sparkEmmitter"
-        sparkEmmiter?.particleZPosition = -1
+        sparkEmmiter?.particleZPosition = -2
         sparkEmmiter?.targetNode = self.opponent!
         sparkEmmiter?.alpha = 0.5
         sparkEmmiter?.particleColor = self.returnGlowColor()
@@ -250,7 +250,7 @@ class Opponent:SKNode
         bodyGlow = SKEmitterNode(fileNamed: "Smoke.sks")!
         bodyGlow?.position = CGPoint(x: 0, y: 10)
         bodyGlow?.name = "sparkEmmitter"
-        bodyGlow?.particleZPosition = -1
+        bodyGlow?.particleZPosition = -2
         bodyGlow?.targetNode = self.opponent!
         bodyGlow?.alpha = 0.5
         bodyGlow?.particleColor = self.returnGlowColor()
