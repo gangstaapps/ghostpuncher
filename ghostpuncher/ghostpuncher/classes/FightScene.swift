@@ -29,7 +29,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     let youLoseSound = SKAction.playSoundFileNamed("deathblow.wav", waitForCompletion: false)
     let youWinSound = SKAction.playSoundFileNamed("ghostshock.wav", waitForCompletion: false)
     
-    init(frame: CGRect, backgroundColor : UIColor, opponent:String = "ghost") {
+    init(frame: CGRect, backgroundColor : UIColor, opponent:String = "ghost", _ level:Int = 1) {
         self.room = Room(frame:frame, name:opponent)
         super.init(size: frame.size)
         self.backgroundColor = backgroundColor
@@ -39,7 +39,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
 //        self.effectsLayer?.zPosition = 3
         self.addChild(self.effectsLayer!)
         
-        self.opponent = Opponent.makeOpponent(frame: frame, named: opponent)
+        self.opponent = Opponent.makeOpponent(frame: frame, named: opponent, level)
         self.addChild(self.opponent!)
         
         self.opponent?.position = CGPoint(x:frame.size.width/2, y:frame.size.height/2)
@@ -243,11 +243,11 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         let scene:MenuScene
         
         if (self.opponent as? Ghost) != nil {
-            scene = MenuScene(frame: frame, opponents:["ghost", "witch", "devil"], startWith:0)
+            scene = MenuScene(frame: frame, diedAt:0)
         } else if (self.opponent as? Witch) != nil {
-            scene = MenuScene(frame: frame, opponents:["ghost", "witch", "devil"], startWith:1)
+            scene = MenuScene(frame: frame, diedAt:1)
         } else {
-            scene = MenuScene(frame: frame, opponents:["ghost", "witch", "devil"], startWith:2)
+            scene = MenuScene(frame: frame, diedAt:2)
         }
         
         

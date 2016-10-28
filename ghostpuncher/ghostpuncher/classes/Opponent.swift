@@ -61,9 +61,10 @@ enum Direction:UInt8
 }
 
 
+
 class Opponent:SKNode
 {
-    
+    var fightParams:FightParams?
     
     var opponent:SKNode!
     var opponentName:String
@@ -113,18 +114,22 @@ class Opponent:SKNode
     
     var ghostMemory:[GameEvents] = Array(repeating: .empty, count: LENGTH_OF_MEMORY)
     
-    static func makeOpponent(frame: CGRect, named:String)->Opponent {
+    static func makeOpponent(frame: CGRect, named:String, _ level:Int = 1)->Opponent {
         
         switch named {
         case "ghost":
-            return Ghost(frame: frame)
+            return Ghost(frame: frame, level)
         case "witch":
-            return Witch(frame: frame)
+            return Witch(frame: frame, level)
         case "devil":
-            return Devil(frame: frame)
+            return Devil(frame: frame, level)
         default:
             return Opponent(frame: frame, name: named)
         }
+    }
+    
+    func initParams(params:FightParams){
+        self.fightParams = params
     }
     
    func addEvent(event:GameEvents){
@@ -267,11 +272,17 @@ class Opponent:SKNode
     
     func returnFullPowerHit()->CGFloat
     {
+        if let fullPower = self.fightParams?.fullPowerHit {
+            return fullPower
+        }
         return 3.0
     }
     
     func returnBlockedHit()->CGFloat
     {
+        if let blockedHit = self.fightParams?.blockedHit {
+            return blockedHit
+        }
         return 1.0
     }
     
@@ -544,44 +555,50 @@ class Opponent:SKNode
         
         let attackDeficit:CGFloat
         
-        
-        if Int(arc4random_uniform(UInt32(4))) == 1 {
-            attackDeficit = (100 - (BattleManager.playerHealth! - BattleManager.opponentHealth!))/30
-        } else {
-            attackDeficit = CGFloat(arc4random_uniform(UInt32(10))) + 10
-        }
+        let attackAggression = self.fightParams?.attackAggression ?? 4.0
         
         
-        return !self.checkFor(events: [.ghostLeftAttackFail, .ghostRightAttackFail,.ghostLeftAttackConnect, .ghostRightAttackConnect,
-                                       .ghostDodgeLeft, .ghostDodgeRight], withinLast: Int(attackDeficit))
+//        if Int(arc4random_uniform(UInt32(attackAggression))) == 1 {
+            attackDeficit = ((100 - (BattleManager.playerHealth! - BattleManager.opponentHealth!))/40) * attackAggression
+        print("attackDeficit = \(attackDeficit)")
+//        } else {
+//            attackDeficit = CGFloat(arc4random_uniform(UInt32(10))) + 10
+//        }
+        
+        
+        return !self.checkFor(events: [.ghostLeftAttackConnect, .ghostRightAttackConnect], withinLast: Int(attackDeficit))
         
     }
     
     func checkDodging()->Bool {
         
-        if self.checkLast(10, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect, .playerLeftKickConnect, .playerRightKickConnect],
+        let comboAggression = self.fightParams?.comboAggression ?? 10
+        
+        if self.checkLast(comboAggression, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect, .playerLeftKickConnect, .playerRightKickConnect],
                           excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail, .playerRightKickFail, .playerLeftKickFail, .ghostGoInvisible, .ghostLeftAttackFail, .ghostRightAttackFail]){
             
-            if !self.checkFor(events: [.ghostComboAttack1], withinLast: 10){
+            if !self.checkFor(events: [.ghostComboAttack1], withinLast: comboAggression){
                 self.addEvent(event: .ghostComboAttack1)
                 
                 return true
             }
         }
         
-        if self.checkLast(3, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect],
+        let dodgeFrequency = self.fightParams?.dodgeFrequency ?? 3
+        
+        if self.checkLast(dodgeFrequency, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect],
                           excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail]){
             
             
             if Int(arc4random_uniform(UInt32(2))) == 1 {
                 self.blockAttack()
-            } else {
-                if self.checkMoreRecent(events: [.playerLeftPunchConnect, .playerRightPunchConnect]) == .playerLeftPunchConnect {
-                    self.addEvent(event: .ghostDodgeRight)
-                } else {
-                    self.addEvent(event: .ghostDodgeLeft)
-                }
             }
+            if self.checkMoreRecent(events: [.playerLeftPunchConnect, .playerRightPunchConnect]) == .playerLeftPunchConnect {
+                self.addEvent(event: .ghostDodgeRight)
+            } else {
+                self.addEvent(event: .ghostDodgeLeft)
+            }
+            
         
             
             
@@ -741,7 +758,9 @@ class Opponent:SKNode
             print("BREAK: not attack time")
         }
         
-        if !self.checkFor(events: [.ghostComboAttack1], withinLast: 40){
+        let comboFrequency = self.fightParams?.comboFrequency ?? 40
+        
+        if !self.checkFor(events: [.ghostComboAttack1], withinLast: comboFrequency){
             self.addEvent(event: .ghostComboAttack1)
             return
         }

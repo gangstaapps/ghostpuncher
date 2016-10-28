@@ -13,8 +13,7 @@ class Devil: Opponent {
     let batwingCycle:SKAction
     var batwings:SKSpriteNode?
     
-    
-    init(frame:CGRect) {
+    init(frame:CGRect, _ multiplier:Int = 1) {
         let batwingAtlas = SKTextureAtlas(named: "batwing.atlas")
         let batwingFrames:[SKTexture] = [batwingAtlas.textureNamed("batwing1.png"),
                                          batwingAtlas.textureNamed("batwing2.png"),
@@ -25,7 +24,7 @@ class Devil: Opponent {
         
         self.batwings = self.body?.childNode(withName: "wings") as! SKSpriteNode?
         self.batwings?.isHidden = true
-        
+        self.initParams(params: FightParams(params: DevilParams(), multiplier: multiplier))
     }
     
     override func hitRecoil(_ direction:Direction, power:CGFloat){
@@ -163,6 +162,31 @@ class Devil: Opponent {
         
         self.opponent.run(attack, withKey:COMBO_ATTACK_KEY)
         
+    }
+    
+    override func willLeftComboConnect() -> Bool {
+        let willConnect = super.willLeftComboConnect()
+        
+        if willConnect {
+            self.batwings?.run(SKAction.sequence([self.batwingCycle.reversed(),
+                                                  SKAction.run({
+                                                    self.batwings?.isHidden = true
+                                                  })]))
+        }
+        
+        return willConnect
+    }
+    override func willRightComboConnect() -> Bool {
+        let willConnect = super.willRightComboConnect()
+        
+        if willConnect {
+            self.batwings?.run(SKAction.sequence([self.batwingCycle.reversed(),
+                                                  SKAction.run({
+                                                    self.batwings?.isHidden = true
+                                                  })]))
+        }
+        
+        return willConnect
     }
     
     override func spark(_ direction:Direction, _ power:CGFloat){

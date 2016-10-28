@@ -9,8 +9,9 @@
 import SpriteKit
 
 class Witch: Opponent {
-    init(frame:CGRect) {
+    init(frame:CGRect, _ multiplier:Int = 1) {
         super.init(frame: frame, name: "witch")
+        self.initParams(params: FightParams(params: WitchParams(), multiplier: multiplier))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -134,17 +135,17 @@ class Witch: Opponent {
         currentSceneTime = currentTime
         
         if self.isBlocking {
-            print("BREAK: is blocking")
+//            print("BREAK: is blocking")
             return
         }
         
         if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil {
-            print("BREAK: combo attack")
+//            print("BREAK: combo attack")
             return
         }
         
         if self.checkDodging() {
-            print("BREAK: is dodging")
+//            print("BREAK: is dodging")
             return
         }
         
@@ -177,7 +178,10 @@ class Witch: Opponent {
             print("BREAK: not attack time")
         }
         
-        if !self.checkFor(events: [.ghostComboAttack1, .ghostComboAttack2], withinLast: 40){
+        
+         let comboFrequency = self.fightParams?.comboFrequency ?? 40
+        
+        if !self.checkFor(events: [.ghostComboAttack1, .ghostComboAttack2], withinLast: comboFrequency){
             if Int(arc4random_uniform(UInt32(2))) == 1 {
                 self.addEvent(event: .ghostComboAttack1)
             } else {
@@ -233,9 +237,46 @@ class Witch: Opponent {
         self.opponent?.addChild(bodyGlow!)
     }
     
+    /*
+     let comboAggression = self.fightParams?.comboAggression ?? 10
+     
+     if self.checkLast(comboAggression, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect, .playerLeftKickConnect, .playerRightKickConnect],
+     excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail, .playerRightKickFail, .playerLeftKickFail, .ghostGoInvisible, .ghostLeftAttackFail, .ghostRightAttackFail]){
+     
+     if !self.checkFor(events: [.ghostComboAttack1], withinLast: comboAggression){
+     self.addEvent(event: .ghostComboAttack1)
+     
+     return true
+     }
+     }
+     
+     let dodgeFrequency = self.fightParams?.dodgeFrequency ?? 3
+     
+     if self.checkLast(dodgeFrequency, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect],
+     excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail]){
+     
+     
+     if Int(arc4random_uniform(UInt32(2))) == 1 {
+     self.blockAttack()
+     }
+     if self.checkMoreRecent(events: [.playerLeftPunchConnect, .playerRightPunchConnect]) == .playerLeftPunchConnect {
+     self.addEvent(event: .ghostDodgeRight)
+     } else {
+     self.addEvent(event: .ghostDodgeLeft)
+     }
+     
+     
+     
+     
+     return true
+     }
+ */
+    
     override func checkDodging()->Bool {
         
-        if self.checkLast(10, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect, .playerLeftKickConnect, .playerRightKickConnect],
+        let comboAggression = self.fightParams?.comboAggression ?? 10
+        
+        if self.checkLast(comboAggression, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect, .playerLeftKickConnect, .playerRightKickConnect],
                           excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail, .playerRightKickFail, .playerLeftKickFail, .ghostGoInvisible, .ghostLeftAttackFail, .ghostRightAttackFail]){
             
             if !self.checkFor(events: [.ghostComboAttack1, .ghostComboAttack2], withinLast: 10){
@@ -248,7 +289,9 @@ class Witch: Opponent {
             }
         }
         
-        if self.checkLast(3, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect],
+        let dodgeFrequency = self.fightParams?.dodgeFrequency ?? 3
+        
+        if self.checkLast(dodgeFrequency, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect],
                           excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail]){
             
             

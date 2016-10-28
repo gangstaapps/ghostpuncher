@@ -33,6 +33,7 @@
 		A25C9FEB1DBF2BD5006CDA73 /* Devil.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25C9FEA1DBF2BD5006CDA73 /* Devil.swift */; };
 		A25C9FED1DC19968006CDA73 /* batwing.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A25C9FEC1DC19968006CDA73 /* batwing.atlas */; };
 		A25C9FF11DC19E3E006CDA73 /* DevilFlames.sks in Resources */ = {isa = PBXBuildFile; fileRef = A25C9FF01DC19E3E006CDA73 /* DevilFlames.sks */; };
+		A25C9FF31DC2F1CC006CDA73 /* FightParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25C9FF21DC2F1CC006CDA73 /* FightParams.swift */; };
 		A27117861DB31D5A00B36F06 /* ghostHead.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A27117831DB31D5A00B36F06 /* ghostHead.atlas */; };
 		A27117871DB31D5A00B36F06 /* ghostLeftArm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A27117841DB31D5A00B36F06 /* ghostLeftArm.atlas */; };
 		A27117881DB31D5A00B36F06 /* ghostRightArm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A27117851DB31D5A00B36F06 /* ghostRightArm.atlas */; };
@@ -122,6 +123,7 @@
 		A25C9FEA1DBF2BD5006CDA73 /* Devil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Devil.swift; path = classes/Devil.swift; sourceTree = "<group>"; };
 		A25C9FEC1DC19968006CDA73 /* batwing.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = batwing.atlas; sourceTree = "<group>"; };
 		A25C9FF01DC19E3E006CDA73 /* DevilFlames.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = DevilFlames.sks; path = opponents/DevilFlames.sks; sourceTree = "<group>"; };
+		A25C9FF21DC2F1CC006CDA73 /* FightParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FightParams.swift; path = opponents/FightParams.swift; sourceTree = "<group>"; };
 		A27117831DB31D5A00B36F06 /* ghostHead.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ghostHead.atlas; sourceTree = "<group>"; };
 		A27117841DB31D5A00B36F06 /* ghostLeftArm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ghostLeftArm.atlas; sourceTree = "<group>"; };
 		A27117851DB31D5A00B36F06 /* ghostRightArm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ghostRightArm.atlas; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 				A2D7B9BD1DBC428D00DC2DD9 /* Ghost.swift */,
 				A2D7B9BF1DBC42B300DC2DD9 /* Witch.swift */,
 				A25C9FEA1DBF2BD5006CDA73 /* Devil.swift */,
+				A25C9FF21DC2F1CC006CDA73 /* FightParams.swift */,
 			);
 			name = classes;
 			sourceTree = "<group>";
@@ -567,6 +570,7 @@
 			files = (
 				A20600F61DADC6DF00035330 /* EffectsLayer.swift in Sources */,
 				A25615F81DAD561C00BA3DF8 /* BattleManager.swift in Sources */,
+				A25C9FF31DC2F1CC006CDA73 /* FightParams.swift in Sources */,
 				A227C7A61DA758A900EFFD7B /* GameViewController.swift in Sources */,
 				A2B49AED1DA88CB600F86F40 /* Opponent.swift in Sources */,
 				A2B49AF11DA88EAF00F86F40 /* FightScene.swift in Sources */,

@@ -16,6 +16,11 @@ class MenuScene: SKScene
     var fightButtonRol:SKSpriteNode?
     var opponents:[SKSpriteNode]?
     
+    var tombstoneButton:SKSpriteNode?
+    var continueFrom:Int = 0
+    
+    static var level = 1
+    
     let selectSound = SKAction.playSoundFileNamed("select.wav", waitForCompletion: false)
     
     init(frame:CGRect) {
@@ -96,6 +101,31 @@ class MenuScene: SKScene
         
     }
     
+    init(frame: CGRect, diedAt:Int) {
+        
+        super.init(size: frame.size)
+        
+        self.continueFrom = diedAt
+        
+        let bkg = SKSpriteNode(imageNamed: "select_bkg")
+        bkg.size = frame.size
+        bkg.position = CGPoint(x: frame.midX, y: frame.midY)
+        self.addChild(bkg)
+        
+        
+        
+        
+        tombstoneButton = SKSpriteNode(imageNamed: "stone_lt")
+        tombstoneButton?.position = CGPoint(x: frame.midX, y: frame.midY)
+        self.addChild(tombstoneButton!)
+        
+        let message = SKSpriteNode(imageNamed: Int(arc4random_uniform(UInt32(2))) == 1 ? "youlose" : "RIP")
+        
+        message.position = CGPoint(x: frame.midX, y: frame.midY)
+        self.addChild(message)
+        
+    }
+    
     init(frame: CGRect, opponents : [String] = ["ghost", "witch", "devil"], startWith:Int, _ animateIn:Bool = false) {
         
         super.init(size: frame.size)
@@ -123,12 +153,16 @@ class MenuScene: SKScene
                 slash1.position = CGPoint(x: frame.midX, y: frame.midY)
                 let slash2 = SKSpriteNode(imageNamed: "slash\(i+1)_2")
                 slash2.position = CGPoint(x: frame.midX, y: frame.midY)
+                let slash3 = SKSpriteNode(imageNamed: "slash\(i+1)_3")
+                slash3.position = CGPoint(x: frame.midX, y: frame.midY)
                 if animateIn && i == (startWith - 1) {
                     button.position = CGPoint(x: frame.midX, y: frame.midY + frame.size.height)
                     button.run(SKAction.sequence([SKAction.moveTo(y: frame.midY, duration: 0.3),SKAction.wait(forDuration: 0.3),SKAction.run({
                         self.addChild(slash1)
                     }),SKAction.wait(forDuration: 0.2),SKAction.run({
                         self.addChild(slash2)
+                    }),SKAction.wait(forDuration: 0.2),SKAction.run({
+                        self.addChild(slash3)
                     }) ])  )
                     
                     self.addChild(button)
@@ -137,6 +171,7 @@ class MenuScene: SKScene
                     self.addChild(button)
                     self.addChild(slash1)
                     self.addChild(slash2)
+                    self.addChild(slash3)
                 }
                 
             }
@@ -149,7 +184,8 @@ class MenuScene: SKScene
         
         if startWith == self.opponents?.count {
             
-            self.run(SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.run {
+            self.run(SKAction.sequence([SKAction.wait(forDuration: 2.0), SKAction.run {
+                MenuScene.level += 1
                 let scene = MenuScene(frame: self.frame)
                 self.view?.presentScene(scene)
                 }]))
@@ -172,7 +208,7 @@ class MenuScene: SKScene
         }),SKAction.wait(forDuration: 0.1), SKAction.run({
             button?.texture = SKTexture(imageNamed: "\(button?.userData?["name"] as! String)_reg")
         }), SKAction.wait(forDuration: 1.0), SKAction.run({
-            let scene = FightScene(frame: self.frame, backgroundColor: UIColor.black, opponent: button?.userData?["name"] as! String)
+            let scene = FightScene(frame: self.frame, backgroundColor: UIColor.black, opponent: button?.userData?["name"] as! String, MenuScene.level)
             
             self.view?.presentScene(scene)
         })]) )
@@ -231,6 +267,16 @@ class MenuScene: SKScene
             return
         }
         
+        if self.checkTombstonePressed(atPoint: pos) {
+             let enemies = ["ghost", "witch", "devil"]
+            let scene = MenuScene(frame: frame, opponents:["ghost", "witch", "devil"], startWith:self.continueFrom, false)
+//            let scene = FightScene(frame: self.frame, backgroundColor: UIColor.black, opponent: enemies[self.continueFrom], MenuScene.level)
+            
+            self.view?.presentScene(scene)
+            
+            return
+        }
+        
         
         
 //        self.opponents?.forEach({button in
@@ -253,6 +299,13 @@ class MenuScene: SKScene
     
     func checkFightPressed(atPoint pos : CGPoint)->Bool {
         guard let _ = self.fightButton?.contains(pos) else {
+            return false
+        }
+        return true
+    }
+    
+    func checkTombstonePressed(atPoint pos : CGPoint)->Bool {
+        guard let _ = self.tombstoneButton?.contains(pos) else {
             return false
         }
         return true

@@ -9,8 +9,9 @@
 import SpriteKit
 
 class Ghost: Opponent {
-    init(frame:CGRect) {
+    init(frame:CGRect, _ multiplier:Int = 1) {
         super.init(frame: frame, name: "ghost")
+        self.initParams(params: FightParams(params: GhostParams(), multiplier: multiplier))
     }
     
     required init?(coder aDecoder: NSCoder) {
