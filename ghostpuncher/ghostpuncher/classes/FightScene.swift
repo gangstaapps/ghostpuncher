@@ -202,8 +202,13 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     func playerWon(){
         self.gameMode.setGame(mode: .locked)
         self.room.openPortal()
-        self.opponent?.defeated()
-        self.run(youWinSound)
+        self.controls?.removeFromParent()
+        self.run(SKAction.sequence([ youWinSound, SKAction.wait(forDuration: 0.5), SKAction.run({
+            self.opponent?.punchedToHell()
+        })]))
+//        self.run(SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.run({
+//            self.ghostIsGone()
+//        })]))
     }
     func ghostIsGone(){
         self.room.closePortal()
@@ -227,7 +232,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     }
     func playerLost(){
 //        self.playerWon()
-        
+        self.effectsLayer?.turnOffLights()
         self.controls?.removeFromParent()
         self.player?.removeFromParent()
         self.run(youLoseSound)

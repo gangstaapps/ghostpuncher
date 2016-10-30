@@ -197,6 +197,24 @@ class Witch: Opponent {
         }
     }
     
+    override func punchedToHell(){
+        self.opponent?.removeAllActions()
+        self.head?.removeAllActions()
+        self.opponent?.setScale(1.0)
+        self.opponent?.alpha = 1.0
+        
+        self.head?.texture = SKTextureAtlas(named: "\(self.opponentName)Head.atlas").textureNamed("\(self.opponentName)_head_frontopen_punch.png")
+        self.leftArm?.texture = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas").textureNamed("\(self.opponentName)_left4.png")
+        self.rightArm?.texture = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas").textureNamed("\(self.opponentName)_right3.png")
+        
+        let scaleMoveGroup:SKAction = SKAction.group([SKAction.scale(to: 0.0, duration: 2.0), SKAction.move(to: CGPoint(x:0, y:0), duration: 2.0)])
+        
+        self.opponent?.run(SKAction.sequence([
+            SKAction.wait(forDuration: 1.0),
+            scaleMoveGroup, SKAction.run({self.delegate?.ghostIsGone()})
+            ]))
+    }
+    
     
     func fireball(pos:CGPoint){
         let sparkEmmiter = SKEmitterNode(fileNamed: "FireBall.sks")!

@@ -59,8 +59,8 @@ struct FightParams {
 class GhostParams:FightParamProto {
     var fullPowerPunch: CGFloat = 2.0
     var blockedPunch: CGFloat = 0.5
-    var attackAggression:CGFloat = 4.0
-    var comboAggression:Int = 10
+    var attackAggression:CGFloat = 3.5
+    var comboAggression:Int = 8
     var dodgeFrequency:Int = 3
 }
 

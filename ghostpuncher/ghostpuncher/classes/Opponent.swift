@@ -300,9 +300,29 @@ class Opponent:SKNode
             ]))
     }
     
+    func punchedToHell(){
+        self.opponent?.removeAllActions()
+        self.head?.removeAllActions()
+        self.opponent?.setScale(1.0)
+        self.opponent?.alpha = 1.0
+        
+        self.head?.texture = SKTextureAtlas(named: "\(self.opponentName)Head.atlas").textureNamed("\(self.opponentName)_head_frontopen_punch.png")
+        self.leftArm?.texture = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas").textureNamed("\(self.opponentName)_left4.png")
+        self.rightArm?.texture = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas").textureNamed("\(self.opponentName)_right4.png")
+        
+        let scaleMoveGroup:SKAction = SKAction.group([SKAction.scale(to: 0.0, duration: 2.0), SKAction.move(to: CGPoint(x:0, y:0), duration: 2.0)])
+        
+        self.opponent?.run(SKAction.sequence([
+            SKAction.wait(forDuration: 1.0),
+            scaleMoveGroup, SKAction.run({self.delegate?.ghostIsGone()})
+            ]))
+    }
+    
     func victory(){
         self.opponent?.removeAllActions()
         self.head?.removeAllActions()
+        self.opponent?.setScale(1.0)
+        self.opponent?.alpha = 1.0
         
         let sequence = SKAction.sequence([
             SKAction.wait(forDuration: 0.5),
@@ -592,8 +612,7 @@ class Opponent:SKNode
             
             if Int(arc4random_uniform(UInt32(2))) == 1 {
                 self.blockAttack()
-            }
-            if self.checkMoreRecent(events: [.playerLeftPunchConnect, .playerRightPunchConnect]) == .playerLeftPunchConnect {
+            }else if self.checkMoreRecent(events: [.playerLeftPunchConnect, .playerRightPunchConnect]) == .playerLeftPunchConnect {
                 self.addEvent(event: .ghostDodgeRight)
             } else {
                 self.addEvent(event: .ghostDodgeLeft)

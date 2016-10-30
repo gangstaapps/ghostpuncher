@@ -140,6 +140,10 @@ class MenuScene: SKScene
         for i in 0..<opponents.count {
             let button:SKSpriteNode
             
+//            let slash1:SKSpriteNode
+//            let slash2:SKSpriteNode
+//            let slash3:SKSpriteNode
+            
             if i >= startWith {
                 button = SKSpriteNode(imageNamed: "\(opponents[i])_rol")
                 button.userData = ["name":opponents[i]]
@@ -147,31 +151,57 @@ class MenuScene: SKScene
                 
                 self.addChild(button)
                 
+                if MenuScene.level > 1 {
+                
+                    for j in 1..<MenuScene.level {
+                        let slash = SKSpriteNode(imageNamed: "slash\(i+1)_\(j)")
+                        slash.position = CGPoint(x: frame.midX, y: frame.midY)
+                        self.addChild(slash)
+                    }
+                }
             } else {
                 button = SKSpriteNode(imageNamed: "stone\(i+1)")
-                let slash1 = SKSpriteNode(imageNamed: "slash\(i+1)_1")
-                slash1.position = CGPoint(x: frame.midX, y: frame.midY)
-                let slash2 = SKSpriteNode(imageNamed: "slash\(i+1)_2")
-                slash2.position = CGPoint(x: frame.midX, y: frame.midY)
-                let slash3 = SKSpriteNode(imageNamed: "slash\(i+1)_3")
-                slash3.position = CGPoint(x: frame.midX, y: frame.midY)
+                
+                var slashes:[SKSpriteNode] = []
+                for j in 1...MenuScene.level {
+                    let slash = SKSpriteNode(imageNamed: "slash\(i+1)_\(j)")
+                    slash.position = CGPoint(x: frame.midX, y: frame.midY)
+                    slashes.append(slash)
+                }
+                
+//                slash1 = SKSpriteNode(imageNamed: "slash\(i+1)_1")
+//                slash1.position = CGPoint(x: frame.midX, y: frame.midY)
+//                slash2 = SKSpriteNode(imageNamed: "slash\(i+1)_2")
+//                slash2.position = CGPoint(x: frame.midX, y: frame.midY)
+//                slash3 = SKSpriteNode(imageNamed: "slash\(i+1)_3")
+//                slash3.position = CGPoint(x: frame.midX, y: frame.midY)
                 if animateIn && i == (startWith - 1) {
                     button.position = CGPoint(x: frame.midX, y: frame.midY + frame.size.height)
-                    button.run(SKAction.sequence([SKAction.moveTo(y: frame.midY, duration: 0.3),SKAction.wait(forDuration: 0.3),SKAction.run({
-                        self.addChild(slash1)
-                    }),SKAction.wait(forDuration: 0.2),SKAction.run({
-                        self.addChild(slash2)
-                    }),SKAction.wait(forDuration: 0.2),SKAction.run({
-                        self.addChild(slash3)
-                    }) ])  )
+//                    button.run(SKAction.sequence([SKAction.moveTo(y: frame.midY, duration: 0.3),SKAction.wait(forDuration: 0.3),SKAction.run({
+//                        self.addChild(slash1)
+//                    }),SKAction.wait(forDuration: 0.2),SKAction.run({
+//                        self.addChild(slash2)
+//                    }),SKAction.wait(forDuration: 0.2),SKAction.run({
+//                        self.addChild(slash3)
+//                    }) ])  )
                     
+                    var sequence:[SKAction] = [SKAction.moveTo(y: frame.midY, duration: 0.3)]
+                    slashes.forEach({slash in
+                        sequence.append(SKAction.wait(forDuration: 0.3))
+                        sequence.append(SKAction.run({
+                            self.addChild(slash)
+                        }))
+                    })
+                    
+                    button.run(SKAction.sequence(sequence))
+
                     self.addChild(button)
                 } else {
                     button.position = CGPoint(x: frame.midX, y: frame.midY)
                     self.addChild(button)
-                    self.addChild(slash1)
-                    self.addChild(slash2)
-                    self.addChild(slash3)
+                    slashes.forEach({slash in
+                        self.addChild(slash)
+                    })
                 }
                 
             }
@@ -186,8 +216,9 @@ class MenuScene: SKScene
             
             self.run(SKAction.sequence([SKAction.wait(forDuration: 2.0), SKAction.run {
                 MenuScene.level += 1
-                let scene = MenuScene(frame: self.frame)
-                self.view?.presentScene(scene)
+                let reveal = SKTransition.crossFade(withDuration: 1.0)
+                let scene = MenuScene(frame: self.frame, opponents:["ghost", "witch", "devil"], startWith:0)
+                self.view?.presentScene(scene, transition: reveal)
                 }]))
             
             return
