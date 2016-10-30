@@ -28,6 +28,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     let superAttackSound = SKAction.playSoundFileNamed("laugh_reverse.wav", waitForCompletion: false)
     let youLoseSound = SKAction.playSoundFileNamed("deathblow.wav", waitForCompletion: false)
     let youWinSound = SKAction.playSoundFileNamed("ghostshock.wav", waitForCompletion: false)
+    let fireballSFX = SKAction.playSoundFileNamed("fireball.wav", waitForCompletion: false)
     
     init(frame: CGRect, backgroundColor : UIColor, opponent:String = "ghost", _ level:Int = 1) {
         self.room = Room(frame:frame, name:opponent)
@@ -135,9 +136,9 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
             if power < 3 {
                 self.run(lightPunchSound)
             } else if power < 7 {
-                self.run(mediumPunchSound)
+                self.run((self.opponent?.mediumPunchSFX())!)
             } else {
-                self.run(heavyPunchSound)
+                self.run((self.opponent?.heavyPunchSFX())!)
             }
             self.battleManager?.playerConnect(power: power)
             self.opponent?.hitRecoil(.right, power:power)
@@ -150,9 +151,9 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
             if power < 3 {
                 self.run(lightPunchSound)
             } else if power < 7 {
-                self.run(mediumPunchSound)
+                self.run((self.opponent?.mediumPunchSFX())!)
             } else {
-                self.run(heavyPunchSound)
+                self.run((self.opponent?.heavyPunchSFX())!)
             }
             self.battleManager?.playerConnect(power: power)
              self.opponent?.hitRecoil(.left, power:power)
@@ -164,7 +165,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         let willItWork = (self.opponent?.willRightComboConnect())!
         self.player?.punchRight(10)
         if willItWork {
-            self.run(heavyPunchSound)
+            self.run((self.opponent?.heavyPunchSFX())!)
             self.battleManager?.playerConnect(power: 10)
             self.opponent?.hitRecoil(.right, power:10)
         }
@@ -175,7 +176,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         let willItWork = (self.opponent?.willLeftComboConnect())!
         self.player?.punchLeft(10)
         if willItWork {
-            self.run(heavyPunchSound)
+            self.run((self.opponent?.heavyPunchSFX())!)
             self.battleManager?.playerConnect(power: 10)
             self.opponent?.hitRecoil(.left, power:10)
         }
@@ -267,8 +268,10 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
             self.room.lunge()
             self.effectsLayer?.showDamage(direction:.left)
             self.opponent?.showDamage(direction:.left)
+            self.run(self.opponent!.enemyConnectSFX())
         } else {
             self.battleManager?.opponentConnect(power:self.opponent!.returnBlockedHit())
+            self.run(self.opponent!.enemyBlockedSFX())
         }
         
     }
@@ -279,8 +282,10 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
             self.room.lunge()
             self.effectsLayer?.showDamage(direction:.right)
             self.opponent?.showDamage(direction:.right)
+            self.run(self.opponent!.enemyConnectSFX())
         }else {
             self.battleManager?.opponentConnect(power:self.opponent!.returnBlockedHit())
+            self.run(self.opponent!.enemyBlockedSFX())
         }
         
     }
@@ -304,7 +309,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     }
     
     func fireBall(){
-        self.run(lightsOutSound)
+        self.run(fireballSFX)
     }
     
     func turnOffLights(){

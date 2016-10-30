@@ -100,21 +100,18 @@ class Witch: Opponent {
             SKAction.wait(forDuration: 0.1),
             SKAction.sequence([
                 SKAction.run({
-                    self.delegate?.fireBall()
                     self.fireball(pos: CGPoint(x: -100, y: 200))
                     self.leftArm?.texture = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas").textureNamed("\(self.opponentName)_left4.png")
                     self.rightArm?.texture = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas").textureNamed("\(self.opponentName)_right1.png")
                 }),
                 SKAction.wait(forDuration: 0.3),
                 SKAction.run({
-                    self.delegate?.fireBall()
                     self.fireball(pos: CGPoint(x: 100, y: 200))
                     self.leftArm?.texture = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas").textureNamed("\(self.opponentName)_left1.png")
                     self.rightArm?.texture = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas").textureNamed("\(self.opponentName)_right4.png")
                 }),
                 SKAction.wait(forDuration: 0.3),
                 SKAction.run({
-                    self.delegate?.fireBall()
                     self.fireball(pos: CGPoint(x: -100, y: 200))
                     self.leftArm?.texture = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas").textureNamed("\(self.opponentName)_left4.png")
                     self.rightArm?.texture = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas").textureNamed("\(self.opponentName)_right1.png")
@@ -225,6 +222,7 @@ class Witch: Opponent {
         sparkEmmiter.zRotation = CGFloat(45.degreesToRadians)
         self.body?.addChild(sparkEmmiter)
         sparkEmmiter.run(SKAction.scale(to: 4.0, duration: 0.5))
+        self.delegate?.fireBall()
     }
     
     override func addGlows(){

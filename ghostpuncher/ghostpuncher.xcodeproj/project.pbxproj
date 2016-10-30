@@ -49,6 +49,16 @@
 		A2B49AF61DA89C1F00F86F40 /* Ghost.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AF51DA89C1F00F86F40 /* Ghost.xcassets */; };
 		A2B49B001DAAB63000F86F40 /* Buttons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AFF1DAAB63000F86F40 /* Buttons.xcassets */; };
 		A2B49B021DAAB6E100F86F40 /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49B011DAAB6E100F86F40 /* Controls.swift */; };
+		A2CEC08D1DC690DC00FFE128 /* buzz.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC0891DC690DC00FFE128 /* buzz.wav */; };
+		A2CEC08E1DC690DC00FFE128 /* groundThump.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC08A1DC690DC00FFE128 /* groundThump.wav */; };
+		A2CEC08F1DC690DC00FFE128 /* slash.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC08B1DC690DC00FFE128 /* slash.wav */; };
+		A2CEC0901DC690DC00FFE128 /* slash2.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC08C1DC690DC00FFE128 /* slash2.wav */; };
+		A2CEC0921DC695A800FFE128 /* skeletonHit.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC0911DC695A800FFE128 /* skeletonHit.wav */; };
+		A2CEC0941DC697F800FFE128 /* sfx_punch3.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC0931DC697F800FFE128 /* sfx_punch3.wav */; };
+		A2CEC0961DC6984400FFE128 /* sfx_punch2.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC0951DC6984400FFE128 /* sfx_punch2.wav */; };
+		A2CEC09A1DC69A3200FFE128 /* enemyBlocked.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC0991DC69A3200FFE128 /* enemyBlocked.wav */; };
+		A2CEC09C1DC69BC900FFE128 /* fireball.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC09B1DC69BC900FFE128 /* fireball.wav */; };
+		A2CEC09E1DC69D7200FFE128 /* enemySlash.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC09D1DC69D7200FFE128 /* enemySlash.wav */; };
 		A2D7B9A41DBB0F6800DC2DD9 /* atmos_loop1.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9971DBB0F6800DC2DD9 /* atmos_loop1.wav */; };
 		A2D7B9A51DBB0F6800DC2DD9 /* atmos_loop2.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9981DBB0F6800DC2DD9 /* atmos_loop2.wav */; };
 		A2D7B9A61DBB0F6800DC2DD9 /* deathblow.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9991DBB0F6800DC2DD9 /* deathblow.wav */; };
@@ -139,6 +149,16 @@
 		A2B49AF51DA89C1F00F86F40 /* Ghost.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Ghost.xcassets; path = opponents/Ghost.xcassets; sourceTree = "<group>"; };
 		A2B49AFF1DAAB63000F86F40 /* Buttons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Buttons.xcassets; sourceTree = "<group>"; };
 		A2B49B011DAAB6E100F86F40 /* Controls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Controls.swift; path = classes/Controls.swift; sourceTree = "<group>"; };
+		A2CEC0891DC690DC00FFE128 /* buzz.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = buzz.wav; sourceTree = "<group>"; };
+		A2CEC08A1DC690DC00FFE128 /* groundThump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = groundThump.wav; sourceTree = "<group>"; };
+		A2CEC08B1DC690DC00FFE128 /* slash.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = slash.wav; sourceTree = "<group>"; };
+		A2CEC08C1DC690DC00FFE128 /* slash2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = slash2.wav; sourceTree = "<group>"; };
+		A2CEC0911DC695A800FFE128 /* skeletonHit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = skeletonHit.wav; sourceTree = "<group>"; };
+		A2CEC0931DC697F800FFE128 /* sfx_punch3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sfx_punch3.wav; sourceTree = "<group>"; };
+		A2CEC0951DC6984400FFE128 /* sfx_punch2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sfx_punch2.wav; sourceTree = "<group>"; };
+		A2CEC0991DC69A3200FFE128 /* enemyBlocked.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = enemyBlocked.wav; sourceTree = "<group>"; };
+		A2CEC09B1DC69BC900FFE128 /* fireball.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fireball.wav; sourceTree = "<group>"; };
+		A2CEC09D1DC69D7200FFE128 /* enemySlash.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = enemySlash.wav; sourceTree = "<group>"; };
 		A2D7B9971DBB0F6800DC2DD9 /* atmos_loop1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = atmos_loop1.wav; sourceTree = "<group>"; };
 		A2D7B9981DBB0F6800DC2DD9 /* atmos_loop2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = atmos_loop2.wav; sourceTree = "<group>"; };
 		A2D7B9991DBB0F6800DC2DD9 /* deathblow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = deathblow.wav; sourceTree = "<group>"; };
@@ -337,6 +357,16 @@
 		A2D7B9961DBB0F6800DC2DD9 /* sound_fx */ = {
 			isa = PBXGroup;
 			children = (
+				A2CEC09B1DC69BC900FFE128 /* fireball.wav */,
+				A2CEC09D1DC69D7200FFE128 /* enemySlash.wav */,
+				A2CEC0991DC69A3200FFE128 /* enemyBlocked.wav */,
+				A2CEC0951DC6984400FFE128 /* sfx_punch2.wav */,
+				A2CEC0931DC697F800FFE128 /* sfx_punch3.wav */,
+				A2CEC0911DC695A800FFE128 /* skeletonHit.wav */,
+				A2CEC0891DC690DC00FFE128 /* buzz.wav */,
+				A2CEC08A1DC690DC00FFE128 /* groundThump.wav */,
+				A2CEC08B1DC690DC00FFE128 /* slash.wav */,
+				A2CEC08C1DC690DC00FFE128 /* slash2.wav */,
 				A2D7B9971DBB0F6800DC2DD9 /* atmos_loop1.wav */,
 				A2D7B9981DBB0F6800DC2DD9 /* atmos_loop2.wav */,
 				A2D7B9991DBB0F6800DC2DD9 /* deathblow.wav */,
@@ -492,30 +522,39 @@
 				A216F0E11DB5D780003DD5BB /* ectoParticle.png in Resources */,
 				A27117881DB31D5A00B36F06 /* ghostRightArm.atlas in Resources */,
 				A2D7B9AE1DBB0F6800DC2DD9 /* soulgrab.wav in Resources */,
+				A2CEC0941DC697F800FFE128 /* sfx_punch3.wav in Resources */,
+				A2CEC08D1DC690DC00FFE128 /* buzz.wav in Resources */,
 				A25C9FE51DBF2A83006CDA73 /* devilHead.atlas in Resources */,
 				A20600FE1DB1A99700035330 /* ecto.png in Resources */,
 				A25C9FE11DBF29E7006CDA73 /* Devil.xcassets in Resources */,
 				A2D7B9A41DBB0F6800DC2DD9 /* atmos_loop1.wav in Resources */,
 				A20600F91DB1A45900035330 /* ectoPlasm.sks in Resources */,
 				A2D7B9BA1DBBBFC300DC2DD9 /* Witch.sks in Resources */,
+				A2CEC08F1DC690DC00FFE128 /* slash.wav in Resources */,
 				A25C9FE61DBF2A83006CDA73 /* devilLeftArm.atlas in Resources */,
 				A2D7B9A81DBB0F6800DC2DD9 /* hard_punch.wav in Resources */,
 				A2D7B9AC1DBB0F6800DC2DD9 /* phaser.wav in Resources */,
 				A2D7B9B71DBBBFA000DC2DD9 /* witchLeftArm.atlas in Resources */,
 				A2D7B9B81DBBBFA000DC2DD9 /* witchRightArm.atlas in Resources */,
+				A2CEC09A1DC69A3200FFE128 /* enemyBlocked.wav in Resources */,
 				A2D7B9B01DBB0F6800DC2DD9 /* witchtalk.wav in Resources */,
+				A2CEC0921DC695A800FFE128 /* skeletonHit.wav in Resources */,
 				A2B49B001DAAB63000F86F40 /* Buttons.xcassets in Resources */,
+				A2CEC0961DC6984400FFE128 /* sfx_punch2.wav in Resources */,
 				A216F0DD1DB5815A003DD5BB /* fists.atlas in Resources */,
+				A2CEC09E1DC69D7200FFE128 /* enemySlash.wav in Resources */,
 				A271178D1DB405FF00B36F06 /* Smoke.sks in Resources */,
 				A2D7B9AB1DBB0F6800DC2DD9 /* med_punch.wav in Resources */,
 				A27117861DB31D5A00B36F06 /* ghostHead.atlas in Resources */,
 				A28A10991DBAC21800029818 /* splashloop.wav in Resources */,
 				A2B49AF61DA89C1F00F86F40 /* Ghost.xcassets in Resources */,
+				A2CEC08E1DC690DC00FFE128 /* groundThump.wav in Resources */,
 				A2D7B9AF1DBB0F6800DC2DD9 /* start.wav in Resources */,
 				A2B49AF41DA89BC900F86F40 /* Ghost.sks in Resources */,
 				A2D7B9A91DBB0F6800DC2DD9 /* laugh_reverse.wav in Resources */,
 				A2D7B9AA1DBB0F6800DC2DD9 /* light_punch.wav in Resources */,
 				A2D7B9A51DBB0F6800DC2DD9 /* atmos_loop2.wav in Resources */,
+				A2CEC09C1DC69BC900FFE128 /* fireball.wav in Resources */,
 				A2D7B9C21DBC47CA00DC2DD9 /* FireBall.sks in Resources */,
 				A27117871DB31D5A00B36F06 /* ghostLeftArm.atlas in Resources */,
 				A2D7B9A71DBB0F6800DC2DD9 /* ghostshock.wav in Resources */,
@@ -528,6 +567,7 @@
 				A227C7AE1DA758AA00EFFD7B /* LaunchScreen.storyboard in Resources */,
 				A25C9FE71DBF2A83006CDA73 /* devilRightArm.atlas in Resources */,
 				A216F0EE1DB71D64003DD5BB /* ghost_portal.atlas in Resources */,
+				A2CEC0901DC690DC00FFE128 /* slash2.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

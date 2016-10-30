@@ -22,6 +22,10 @@ class MenuScene: SKScene
     static var level = 1
     
     let selectSound = SKAction.playSoundFileNamed("select.wav", waitForCompletion: false)
+    let buzzSound = SKAction.playSoundFileNamed("buzz.wav", waitForCompletion: false)
+    let thumpSound = SKAction.playSoundFileNamed("groundThump.wav", waitForCompletion: false)
+    let slashSound = SKAction.playSoundFileNamed("slash.wav", waitForCompletion: false)
+    let slash2Sound = SKAction.playSoundFileNamed("slash2.wav", waitForCompletion: false)
     
     init(frame:CGRect) {
         super.init(size: frame.size)
@@ -189,9 +193,10 @@ class MenuScene: SKScene
 //                        self.addChild(slash3)
 //                    }) ])  )
                     
-                    var sequence:[SKAction] = [SKAction.moveTo(y: frame.midY, duration: 0.3)]
+                    var sequence:[SKAction] = [SKAction.moveTo(y: frame.midY, duration: 0.3), self.thumpSound]
                     slashes.forEach({slash in
                         sequence.append(SKAction.wait(forDuration: 0.3))
+                        sequence.append(self.slash2Sound)
                         sequence.append(SKAction.run({
                             self.addChild(slash)
                         }))
@@ -233,14 +238,17 @@ class MenuScene: SKScene
         
         
         button?.run(SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.run({
+            self.run(self.buzzSound)
             button?.texture = SKTexture(imageNamed: "\(button?.userData?["name"] as! String)_reg")
         }),SKAction.wait(forDuration: 0.5), SKAction.run({
             button?.texture = SKTexture(imageNamed: "\(button?.userData?["name"] as! String)_rol")
         }),SKAction.wait(forDuration: 0.1), SKAction.run({
+            self.run(self.buzzSound)
             button?.texture = SKTexture(imageNamed: "\(button?.userData?["name"] as! String)_reg")
         }),SKAction.wait(forDuration: 0.2), SKAction.run({
             button?.texture = SKTexture(imageNamed: "\(button?.userData?["name"] as! String)_rol")
         }),SKAction.wait(forDuration: 0.1), SKAction.run({
+            self.run(self.buzzSound)
             button?.texture = SKTexture(imageNamed: "\(button?.userData?["name"] as! String)_reg")
         }), SKAction.wait(forDuration: 1.0), SKAction.run({
             let scene = FightScene(frame: self.frame, backgroundColor: UIColor.black, opponent: button?.userData?["name"] as! String, MenuScene.level)

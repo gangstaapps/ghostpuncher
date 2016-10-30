@@ -66,6 +66,12 @@ class Opponent:SKNode
 {
     var fightParams:FightParams?
     
+    let heavyPunchSound = SKAction.playSoundFileNamed("sfx_punch2.wav", waitForCompletion: false)
+    let mediumPunchSound = SKAction.playSoundFileNamed("sfx_punch3.wav", waitForCompletion: false)
+    
+    let slashSound = SKAction.playSoundFileNamed("enemySlash.wav", waitForCompletion: false)
+    let slashBlockedSound = SKAction.playSoundFileNamed("enemyBlocked.wav", waitForCompletion: false)
+    
     var opponent:SKNode!
     var opponentName:String
     var opponentFrame:CGRect
@@ -881,5 +887,17 @@ class Opponent:SKNode
         }
         
         return willConnect
+    }
+    func mediumPunchSFX()->SKAction {
+        return mediumPunchSound
+    }
+    func heavyPunchSFX()->SKAction {
+        return heavyPunchSound
+    }
+    func enemyConnectSFX()->SKAction {
+        return slashSound
+    }
+    func enemyBlockedSFX()->SKAction {
+        return slashBlockedSound
     }
 }
