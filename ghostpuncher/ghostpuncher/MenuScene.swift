@@ -115,15 +115,15 @@ class MenuScene: SKScene
         
         
         
-        tombstoneButton = SKSpriteNode(imageNamed: "stone_lt")
-        tombstoneButton?.position = CGPoint(x: frame.midX, y: frame.midY)
+        tombstoneButton = SKSpriteNode(imageNamed: "stone_dark")
+        tombstoneButton?.position = CGPoint(x: frame.midX, y: frame.midY - frame.size.height)
         self.addChild(tombstoneButton!)
         
-        let message = SKSpriteNode(imageNamed: Int(arc4random_uniform(UInt32(2))) == 1 ? "youlose" : "RIP")
+        let message = SKSpriteNode(imageNamed: Int(arc4random_uniform(UInt32(3))) == 1 ? "youlose" : "RIP")
         
-        message.position = CGPoint(x: frame.midX, y: frame.midY)
-        self.addChild(message)
-        
+        //message.position = CGPoint(x: frame.midX, y: frame.midY)
+        tombstoneButton?.addChild(message)
+        tombstoneButton?.run(SKAction.moveTo(y: frame.midY, duration: 2.0))
     }
     
     init(frame: CGRect, opponents : [String] = ["ghost", "witch", "devil"], startWith:Int, _ animateIn:Bool = false) {
@@ -135,6 +135,8 @@ class MenuScene: SKScene
         bkg.position = CGPoint(x: frame.midX, y: frame.midY)
         self.addChild(bkg)
         
+        
+        let theLevel = min(MenuScene.level, 3)
         
         self.opponents = []
         for i in 0..<opponents.count {
@@ -151,9 +153,9 @@ class MenuScene: SKScene
                 
                 self.addChild(button)
                 
-                if MenuScene.level > 1 {
+                if theLevel > 1 {
                 
-                    for j in 1..<MenuScene.level {
+                    for j in 1..<theLevel {
                         let slash = SKSpriteNode(imageNamed: "slash\(i+1)_\(j)")
                         slash.position = CGPoint(x: frame.midX, y: frame.midY)
                         self.addChild(slash)
@@ -162,8 +164,10 @@ class MenuScene: SKScene
             } else {
                 button = SKSpriteNode(imageNamed: "stone\(i+1)")
                 
+                
+                
                 var slashes:[SKSpriteNode] = []
-                for j in 1...MenuScene.level {
+                for j in 1...theLevel {
                     let slash = SKSpriteNode(imageNamed: "slash\(i+1)_\(j)")
                     slash.position = CGPoint(x: frame.midX, y: frame.midY)
                     slashes.append(slash)
