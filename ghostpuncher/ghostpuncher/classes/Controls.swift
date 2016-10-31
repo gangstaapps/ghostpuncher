@@ -158,7 +158,8 @@ class Controls:SKNode
                              width: (energyBarFrame.size.width - 20) * percent, height: energyBarFrame.size.height/3)
         energyBarPlayer.path = UIBezierPath(rect: barRect).cgPath
         
-        
+        energyBarPlayer.run(SKAction.sequence([SKAction.moveBy(x: -15, y: 0, duration: 0.2),SKAction.moveBy(x: 15, y: 0, duration: 0.1)]))
+        energyBarHolderPlayer.run(SKAction.sequence([SKAction.moveBy(x: -15, y: 0, duration: 0.2),SKAction.moveBy(x: 15, y: 0, duration: 0.1)]))
     }
     func setOpponentHealth(percent:CGFloat){
         let energyBarFrame = self.energyBarHolderOpponent.frame
@@ -166,6 +167,9 @@ class Controls:SKNode
                              y: energyBarFrame.origin.y + energyBarFrame.height/3,
                              width: (energyBarFrame.size.width - 20) * percent, height: energyBarFrame.size.height/3)
         energyBarOpponent.path = UIBezierPath(rect: barRect).cgPath
+        
+        energyBarOpponent.run(SKAction.sequence([SKAction.moveBy(x: 15, y: 0, duration: 0.2),SKAction.moveBy(x: -15, y: 0, duration: 0.1)]))
+        energyBarHolderOpponent.run(SKAction.sequence([SKAction.moveBy(x: 15, y: 0, duration: 0.2),SKAction.moveBy(x: -15, y: 0, duration: 0.1)]))
     }
     func checkButtonHit(_ touches:Set<UITouch> ){
         

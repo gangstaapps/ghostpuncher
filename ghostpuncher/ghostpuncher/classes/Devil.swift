@@ -191,23 +191,23 @@ class Devil: Opponent {
     
     override func spark(_ direction:Direction, _ power:CGFloat){
         
-//        let sparkEmmiter = SKEmitterNode(fileNamed: "ectoPlasm.sks")!
-//        sparkEmmiter.position = CGPoint(x: (direction == .right ? -30 : 30), y: 25)
-//        sparkEmmiter.name = "sparkEmmitter"
-//        sparkEmmiter.zPosition = 200
-//        sparkEmmiter.targetNode = self
+        let sparkEmmiter = SKEmitterNode(fileNamed: "devilBlood.sks")!
+        sparkEmmiter.position = CGPoint(x: (direction == .right ? -30 : 30), y: -5)
+        sparkEmmiter.name = "devilBlood"
+        sparkEmmiter.zPosition = 1200
+        sparkEmmiter.targetNode = self.head!
 //        sparkEmmiter.particleLifetime = 3
 //        sparkEmmiter.particleColor = SKColor.red
 //        sparkEmmiter.particleColorBlendFactor = 1.0
 //        sparkEmmiter.alpha = 1.0
 //        sparkEmmiter.particleBlendMode = SKBlendMode.alpha
 //        sparkEmmiter.particleColorSequence = nil
-//        sparkEmmiter.emissionAngle = (CGFloat(direction == .right ? 180.0.radiansToDegrees : 0.0.radiansToDegrees))
-//        sparkEmmiter.xAcceleration = (direction == .right ? -900 : 900)
-//        sparkEmmiter.numParticlesToEmit = Int(power.multiplied(by: 10))
-//        
-//        
-//        self.head?.addChild(sparkEmmiter)
+        sparkEmmiter.emissionAngle = (CGFloat(direction == .right ? 180.0.radiansToDegrees : 0.0.radiansToDegrees))
+        sparkEmmiter.xAcceleration = (direction == .right ? -900 : 900)
+        sparkEmmiter.numParticlesToEmit = Int(power.multiplied(by: 10))
+        
+        
+        self.head?.addChild(sparkEmmiter)
     }
     
     override func returnGlowColor()->SKColor {

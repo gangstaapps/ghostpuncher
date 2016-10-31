@@ -26,6 +26,8 @@ class MenuScene: SKScene
     let thumpSound = SKAction.playSoundFileNamed("groundThump.wav", waitForCompletion: false)
     let slashSound = SKAction.playSoundFileNamed("slash.wav", waitForCompletion: false)
     let slash2Sound = SKAction.playSoundFileNamed("slash2.wav", waitForCompletion: false)
+    let mediumPunchSound = SKAction.playSoundFileNamed("sfx_punch3.wav", waitForCompletion: false)
+    let evilLaughSound = SKAction.playSoundFileNamed("evilLaugh.wav", waitForCompletion: false)
     
     init(frame:CGRect) {
         super.init(size: frame.size)
@@ -47,12 +49,14 @@ class MenuScene: SKScene
         self.addChild(logo!)
         
         fist.run(SKAction.sequence([
-             SKAction.moveTo(x: 0, duration: 0.2)
+            SKAction.moveTo(x: 0, duration: 0.2),
+            self.mediumPunchSound
         ]))
         
         logo?.run(SKAction.sequence([
             SKAction.wait(forDuration: 0.4),
-            SKAction.moveTo(x: frame.midX, duration: 0.0)
+            SKAction.moveTo(x: frame.midX, duration: 0.0),
+            evilLaughSound
             ]))
         
         fightButton = SKSpriteNode(imageNamed: "fight_reg")
@@ -311,7 +315,7 @@ class MenuScene: SKScene
         }
         
         if self.checkTombstonePressed(atPoint: pos) {
-             let enemies = ["ghost", "witch", "devil"]
+//             let enemies = ["ghost", "witch", "devil"]
             let scene = MenuScene(frame: frame, opponents:["ghost", "witch", "devil"], startWith:self.continueFrom, false)
 //            let scene = FightScene(frame: self.frame, backgroundColor: UIColor.black, opponent: enemies[self.continueFrom], MenuScene.level)
             
