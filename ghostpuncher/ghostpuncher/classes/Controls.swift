@@ -73,7 +73,7 @@ class Controls:SKNode
     
     
     
-    init(frame: CGRect) {
+    init(frame: CGRect, opponent:String) {
         self.roomFrame = frame
         
         self.leftPunch  = SKSpriteNode(imageNamed: "punch_reg")
@@ -86,6 +86,12 @@ class Controls:SKNode
         self.energyBarHolderPlayer.setScale(0.5)
         self.energyBarHolderOpponent.position = CGPoint(x: self.roomFrame.size.width * 0.85, y: self.roomFrame.size.height * 0.95)
         self.energyBarHolderOpponent.setScale(0.5)
+        
+        let opponentIcon:SKSpriteNode = SKSpriteNode(texture: SKTextureAtlas(named: "\(opponent)Head.atlas").textureNamed("\(opponent)_head_frontopen_punch.png"))
+        
+        opponentIcon.setScale(0.2)
+        
+        
         
         energyBarPlayer = SKShapeNode()
         energyBarPlayer.fillColor = UIColor.orange
@@ -114,6 +120,10 @@ class Controls:SKNode
         rightButtonPowerMeter.lineWidth = 4
         rightButtonPowerMeter.glowWidth = 5
         self.addChild(rightButtonPowerMeter)
+        
+        opponentIcon.position = CGPoint(x: self.energyBarHolderOpponent.frame.origin.x - 10, y: self.roomFrame.size.height * 0.95)
+        
+        self.addChild(opponentIcon)
         
         self.addChild(leftPunchRoll)
         
@@ -147,6 +157,8 @@ class Controls:SKNode
                              y: energyBarFrame.origin.y + energyBarFrame.height/3,
                              width: (energyBarFrame.size.width - 20) * percent, height: energyBarFrame.size.height/3)
         energyBarPlayer.path = UIBezierPath(rect: barRect).cgPath
+        
+        
     }
     func setOpponentHealth(percent:CGFloat){
         let energyBarFrame = self.energyBarHolderOpponent.frame

@@ -161,15 +161,15 @@ class Witch: Opponent {
         if self.checkForAttackTime()
         {
             
-            if Int(arc4random_uniform(UInt32(2))) == 1 {
-                self.blockAttack()
-            }else {
+//            if Int(arc4random_uniform(UInt32(4))) == 1  && !self.checkLast(10, eventsEqualAny: [.ghostBlock],  excluding:[]) {
+//                self.blockAttack()
+//            }else {
                 let amount = max(arc4random_uniform(UInt32(2)), 1)
                 
                 for _ in 0...amount {
                     self.randomAttack()
                 }
-            }
+//            }
             return
         } else {
             print("BREAK: not attack time")
@@ -311,7 +311,7 @@ class Witch: Opponent {
                           excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail]){
             
             
-            if Int(arc4random_uniform(UInt32(2))) == 1 {
+            if Int(arc4random_uniform(UInt32(4))) == 1  && !self.checkLast(10, eventsEqualAny: [.ghostBlock],  excluding:[]) {
                 self.blockAttack()
             } else {
                 if self.checkMoreRecent(events: [.playerLeftPunchConnect, .playerRightPunchConnect]) == .playerLeftPunchConnect {

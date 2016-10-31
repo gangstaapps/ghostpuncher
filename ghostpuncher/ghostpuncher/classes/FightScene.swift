@@ -51,7 +51,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.player?.zPosition = 10
         self.addChild(self.player!)
         
-        self.controls = Controls(frame: frame)
+        self.controls = Controls(frame: frame, opponent:opponent)
         self.controls?.zPosition = 20
         self.addChild(self.controls!)
         self.controls?.delegate = self

@@ -613,11 +613,12 @@ class Opponent:SKNode
         let dodgeFrequency = self.fightParams?.dodgeFrequency ?? 3
         
         if self.checkLast(dodgeFrequency, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect],
-                          excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail]){
+                          excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail, .ghostBlock]){
             
             
-            if Int(arc4random_uniform(UInt32(2))) == 1 {
+            if Int(arc4random_uniform(UInt32(2))) == 1 && !self.checkLast(10, eventsEqualAny: [.ghostBlock],  excluding:[]) {
                 self.blockAttack()
+                print("Block attack")
             }else if self.checkMoreRecent(events: [.playerLeftPunchConnect, .playerRightPunchConnect]) == .playerLeftPunchConnect {
                 self.addEvent(event: .ghostDodgeRight)
             } else {
@@ -769,15 +770,15 @@ class Opponent:SKNode
         if self.checkForAttackTime()
         {
             
-            if Int(arc4random_uniform(UInt32(2))) == 1 {
-                self.blockAttack()
-            }else {
+//            if Int(arc4random_uniform(UInt32(4))) == 1  && !self.checkLast(10, eventsEqualAny: [.ghostBlock],  excluding:[]) {
+//                self.blockAttack()
+//            }else {
                 let amount = max(arc4random_uniform(UInt32(2)), 1)
                 
                 for _ in 0...amount {
                     self.randomAttack()
                 }
-            }
+//            }
             return
         } else {
             print("BREAK: not attack time")
