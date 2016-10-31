@@ -60,7 +60,7 @@ class GhostParams:FightParamProto {
     var fullPowerPunch: CGFloat = 2.0
     var blockedPunch: CGFloat = 0.5
     var attackAggression:CGFloat = 3.5
-    var comboAggression:Int = 8
+    var comboAggression:Int = 9
     var dodgeFrequency:Int = 3
 }
 
@@ -68,15 +68,15 @@ class WitchParams:FightParamProto {
     var fullPowerPunch: CGFloat = 3.0
     var blockedPunch: CGFloat = 1.0
     var attackAggression:CGFloat = 3.0
-    var comboAggression:Int = 6
+    var comboAggression:Int = 7
     var dodgeFrequency:Int = 3
 }
 
 class DevilParams:FightParamProto {
     var fullPowerPunch: CGFloat = 4.0
     var blockedPunch: CGFloat = 1.5
-    var attackAggression:CGFloat = 2.0
-    var comboAggression:Int = 5
+    var attackAggression:CGFloat = 2.5
+    var comboAggression:Int = 6
     var dodgeFrequency:Int = 2
 }
 

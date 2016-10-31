@@ -34,6 +34,9 @@ class Controls:SKNode
     var leftButtonPowerMeter:SKShapeNode
     var rightButtonPowerMeter:SKShapeNode
     
+    var leftButtonPowerSmoke:SKEmitterNode
+    var rightButtonPowerSmoke:SKEmitterNode
+    
     var leftButtonGainingPower = false
     var rightButtonGainingPower = false
     var leftButtonPower:CGFloat = 1.0
@@ -107,18 +110,47 @@ class Controls:SKNode
         
         rightButtonPowerMeter = SKShapeNode()
         
+        leftButtonPowerSmoke = SKEmitterNode(fileNamed: "DevilFlames.sks")!
+//        leftButtonPowerSmoke.position = leftPunch.position
+        leftButtonPowerSmoke.name = "sparkEmmitterLeft"
+        leftButtonPowerSmoke.particleZPosition = -2
+        leftButtonPowerSmoke.targetNode = leftPunchRoll
+        leftButtonPowerSmoke.alpha = 0.25
+        leftButtonPowerSmoke.particleAlpha = 0.5
+        leftButtonPowerSmoke.particleSpeed = 0
+        leftButtonPowerSmoke.particlePositionRange = CGVector(dx: leftPunchRoll.frame.size.width * 0.7, dy: 20.0)
+        
+        leftPunchRoll.addChild(leftButtonPowerSmoke)
+        
+        let rightPunchRoll = SKSpriteNode(imageNamed: "punch_roll")
+        rightPunchRoll.position = CGPoint(x: self.roomFrame.size.width * 0.9, y: self.roomFrame.size.height * 0.15)
+        
+        
+        rightButtonPowerSmoke = SKEmitterNode(fileNamed: "DevilFlames.sks")!
+//        rightButtonPowerSmoke.position = rightPunch.position
+        rightButtonPowerSmoke.name = "sparkEmmitterRight"
+        rightButtonPowerSmoke.particleZPosition = -2
+        rightButtonPowerSmoke.targetNode = rightPunchRoll
+        rightButtonPowerSmoke.alpha = 0.25
+        rightButtonPowerSmoke.particleAlpha = 0.5
+        rightButtonPowerSmoke.particleSpeed = 0
+        rightButtonPowerSmoke.particlePositionRange = CGVector(dx: rightPunchRoll.frame.size.width * 0.7, dy: 20.0)
+        
+        rightPunchRoll.addChild(rightButtonPowerSmoke)
+        
+        
         super.init()
         
         leftButtonPowerMeter.fillColor = SKColor.clear
         leftButtonPowerMeter.strokeColor = SKColor.red
-        leftButtonPowerMeter.lineWidth = 4
-        leftButtonPowerMeter.glowWidth = 5
+        leftButtonPowerMeter.lineWidth = 1
+        leftButtonPowerMeter.glowWidth = 1
         self.addChild(leftButtonPowerMeter)
         
         rightButtonPowerMeter.fillColor = SKColor.clear
         rightButtonPowerMeter.strokeColor = SKColor.red
-        rightButtonPowerMeter.lineWidth = 4
-        rightButtonPowerMeter.glowWidth = 5
+        rightButtonPowerMeter.lineWidth = 1
+        rightButtonPowerMeter.glowWidth = 1
         self.addChild(rightButtonPowerMeter)
         
         opponentIcon.position = CGPoint(x: self.energyBarHolderOpponent.frame.origin.x - 10, y: self.roomFrame.size.height * 0.95)
@@ -129,8 +161,7 @@ class Controls:SKNode
         
         self.addChild(self.leftPunch)
         
-        let rightPunchRoll = SKSpriteNode(imageNamed: "punch_roll")
-        rightPunchRoll.position = CGPoint(x: self.roomFrame.size.width * 0.9, y: self.roomFrame.size.height * 0.15)
+        
         self.addChild(rightPunchRoll)
         
         self.rightPunch.position = CGPoint(x: self.roomFrame.size.width * 0.9, y: self.roomFrame.size.height * 0.15)
@@ -239,7 +270,7 @@ class Controls:SKNode
                     delegate?.punchLeft(power: leftButtonPower)
                     leftButtonPowerMeter.path = nil
                     leftButtonGainingPower = false
-
+                    leftButtonPowerSmoke.particleSpeed = 0
                 }
             }
         }
@@ -252,6 +283,7 @@ class Controls:SKNode
                     delegate?.punchRight(power: rightButtonPower)
                     rightButtonPowerMeter.path = nil
                     rightButtonGainingPower = false
+                    rightButtonPowerSmoke.particleSpeed = 0
                 }
             }
         }
@@ -263,26 +295,30 @@ class Controls:SKNode
         if rightButtonGainingPower {
             rightButtonPower += 0.1
             let degrees = (rightButtonPower/10.0) * 360
-            rightButtonPowerMeter.path = self.circlePathWith(angle: CGFloat(degrees), forButton: self.rightPunch)
+//            rightButtonPowerMeter.path = self.circlePathWith(angle: CGFloat(degrees), forButton: self.rightPunch)
+            rightButtonPowerSmoke.particleSpeed = rightButtonPower * 20
             if rightButtonPower >= 10 {
                 rightButtonGainingPower = false
                 delegate?.punchRight(power:rightButtonPower)
                 self.rightPunch.isHidden = false
                 self.rightPunch.userData = nil
                 rightButtonPowerMeter.path = nil
+                rightButtonPowerSmoke.particleSpeed = 0
             }
         }
         
         if leftButtonGainingPower {
             leftButtonPower += 0.1
             let degrees = (leftButtonPower/10.0) * 360
-            leftButtonPowerMeter.path = self.circlePathWith(angle: CGFloat(degrees), forButton: self.leftPunch)
+//            leftButtonPowerMeter.path = self.circlePathWith(angle: CGFloat(degrees), forButton: self.leftPunch)
+           leftButtonPowerSmoke.particleSpeed = leftButtonPower * 20
             if leftButtonPower >= 10 {
                 leftButtonGainingPower = false
                 delegate?.punchLeft(power:leftButtonPower)
                 self.leftPunch.isHidden = false
                 self.leftPunch.userData = nil
                 leftButtonPowerMeter.path = nil
+                leftButtonPowerSmoke.particleSpeed = 0
             }
         }
         if currentSceneTime - lastActivityCheck > INACTIVITY_TIME_TO_CHECK {
