@@ -110,7 +110,7 @@ class Controls:SKNode
         
         rightButtonPowerMeter = SKShapeNode()
         
-        leftButtonPowerSmoke = SKEmitterNode(fileNamed: "DevilFlames.sks")!
+        leftButtonPowerSmoke = SKEmitterNode(fileNamed: "ButtonPowerMeter.sks")!
 //        leftButtonPowerSmoke.position = leftPunch.position
         leftButtonPowerSmoke.name = "sparkEmmitterLeft"
         leftButtonPowerSmoke.particleZPosition = -2
@@ -126,7 +126,7 @@ class Controls:SKNode
         rightPunchRoll.position = CGPoint(x: self.roomFrame.size.width * 0.9, y: self.roomFrame.size.height * 0.15)
         
         
-        rightButtonPowerSmoke = SKEmitterNode(fileNamed: "DevilFlames.sks")!
+        rightButtonPowerSmoke = SKEmitterNode(fileNamed: "ButtonPowerMeter.sks")!
 //        rightButtonPowerSmoke.position = rightPunch.position
         rightButtonPowerSmoke.name = "sparkEmmitterRight"
         rightButtonPowerSmoke.particleZPosition = -2
@@ -143,14 +143,14 @@ class Controls:SKNode
         
         leftButtonPowerMeter.fillColor = SKColor.clear
         leftButtonPowerMeter.strokeColor = SKColor.red
-        leftButtonPowerMeter.lineWidth = 1
-        leftButtonPowerMeter.glowWidth = 1
+        leftButtonPowerMeter.lineWidth = 4
+        leftButtonPowerMeter.glowWidth = 5
         self.addChild(leftButtonPowerMeter)
         
         rightButtonPowerMeter.fillColor = SKColor.clear
         rightButtonPowerMeter.strokeColor = SKColor.red
-        rightButtonPowerMeter.lineWidth = 1
-        rightButtonPowerMeter.glowWidth = 1
+        rightButtonPowerMeter.lineWidth = 4
+        rightButtonPowerMeter.glowWidth = 5
         self.addChild(rightButtonPowerMeter)
         
         opponentIcon.position = CGPoint(x: self.energyBarHolderOpponent.frame.origin.x - 10, y: self.roomFrame.size.height * 0.95)
