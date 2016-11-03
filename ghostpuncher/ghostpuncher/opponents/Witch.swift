@@ -154,7 +154,7 @@ class Witch: Opponent {
         }
         
         if self.opponent.alpha < 1.0 {
-            print("BREAK: alpha < 1")
+            
             return
         }
         
@@ -172,7 +172,7 @@ class Witch: Opponent {
 //            }
             return
         } else {
-            print("BREAK: not attack time")
+           
         }
         
         

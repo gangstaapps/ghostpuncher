@@ -27,6 +27,7 @@
 		A2519B441DC70454001925F8 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = A2519B421DC70454001925F8 /* spark.png */; };
 		A2519B481DC7088F001925F8 /* evilLaugh.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2519B471DC7088F001925F8 /* evilLaugh.wav */; };
 		A2519B4A1DC84311001925F8 /* ButtonPowerMeter.sks in Resources */ = {isa = PBXBuildFile; fileRef = A2519B491DC84311001925F8 /* ButtonPowerMeter.sks */; };
+		A2519B4C1DC9B859001925F8 /* Buttons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2519B4B1DC9B859001925F8 /* Buttons.xcassets */; };
 		A25615F61DAC207D00BA3DF8 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25615F51DAC207D00BA3DF8 /* MenuScene.swift */; };
 		A25615F81DAD561C00BA3DF8 /* BattleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25615F71DAD561C00BA3DF8 /* BattleManager.swift */; };
 		A25C9FE11DBF29E7006CDA73 /* Devil.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A25C9FE01DBF29E7006CDA73 /* Devil.xcassets */; };
@@ -50,7 +51,6 @@
 		A2B49AF11DA88EAF00F86F40 /* FightScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AF01DA88EAF00F86F40 /* FightScene.swift */; };
 		A2B49AF41DA89BC900F86F40 /* Ghost.sks in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AF31DA89BC900F86F40 /* Ghost.sks */; };
 		A2B49AF61DA89C1F00F86F40 /* Ghost.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AF51DA89C1F00F86F40 /* Ghost.xcassets */; };
-		A2B49B001DAAB63000F86F40 /* Buttons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B49AFF1DAAB63000F86F40 /* Buttons.xcassets */; };
 		A2B49B021DAAB6E100F86F40 /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49B011DAAB6E100F86F40 /* Controls.swift */; };
 		A2CEC08D1DC690DC00FFE128 /* buzz.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC0891DC690DC00FFE128 /* buzz.wav */; };
 		A2CEC08E1DC690DC00FFE128 /* groundThump.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC08A1DC690DC00FFE128 /* groundThump.wav */; };
@@ -130,6 +130,7 @@
 		A2519B421DC70454001925F8 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		A2519B471DC7088F001925F8 /* evilLaugh.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = evilLaugh.wav; sourceTree = "<group>"; };
 		A2519B491DC84311001925F8 /* ButtonPowerMeter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ButtonPowerMeter.sks; sourceTree = "<group>"; };
+		A2519B4B1DC9B859001925F8 /* Buttons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Buttons.xcassets; sourceTree = "<group>"; };
 		A25615F51DAC207D00BA3DF8 /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		A25615F71DAD561C00BA3DF8 /* BattleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BattleManager.swift; path = classes/BattleManager.swift; sourceTree = "<group>"; };
 		A25C9FE01DBF29E7006CDA73 /* Devil.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Devil.xcassets; sourceTree = "<group>"; };
@@ -153,7 +154,6 @@
 		A2B49AF01DA88EAF00F86F40 /* FightScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FightScene.swift; path = classes/FightScene.swift; sourceTree = "<group>"; };
 		A2B49AF31DA89BC900F86F40 /* Ghost.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Ghost.sks; path = opponents/Ghost.sks; sourceTree = "<group>"; };
 		A2B49AF51DA89C1F00F86F40 /* Ghost.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Ghost.xcassets; path = opponents/Ghost.xcassets; sourceTree = "<group>"; };
-		A2B49AFF1DAAB63000F86F40 /* Buttons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Buttons.xcassets; sourceTree = "<group>"; };
 		A2B49B011DAAB6E100F86F40 /* Controls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Controls.swift; path = classes/Controls.swift; sourceTree = "<group>"; };
 		A2CEC0891DC690DC00FFE128 /* buzz.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = buzz.wav; sourceTree = "<group>"; };
 		A2CEC08A1DC690DC00FFE128 /* groundThump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = groundThump.wav; sourceTree = "<group>"; };
@@ -357,7 +357,7 @@
 			isa = PBXGroup;
 			children = (
 				A227C7AA1DA758AA00EFFD7B /* Assets.xcassets */,
-				A2B49AFF1DAAB63000F86F40 /* Buttons.xcassets */,
+				A2519B4B1DC9B859001925F8 /* Buttons.xcassets */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -523,6 +523,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A227C7A91DA758A900EFFD7B /* Main.storyboard in Resources */,
+				A2519B4C1DC9B859001925F8 /* Buttons.xcassets in Resources */,
 				A216F0E61DB6EE18003DD5BB /* portal.atlas in Resources */,
 				A2519B4A1DC84311001925F8 /* ButtonPowerMeter.sks in Resources */,
 				A2D7B9A61DBB0F6800DC2DD9 /* deathblow.wav in Resources */,
@@ -549,7 +550,6 @@
 				A2D7B9B01DBB0F6800DC2DD9 /* witchtalk.wav in Resources */,
 				A2519B441DC70454001925F8 /* spark.png in Resources */,
 				A2CEC0921DC695A800FFE128 /* skeletonHit.wav in Resources */,
-				A2B49B001DAAB63000F86F40 /* Buttons.xcassets in Resources */,
 				A2CEC0961DC6984400FFE128 /* sfx_punch2.wav in Resources */,
 				A216F0DD1DB5815A003DD5BB /* fists.atlas in Resources */,
 				A2CEC09E1DC69D7200FFE128 /* enemySlash.wav in Resources */,

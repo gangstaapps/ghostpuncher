@@ -26,12 +26,12 @@ struct FightParams {
     }
     var fullPowerHit:CGFloat {
         get {
-            return CGFloat(self.multiplier) * self.opponentParams.fullPowerPunch
+            return  self.opponentParams.fullPowerPunch
         }
     }
     var blockedHit:CGFloat {
         get {
-            return CGFloat(self.multiplier) * self.opponentParams.blockedPunch
+            return  self.opponentParams.blockedPunch
         }
     }
     var attackAggression:CGFloat {
@@ -59,24 +59,24 @@ struct FightParams {
 class GhostParams:FightParamProto {
     var fullPowerPunch: CGFloat = 2.0
     var blockedPunch: CGFloat = 0.5
-    var attackAggression:CGFloat = 3.5
-    var comboAggression:Int = 9
+    var attackAggression:CGFloat = 4.5
+    var comboAggression:Int = 10
     var dodgeFrequency:Int = 3
 }
 
 class WitchParams:FightParamProto {
     var fullPowerPunch: CGFloat = 3.0
     var blockedPunch: CGFloat = 1.0
-    var attackAggression:CGFloat = 3.0
-    var comboAggression:Int = 7
+    var attackAggression:CGFloat = 3.5
+    var comboAggression:Int = 9
     var dodgeFrequency:Int = 3
 }
 
 class DevilParams:FightParamProto {
     var fullPowerPunch: CGFloat = 4.0
     var blockedPunch: CGFloat = 1.5
-    var attackAggression:CGFloat = 2.5
-    var comboAggression:Int = 6
+    var attackAggression:CGFloat = 3.0
+    var comboAggression:Int = 8
     var dodgeFrequency:Int = 2
 }
 

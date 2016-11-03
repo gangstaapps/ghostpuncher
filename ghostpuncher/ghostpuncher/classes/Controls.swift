@@ -16,11 +16,15 @@ protocol ControlsDelegate:class {
     func checkBlockEndRight()->Bool
     func comboRight()
     func comboLeft()
+    func jukeRight()
+    func jukeLeft()
 }
 
 class Controls:SKNode
 {
     let roomFrame:CGRect
+    
+    
     
     let leftPunch:SKSpriteNode
     let rightPunch:SKSpriteNode
@@ -28,8 +32,8 @@ class Controls:SKNode
     let energyBarHolderPlayer:SKSpriteNode
     let energyBarHolderOpponent:SKSpriteNode
     
-    let energyBarPlayer:SKShapeNode
-    let energyBarOpponent:SKShapeNode
+    let energyBarPlayer:SKSpriteNode
+    let energyBarOpponent:SKSpriteNode
     
     var leftButtonPowerMeter:SKShapeNode
     var rightButtonPowerMeter:SKShapeNode
@@ -45,7 +49,7 @@ class Controls:SKNode
     weak var delegate:ControlsDelegate?
     
     static let LENGTH_OF_MEMORY = 100
-    let INACTIVITY_TIME_TO_CHECK = 0.25
+    let INACTIVITY_TIME_TO_CHECK = 0.2
     
     var lastActivityCheck = 0.0
     var currentSceneTime = 0.0
@@ -57,6 +61,8 @@ class Controls:SKNode
         case punchRight = 2
         case nothing = 4
         case combo = 8
+        case jukeLeft = 16
+        case jukeRight = 32
     }
     
     func addEvent(event:Button){
@@ -82,8 +88,8 @@ class Controls:SKNode
         self.leftPunch  = SKSpriteNode(imageNamed: "punch_reg")
         self.rightPunch   = SKSpriteNode(imageNamed: "punch_reg")
        
-        self.energyBarHolderPlayer = SKSpriteNode(imageNamed: "control_bar")
-        self.energyBarHolderOpponent = SKSpriteNode(imageNamed: "control_bar")
+        self.energyBarHolderPlayer = SKSpriteNode(imageNamed: "left_health")
+        self.energyBarHolderOpponent = SKSpriteNode(imageNamed: "right_health")
         
         self.energyBarHolderPlayer.position = CGPoint(x: self.roomFrame.size.width * 0.15, y: self.roomFrame.size.height * 0.95)
         self.energyBarHolderPlayer.setScale(0.5)
@@ -96,13 +102,18 @@ class Controls:SKNode
         
         
         
-        energyBarPlayer = SKShapeNode()
-        energyBarPlayer.fillColor = UIColor.orange
+        energyBarPlayer = SKSpriteNode(imageNamed: "green_meter")
+        energyBarPlayer.anchorPoint = CGPoint(x: 0, y: 0.5)
+//        energyBarPlayer.fillColor = UIColor.orange
         
-        energyBarOpponent = SKShapeNode()
-        energyBarOpponent.fillColor = UIColor.green
+        energyBarOpponent = SKSpriteNode(imageNamed: "orange_meter")
+        energyBarOpponent.anchorPoint = CGPoint(x: 0, y: 0.5)
+//        energyBarOpponent.fillColor = UIColor.green
         
-        let leftPunchRoll = SKSpriteNode(imageNamed: "punch_roll")
+        
+        
+        
+        let leftPunchRoll = SKSpriteNode(imageNamed: "punch_rol")
         leftPunchRoll.position = CGPoint(x: self.roomFrame.size.width * 0.1, y: self.roomFrame.size.height * 0.15)
         self.leftPunch.position = leftPunchRoll.position
         
@@ -118,11 +129,11 @@ class Controls:SKNode
         leftButtonPowerSmoke.alpha = 0.25
         leftButtonPowerSmoke.particleAlpha = 0.5
         leftButtonPowerSmoke.particleSpeed = 0
-        leftButtonPowerSmoke.particlePositionRange = CGVector(dx: leftPunchRoll.frame.size.width * 0.7, dy: 20.0)
+//        leftButtonPowerSmoke.particlePositionRange = CGVector(dx: leftPunchRoll.frame.size.width * 0.7, dy: 20.0)
         
         leftPunchRoll.addChild(leftButtonPowerSmoke)
         
-        let rightPunchRoll = SKSpriteNode(imageNamed: "punch_roll")
+        let rightPunchRoll = SKSpriteNode(imageNamed: "punch_rol")
         rightPunchRoll.position = CGPoint(x: self.roomFrame.size.width * 0.9, y: self.roomFrame.size.height * 0.15)
         
         
@@ -134,26 +145,28 @@ class Controls:SKNode
         rightButtonPowerSmoke.alpha = 0.25
         rightButtonPowerSmoke.particleAlpha = 0.5
         rightButtonPowerSmoke.particleSpeed = 0
-        rightButtonPowerSmoke.particlePositionRange = CGVector(dx: rightPunchRoll.frame.size.width * 0.7, dy: 20.0)
+//        rightButtonPowerSmoke.particlePositionRange = CGVector(dx: rightPunchRoll.frame.size.width * 0.7, dy: 20.0)
         
         rightPunchRoll.addChild(rightButtonPowerSmoke)
         
         
         super.init()
         
+        
+        
         leftButtonPowerMeter.fillColor = SKColor.clear
-        leftButtonPowerMeter.strokeColor = SKColor.red
+        leftButtonPowerMeter.strokeColor = SKColor.init(hex: 0xff9b14)
         leftButtonPowerMeter.lineWidth = 4
         leftButtonPowerMeter.glowWidth = 5
         self.addChild(leftButtonPowerMeter)
         
         rightButtonPowerMeter.fillColor = SKColor.clear
-        rightButtonPowerMeter.strokeColor = SKColor.red
+        rightButtonPowerMeter.strokeColor = SKColor.init(hex: 0xff9b14)
         rightButtonPowerMeter.lineWidth = 4
         rightButtonPowerMeter.glowWidth = 5
         self.addChild(rightButtonPowerMeter)
         
-        opponentIcon.position = CGPoint(x: self.energyBarHolderOpponent.frame.origin.x - 10, y: self.roomFrame.size.height * 0.95)
+        opponentIcon.position = CGPoint(x: self.energyBarHolderOpponent.frame.origin.x - 16, y: self.roomFrame.size.height * 0.95)
         
         self.addChild(opponentIcon)
         
@@ -177,27 +190,33 @@ class Controls:SKNode
         self.setOpponentHealth(percent:1.00)
     }
     
+    
+    
     func circlePathWith(angle:CGFloat, forButton sprite:SKSpriteNode)->CGPath{
         return UIBezierPath(arcCenter:
-            CGPoint(x:sprite.position.x,y:sprite.position.y + 10) , radius: (sprite.frame.size.width + 10)/2, startAngle: 0.0, endAngle: CGFloat(angle).degreesToRadians, clockwise: true).cgPath
+            CGPoint(x:sprite.position.x,y:sprite.position.y ) , radius: (sprite.frame.size.width + 10)/2, startAngle: 0.0, endAngle: CGFloat(angle).degreesToRadians, clockwise: true).cgPath
     }
     
     func setPlayerHealth(percent:CGFloat){
         let energyBarFrame = self.energyBarHolderPlayer.frame
-        let barRect = CGRect(x: energyBarFrame.origin.x + 10,
+        let barRect = CGRect(x: energyBarFrame.origin.x,
                              y: energyBarFrame.origin.y + energyBarFrame.height/3,
-                             width: (energyBarFrame.size.width - 20) * percent, height: energyBarFrame.size.height/3)
-        energyBarPlayer.path = UIBezierPath(rect: barRect).cgPath
+                             width: (energyBarFrame.size.width - 12) * percent, height: energyBarFrame.size.height/2)
+//        energyBarPlayer.path = UIBezierPath(rect: barRect).cgPath
+        energyBarPlayer.size = barRect.size
+         energyBarPlayer.position = barRect.origin
         
         energyBarPlayer.run(SKAction.sequence([SKAction.moveBy(x: -15, y: 0, duration: 0.2),SKAction.moveBy(x: 15, y: 0, duration: 0.1)]))
         energyBarHolderPlayer.run(SKAction.sequence([SKAction.moveBy(x: -15, y: 0, duration: 0.2),SKAction.moveBy(x: 15, y: 0, duration: 0.1)]))
     }
     func setOpponentHealth(percent:CGFloat){
         let energyBarFrame = self.energyBarHolderOpponent.frame
-        let barRect = CGRect(x: energyBarFrame.origin.x + 10,
+        let barRect = CGRect(x: energyBarFrame.origin.x + 12,
                              y: energyBarFrame.origin.y + energyBarFrame.height/3,
-                             width: (energyBarFrame.size.width - 20) * percent, height: energyBarFrame.size.height/3)
-        energyBarOpponent.path = UIBezierPath(rect: barRect).cgPath
+                             width: (energyBarFrame.size.width - 12) * percent, height: energyBarFrame.size.height/2)
+//        energyBarOpponent.path = UIBezierPath(rect: barRect).cgPath
+        energyBarOpponent.size = barRect.size
+        energyBarOpponent.position = barRect.origin
         
         energyBarOpponent.run(SKAction.sequence([SKAction.moveBy(x: 15, y: 0, duration: 0.2),SKAction.moveBy(x: -15, y: 0, duration: 0.1)]))
         energyBarHolderOpponent.run(SKAction.sequence([SKAction.moveBy(x: 15, y: 0, duration: 0.2),SKAction.moveBy(x: -15, y: 0, duration: 0.1)]))
@@ -295,7 +314,7 @@ class Controls:SKNode
         if rightButtonGainingPower {
             rightButtonPower += 0.1
             let degrees = (rightButtonPower/10.0) * 360
-//            rightButtonPowerMeter.path = self.circlePathWith(angle: CGFloat(degrees), forButton: self.rightPunch)
+            rightButtonPowerMeter.path = self.circlePathWith(angle: CGFloat(degrees), forButton: self.rightPunch)
             rightButtonPowerSmoke.particleSpeed = rightButtonPower * 20
             if rightButtonPower >= 10 {
                 rightButtonGainingPower = false
@@ -310,7 +329,7 @@ class Controls:SKNode
         if leftButtonGainingPower {
             leftButtonPower += 0.1
             let degrees = (leftButtonPower/10.0) * 360
-//            leftButtonPowerMeter.path = self.circlePathWith(angle: CGFloat(degrees), forButton: self.leftPunch)
+            leftButtonPowerMeter.path = self.circlePathWith(angle: CGFloat(degrees), forButton: self.leftPunch)
            leftButtonPowerSmoke.particleSpeed = leftButtonPower * 20
             if leftButtonPower >= 10 {
                 leftButtonGainingPower = false
@@ -376,6 +395,55 @@ class Controls:SKNode
             
             return true
         }
+        
+//        if self.checkFor(combo: [.punchLeft, .punchLeft, .punchLeft]) && !self.checkFor(events: [.jukeLeft], withinLast: 5)  {
+//            self.addEvent(event: .jukeLeft)
+//            self.delegate?.jukeLeft()
+//            
+//            leftButtonPowerMeter.removeAllActions()
+//            
+//            leftButtonPowerMeter.strokeColor = SKColor.green
+//            leftButtonPowerMeter.lineWidth = 14
+//            leftButtonPowerMeter.glowWidth = 15
+//            leftButtonPowerMeter.path = self.circlePathWith(angle: CGFloat(360), forButton: self.leftPunch)
+//            
+//            leftButtonPowerMeter.run(SKAction.sequence([
+//                SKAction.wait(forDuration: 0.5),
+//                SKAction.run({
+//                    self.leftButtonPowerMeter.path = nil
+//                    self.leftButtonPowerMeter.strokeColor = SKColor.red
+//                    self.leftButtonPowerMeter.lineWidth = 4
+//                    self.leftButtonPowerMeter.glowWidth = 5
+//                })
+//                ]))
+//            
+//            return true
+//        }
+//        
+//        if self.checkFor(combo: [.punchRight, .punchRight, .punchRight]) && !self.checkFor(events: [.jukeRight], withinLast: 5)  {
+//            self.addEvent(event: .jukeRight)
+//            self.delegate?.jukeRight()
+//            
+//            leftButtonPowerMeter.removeAllActions()
+//            
+//            leftButtonPowerMeter.strokeColor = SKColor.green
+//            leftButtonPowerMeter.lineWidth = 14
+//            leftButtonPowerMeter.glowWidth = 15
+//            leftButtonPowerMeter.path = self.circlePathWith(angle: CGFloat(360), forButton: self.leftPunch)
+//            
+//            leftButtonPowerMeter.run(SKAction.sequence([
+//                SKAction.wait(forDuration: 0.5),
+//                SKAction.run({
+//                    self.leftButtonPowerMeter.path = nil
+//                    self.leftButtonPowerMeter.strokeColor = SKColor.red
+//                    self.leftButtonPowerMeter.lineWidth = 4
+//                    self.leftButtonPowerMeter.glowWidth = 5
+//                })
+//                ]))
+//            
+//            return true
+//        }
+        
         return false
     }
     

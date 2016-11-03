@@ -28,6 +28,7 @@ protocol OpponentDelegate: class {
     func playerPunchBlocked()
     func explosion()
     func fireBall()
+    func showDamage(node:SKSpriteNode)
 }
 
 enum GameEvents:UInt8
@@ -65,6 +66,9 @@ enum Direction:UInt8
 class Opponent:SKNode
 {
     var fightParams:FightParams?
+    
+   
+    
     
     let heavyPunchSound = SKAction.playSoundFileNamed("sfx_punch2.wav", waitForCompletion: false)
     let mediumPunchSound = SKAction.playSoundFileNamed("sfx_punch3.wav", waitForCompletion: false)
@@ -586,7 +590,7 @@ class Opponent:SKNode
         
 //        if Int(arc4random_uniform(UInt32(attackAggression))) == 1 {
             attackDeficit = ((100 - (BattleManager.playerHealth! - BattleManager.opponentHealth!))/40) * attackAggression
-        print("attackDeficit = \(attackDeficit)")
+//        print("attackDeficit = \(attackDeficit)")
 //        } else {
 //            attackDeficit = CGFloat(arc4random_uniform(UInt32(10))) + 10
 //        }
@@ -741,17 +745,17 @@ class Opponent:SKNode
        currentSceneTime = currentTime
         
         if self.isBlocking {
-            print("BREAK: is blocking")
+            
             return
         }
         
         if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil {
-            print("BREAK: combo attack")
+            
             return
         }
         
         if self.checkDodging() {
-            print("BREAK: is dodging")
+            
             return
         }
         
@@ -763,7 +767,7 @@ class Opponent:SKNode
         }
         
         if self.opponent.alpha < 1.0 {
-            print("BREAK: alpha < 1")
+            
             return
         }
         
@@ -781,7 +785,7 @@ class Opponent:SKNode
 //            }
             return
         } else {
-            print("BREAK: not attack time")
+            
         }
         
         let comboFrequency = self.fightParams?.comboFrequency ?? 40
@@ -809,10 +813,12 @@ class Opponent:SKNode
             node = SKSpriteNode(imageNamed: "ghost_slash_left")
             xPositionAdjust = -(self.body?.frame.size.width)!/3
         }
-        node.position = CGPoint(x: self.opponent.position.x + xPositionAdjust, y: 0)
+        node.position = CGPoint(x: self.opponent.position.x + xPositionAdjust + self.opponentFrame.size.width/2, y: self.opponentFrame.size.height/2)
         node.zPosition = 20
-        self.addChild(node)
+        self.delegate?.showDamage(node: node)
         node.run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.removeFromParent()]))
+        
+        
     }
     
     func willRightPunchConnect(_ power:CGFloat) ->Bool {
