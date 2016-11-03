@@ -28,6 +28,12 @@
 		A2519B481DC7088F001925F8 /* evilLaugh.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2519B471DC7088F001925F8 /* evilLaugh.wav */; };
 		A2519B4A1DC84311001925F8 /* ButtonPowerMeter.sks in Resources */ = {isa = PBXBuildFile; fileRef = A2519B491DC84311001925F8 /* ButtonPowerMeter.sks */; };
 		A2519B4C1DC9B859001925F8 /* Buttons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2519B4B1DC9B859001925F8 /* Buttons.xcassets */; };
+		A2519B501DCB10CB001925F8 /* bossHead.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A2519B4D1DCB10CB001925F8 /* bossHead.atlas */; };
+		A2519B511DCB10CB001925F8 /* bossLeftArm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A2519B4E1DCB10CB001925F8 /* bossLeftArm.atlas */; };
+		A2519B521DCB10CB001925F8 /* bossRightArm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A2519B4F1DCB10CB001925F8 /* bossRightArm.atlas */; };
+		A2519B541DCB10DA001925F8 /* Boss.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2519B531DCB10DA001925F8 /* Boss.xcassets */; };
+		A2519B561DCB1142001925F8 /* Boss.sks in Resources */ = {isa = PBXBuildFile; fileRef = A2519B551DCB1142001925F8 /* Boss.sks */; };
+		A2519B581DCB12AE001925F8 /* Boss.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2519B571DCB12AE001925F8 /* Boss.swift */; };
 		A25615F61DAC207D00BA3DF8 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25615F51DAC207D00BA3DF8 /* MenuScene.swift */; };
 		A25615F81DAD561C00BA3DF8 /* BattleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25615F71DAD561C00BA3DF8 /* BattleManager.swift */; };
 		A25C9FE11DBF29E7006CDA73 /* Devil.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A25C9FE01DBF29E7006CDA73 /* Devil.xcassets */; };
@@ -131,6 +137,12 @@
 		A2519B471DC7088F001925F8 /* evilLaugh.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = evilLaugh.wav; sourceTree = "<group>"; };
 		A2519B491DC84311001925F8 /* ButtonPowerMeter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ButtonPowerMeter.sks; sourceTree = "<group>"; };
 		A2519B4B1DC9B859001925F8 /* Buttons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Buttons.xcassets; sourceTree = "<group>"; };
+		A2519B4D1DCB10CB001925F8 /* bossHead.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = bossHead.atlas; sourceTree = "<group>"; };
+		A2519B4E1DCB10CB001925F8 /* bossLeftArm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = bossLeftArm.atlas; sourceTree = "<group>"; };
+		A2519B4F1DCB10CB001925F8 /* bossRightArm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = bossRightArm.atlas; sourceTree = "<group>"; };
+		A2519B531DCB10DA001925F8 /* Boss.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Boss.xcassets; sourceTree = "<group>"; };
+		A2519B551DCB1142001925F8 /* Boss.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Boss.sks; sourceTree = "<group>"; };
+		A2519B571DCB12AE001925F8 /* Boss.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Boss.swift; sourceTree = "<group>"; };
 		A25615F51DAC207D00BA3DF8 /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		A25615F71DAD561C00BA3DF8 /* BattleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BattleManager.swift; path = classes/BattleManager.swift; sourceTree = "<group>"; };
 		A25C9FE01DBF29E7006CDA73 /* Devil.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Devil.xcassets; sourceTree = "<group>"; };
@@ -314,6 +326,7 @@
 				A2D7B9BF1DBC42B300DC2DD9 /* Witch.swift */,
 				A25C9FEA1DBF2BD5006CDA73 /* Devil.swift */,
 				A25C9FF21DC2F1CC006CDA73 /* FightParams.swift */,
+				A2519B571DCB12AE001925F8 /* Boss.swift */,
 			);
 			name = classes;
 			sourceTree = "<group>";
@@ -340,7 +353,12 @@
 				A2D7B9C11DBC47CA00DC2DD9 /* FireBall.sks */,
 				A25C9FE01DBF29E7006CDA73 /* Devil.xcassets */,
 				A25C9FE81DBF2AB2006CDA73 /* Devil.sks */,
+				A2519B4D1DCB10CB001925F8 /* bossHead.atlas */,
+				A2519B4E1DCB10CB001925F8 /* bossLeftArm.atlas */,
+				A2519B4F1DCB10CB001925F8 /* bossRightArm.atlas */,
 				A25C9FF01DC19E3E006CDA73 /* DevilFlames.sks */,
+				A2519B531DCB10DA001925F8 /* Boss.xcassets */,
+				A2519B551DCB1142001925F8 /* Boss.sks */,
 			);
 			name = opponents;
 			sourceTree = "<group>";
@@ -524,6 +542,7 @@
 			files = (
 				A227C7A91DA758A900EFFD7B /* Main.storyboard in Resources */,
 				A2519B4C1DC9B859001925F8 /* Buttons.xcassets in Resources */,
+				A2519B501DCB10CB001925F8 /* bossHead.atlas in Resources */,
 				A216F0E61DB6EE18003DD5BB /* portal.atlas in Resources */,
 				A2519B4A1DC84311001925F8 /* ButtonPowerMeter.sks in Resources */,
 				A2D7B9A61DBB0F6800DC2DD9 /* deathblow.wav in Resources */,
@@ -531,6 +550,7 @@
 				A25C9FE91DBF2AB2006CDA73 /* Devil.sks in Resources */,
 				A216F0E11DB5D780003DD5BB /* ectoParticle.png in Resources */,
 				A27117881DB31D5A00B36F06 /* ghostRightArm.atlas in Resources */,
+				A2519B511DCB10CB001925F8 /* bossLeftArm.atlas in Resources */,
 				A2D7B9AE1DBB0F6800DC2DD9 /* soulgrab.wav in Resources */,
 				A2CEC0941DC697F800FFE128 /* sfx_punch3.wav in Resources */,
 				A2CEC08D1DC690DC00FFE128 /* buzz.wav in Resources */,
@@ -546,6 +566,8 @@
 				A2D7B9AC1DBB0F6800DC2DD9 /* phaser.wav in Resources */,
 				A2D7B9B71DBBBFA000DC2DD9 /* witchLeftArm.atlas in Resources */,
 				A2D7B9B81DBBBFA000DC2DD9 /* witchRightArm.atlas in Resources */,
+				A2519B541DCB10DA001925F8 /* Boss.xcassets in Resources */,
+				A2519B561DCB1142001925F8 /* Boss.sks in Resources */,
 				A2CEC09A1DC69A3200FFE128 /* enemyBlocked.wav in Resources */,
 				A2D7B9B01DBB0F6800DC2DD9 /* witchtalk.wav in Resources */,
 				A2519B441DC70454001925F8 /* spark.png in Resources */,
@@ -563,6 +585,7 @@
 				A2B49AF41DA89BC900F86F40 /* Ghost.sks in Resources */,
 				A2D7B9A91DBB0F6800DC2DD9 /* laugh_reverse.wav in Resources */,
 				A2D7B9AA1DBB0F6800DC2DD9 /* light_punch.wav in Resources */,
+				A2519B521DCB10CB001925F8 /* bossRightArm.atlas in Resources */,
 				A2D7B9A51DBB0F6800DC2DD9 /* atmos_loop2.wav in Resources */,
 				A2519B431DC70454001925F8 /* devilBlood.sks in Resources */,
 				A2CEC09C1DC69BC900FFE128 /* fireball.wav in Resources */,
@@ -625,6 +648,7 @@
 				A25C9FF31DC2F1CC006CDA73 /* FightParams.swift in Sources */,
 				A227C7A61DA758A900EFFD7B /* GameViewController.swift in Sources */,
 				A2B49AED1DA88CB600F86F40 /* Opponent.swift in Sources */,
+				A2519B581DCB12AE001925F8 /* Boss.swift in Sources */,
 				A2B49AF11DA88EAF00F86F40 /* FightScene.swift in Sources */,
 				A2B49AEB1DA88C1900F86F40 /* Room.swift in Sources */,
 				A2B49B021DAAB6E100F86F40 /* Controls.swift in Sources */,

@@ -283,13 +283,17 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         
         let scene:MenuScene
         
+        
+        
         if (self.opponent as? Ghost) != nil {
-            scene = MenuScene(frame: frame, opponents:["ghost", "witch", "devil"], startWith:1, true)
+            scene = MenuScene(frame: frame, opponents:MenuScene.opponentNames, startWith:1, true)
         } else if (self.opponent as? Witch) != nil {
-            scene = MenuScene(frame: frame, opponents:["ghost", "witch", "devil"], startWith:2, true)
-        } else {
-            scene = MenuScene(frame: frame, opponents:["ghost", "witch", "devil"], startWith:3, true)
-        }
+            scene = MenuScene(frame: frame, opponents:MenuScene.opponentNames, startWith:2, true)
+        } else  if (self.opponent as? Devil) != nil {
+            scene = MenuScene(frame: frame, opponents:MenuScene.opponentNames, startWith:3, true)
+            } else {
+                scene = MenuScene(frame: frame, opponents:MenuScene.opponentNames, startWith:4, true)
+            }
         
         
 //        self.view?.presentScene(scene)

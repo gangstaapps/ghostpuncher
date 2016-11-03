@@ -80,3 +80,11 @@ class DevilParams:FightParamProto {
     var dodgeFrequency:Int = 2
 }
 
+class BossParams:FightParamProto {
+    var fullPowerPunch: CGFloat = 4.0
+    var blockedPunch: CGFloat = 1.5
+    var attackAggression:CGFloat = 3.0
+    var comboAggression:Int = 8
+    var dodgeFrequency:Int = 2
+}
+

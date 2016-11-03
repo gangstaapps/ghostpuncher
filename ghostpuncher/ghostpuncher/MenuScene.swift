@@ -29,6 +29,8 @@ class MenuScene: SKScene
     let mediumPunchSound = SKAction.playSoundFileNamed("sfx_punch3.wav", waitForCompletion: false)
     let evilLaughSound = SKAction.playSoundFileNamed("evilLaugh.wav", waitForCompletion: false)
     
+    static let opponentNames = ["ghost", "witch", "devil", "boss"]
+    
     init(frame:CGRect) {
         super.init(size: frame.size)
         
@@ -87,7 +89,7 @@ class MenuScene: SKScene
         
     }
     
-    init(frame: CGRect, opponents : [String] = ["ghost", "witch", "devil"]) {
+    init(frame: CGRect, opponents : [String] = opponentNames) {
         
         super.init(size: frame.size)
         
@@ -134,7 +136,7 @@ class MenuScene: SKScene
         tombstoneButton?.run(SKAction.moveTo(y: frame.midY, duration: 2.0))
     }
     
-    init(frame: CGRect, opponents : [String] = ["ghost", "witch", "devil"], startWith:Int, _ animateIn:Bool = false) {
+    init(frame: CGRect, opponents : [String] = opponentNames, startWith:Int, _ animateIn:Bool = false) {
         
         super.init(size: frame.size)
         
@@ -230,7 +232,7 @@ class MenuScene: SKScene
             self.run(SKAction.sequence([SKAction.wait(forDuration: 2.0), SKAction.run {
                 MenuScene.level += 1
                 let reveal = SKTransition.crossFade(withDuration: 1.0)
-                let scene = MenuScene(frame: self.frame, opponents:["ghost", "witch", "devil"], startWith:0)
+                let scene = MenuScene(frame: self.frame, opponents:MenuScene.opponentNames, startWith:0)
                 self.view?.presentScene(scene, transition: reveal)
                 }]))
             
@@ -308,7 +310,7 @@ class MenuScene: SKScene
             logo?.run(SKAction.moveBy(x: -self.frame.size.width/2, y: 0, duration: 0.2))
             fightButton?.run(SKAction.sequence([SKAction.moveBy(x: -self.frame.size.width/2, y: 0, duration: 0.2),
                                                 SKAction.run({
-                                                    let scene = MenuScene(frame: self.frame, opponents:["ghost", "witch", "devil"], startWith:0)
+                                                    let scene = MenuScene(frame: self.frame, opponents:MenuScene.opponentNames, startWith:0)
                                                     self.view?.presentScene(scene)
                                                 })]))
             return
@@ -316,7 +318,7 @@ class MenuScene: SKScene
         
         if self.checkTombstonePressed(atPoint: pos) {
 //             let enemies = ["ghost", "witch", "devil"]
-            let scene = MenuScene(frame: frame, opponents:["ghost", "witch", "devil"], startWith:self.continueFrom, false)
+            let scene = MenuScene(frame: frame, opponents:MenuScene.opponentNames, startWith:self.continueFrom, false)
 //            let scene = FightScene(frame: self.frame, backgroundColor: UIColor.black, opponent: enemies[self.continueFrom], MenuScene.level)
             
             self.view?.presentScene(scene)
