@@ -29,7 +29,7 @@ class MenuScene: SKScene
     let mediumPunchSound = SKAction.playSoundFileNamed("sfx_punch3.wav", waitForCompletion: false)
     let evilLaughSound = SKAction.playSoundFileNamed("evilLaugh.wav", waitForCompletion: false)
     
-    static let opponentNames = ["ghost", "witch", "devil", "boss"]
+    
     
     init(frame:CGRect) {
         super.init(size: frame.size)
@@ -89,7 +89,7 @@ class MenuScene: SKScene
         
     }
     
-    init(frame: CGRect, opponents : [String] = opponentNames) {
+    init(frame: CGRect, opponents : [String] = BattleManager.opponentNames) {
         
         super.init(size: frame.size)
         
@@ -136,7 +136,7 @@ class MenuScene: SKScene
         tombstoneButton?.run(SKAction.moveTo(y: frame.midY, duration: 2.0))
     }
     
-    init(frame: CGRect, opponents : [String] = opponentNames, startWith:Int, _ animateIn:Bool = false) {
+    init(frame: CGRect, opponents : [String] = BattleManager.opponentNames, startWith:Int, _ animateIn:Bool = false) {
         
         super.init(size: frame.size)
         
@@ -145,21 +145,29 @@ class MenuScene: SKScene
         bkg.position = CGPoint(x: frame.midX, y: frame.midY)
         self.addChild(bkg)
         
+        var opponentsToDisplay = opponents
         
-        let theLevel = min(MenuScene.level, 3)
+        var theLevel = min(MenuScene.level, 3)
+        
+        if MenuScene.level == 2 || MenuScene.level == 3 {
+            let bossbkg = SKSpriteNode(imageNamed: "boss_background\(theLevel - 1)")
+            bossbkg.size = frame.size
+            bossbkg.position = CGPoint(x: frame.midX, y: frame.midY)
+            self.addChild(bossbkg)
+        } else if MenuScene.level > 3 {
+            opponentsToDisplay = ["boss"]
+            theLevel = 0
+        }
         
         self.opponents = []
-        for i in 0..<opponents.count {
+        for i in 0..<opponentsToDisplay.count {
             let button:SKSpriteNode
-            
-//            let slash1:SKSpriteNode
-//            let slash2:SKSpriteNode
-//            let slash3:SKSpriteNode
+
             
             if i >= startWith {
-                button = SKSpriteNode(imageNamed: "\(opponents[i])_rol")
-                button.userData = ["name":opponents[i]]
-                button.position = CGPoint(x: (frame.size.width/CGFloat(opponents.count + 1)) * CGFloat(i + 1), y: frame.size.height * 0.5)
+                button = SKSpriteNode(imageNamed: "\(opponentsToDisplay[i])_rol")
+                button.userData = ["name":opponentsToDisplay[i]]
+                button.position = CGPoint(x: (frame.size.width/CGFloat(opponentsToDisplay.count + 1)) * CGFloat(i + 1), y: frame.size.height * 0.5)
                 
                 self.addChild(button)
                 
@@ -183,22 +191,8 @@ class MenuScene: SKScene
                     slashes.append(slash)
                 }
                 
-//                slash1 = SKSpriteNode(imageNamed: "slash\(i+1)_1")
-//                slash1.position = CGPoint(x: frame.midX, y: frame.midY)
-//                slash2 = SKSpriteNode(imageNamed: "slash\(i+1)_2")
-//                slash2.position = CGPoint(x: frame.midX, y: frame.midY)
-//                slash3 = SKSpriteNode(imageNamed: "slash\(i+1)_3")
-//                slash3.position = CGPoint(x: frame.midX, y: frame.midY)
                 if animateIn && i == (startWith - 1) {
                     button.position = CGPoint(x: frame.midX, y: frame.midY + frame.size.height)
-//                    button.run(SKAction.sequence([SKAction.moveTo(y: frame.midY, duration: 0.3),SKAction.wait(forDuration: 0.3),SKAction.run({
-//                        self.addChild(slash1)
-//                    }),SKAction.wait(forDuration: 0.2),SKAction.run({
-//                        self.addChild(slash2)
-//                    }),SKAction.wait(forDuration: 0.2),SKAction.run({
-//                        self.addChild(slash3)
-//                    }) ])  )
-                    
                     var sequence:[SKAction] = [SKAction.moveTo(y: frame.midY, duration: 0.3), self.thumpSound]
                     slashes.forEach({slash in
                         sequence.append(SKAction.wait(forDuration: 0.3))
@@ -232,7 +226,7 @@ class MenuScene: SKScene
             self.run(SKAction.sequence([SKAction.wait(forDuration: 2.0), SKAction.run {
                 MenuScene.level += 1
                 let reveal = SKTransition.crossFade(withDuration: 1.0)
-                let scene = MenuScene(frame: self.frame, opponents:MenuScene.opponentNames, startWith:0)
+                let scene = MenuScene(frame: self.frame, opponents:BattleManager.opponentNames, startWith:0)
                 self.view?.presentScene(scene, transition: reveal)
                 }]))
             
@@ -310,7 +304,8 @@ class MenuScene: SKScene
             logo?.run(SKAction.moveBy(x: -self.frame.size.width/2, y: 0, duration: 0.2))
             fightButton?.run(SKAction.sequence([SKAction.moveBy(x: -self.frame.size.width/2, y: 0, duration: 0.2),
                                                 SKAction.run({
-                                                    let scene = MenuScene(frame: self.frame, opponents:MenuScene.opponentNames, startWith:0)
+                                                   
+                                                    let scene = MenuScene(frame: self.frame, opponents:BattleManager.opponentNames, startWith:0)
                                                     self.view?.presentScene(scene)
                                                 })]))
             return
@@ -318,7 +313,7 @@ class MenuScene: SKScene
         
         if self.checkTombstonePressed(atPoint: pos) {
 //             let enemies = ["ghost", "witch", "devil"]
-            let scene = MenuScene(frame: frame, opponents:MenuScene.opponentNames, startWith:self.continueFrom, false)
+            let scene = MenuScene(frame: frame, opponents:BattleManager.opponentNames, startWith:self.continueFrom, false)
 //            let scene = FightScene(frame: self.frame, backgroundColor: UIColor.black, opponent: enemies[self.continueFrom], MenuScene.level)
             
             self.view?.presentScene(scene)

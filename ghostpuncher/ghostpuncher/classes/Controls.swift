@@ -166,7 +166,7 @@ class Controls:SKNode
         rightButtonPowerMeter.glowWidth = 5
         self.addChild(rightButtonPowerMeter)
         
-        opponentIcon.position = CGPoint(x: self.energyBarHolderOpponent.frame.origin.x - 16, y: self.roomFrame.size.height * 0.95)
+        opponentIcon.position = CGPoint(x: self.energyBarHolderOpponent.frame.origin.x - opponentIcon.frame.size.width/2, y: self.roomFrame.size.height * 0.95)
         
         self.addChild(opponentIcon)
         
@@ -286,7 +286,7 @@ class Controls:SKNode
                 self.leftPunch.isHidden = false
                 self.leftPunch.userData = nil
                 if !(delegate?.checkBlockEndLeft())! {
-                    delegate?.punchLeft(power: leftButtonPower)
+                    delegate?.punchLeft(power: leftButtonPower/2.0)
                     leftButtonPowerMeter.path = nil
                     leftButtonGainingPower = false
                     leftButtonPowerSmoke.particleSpeed = 0
@@ -299,7 +299,7 @@ class Controls:SKNode
                 self.rightPunch.isHidden = false
                 self.rightPunch.userData = nil
                 if !(delegate?.checkBlockEndRight())! {
-                    delegate?.punchRight(power: rightButtonPower)
+                    delegate?.punchRight(power: rightButtonPower/2.0)
                     rightButtonPowerMeter.path = nil
                     rightButtonGainingPower = false
                     rightButtonPowerSmoke.particleSpeed = 0
@@ -318,7 +318,7 @@ class Controls:SKNode
             rightButtonPowerSmoke.particleSpeed = rightButtonPower * 20
             if rightButtonPower >= 10 {
                 rightButtonGainingPower = false
-                delegate?.punchRight(power:rightButtonPower)
+                delegate?.punchRight(power:rightButtonPower * 0.8)
                 self.rightPunch.isHidden = false
                 self.rightPunch.userData = nil
                 rightButtonPowerMeter.path = nil
@@ -333,7 +333,7 @@ class Controls:SKNode
            leftButtonPowerSmoke.particleSpeed = leftButtonPower * 20
             if leftButtonPower >= 10 {
                 leftButtonGainingPower = false
-                delegate?.punchLeft(power:leftButtonPower)
+                delegate?.punchLeft(power:leftButtonPower * 0.8)
                 self.leftPunch.isHidden = false
                 self.leftPunch.userData = nil
                 leftButtonPowerMeter.path = nil
@@ -363,7 +363,7 @@ class Controls:SKNode
                 SKAction.wait(forDuration: 0.5),
                 SKAction.run({
                     self.leftButtonPowerMeter.path = nil
-                    self.leftButtonPowerMeter.strokeColor = SKColor.red
+                    self.leftButtonPowerMeter.strokeColor = SKColor.init(hex: 0xff9b14)
                     self.leftButtonPowerMeter.lineWidth = 4
                     self.leftButtonPowerMeter.glowWidth = 5
                 })
@@ -387,7 +387,7 @@ class Controls:SKNode
                 SKAction.wait(forDuration: 0.5),
                 SKAction.run({
                     self.rightButtonPowerMeter.path = nil
-                    self.rightButtonPowerMeter.strokeColor = SKColor.red
+                    self.rightButtonPowerMeter.strokeColor = SKColor.init(hex: 0xff9b14)
                     self.rightButtonPowerMeter.lineWidth = 4
                     self.rightButtonPowerMeter.glowWidth = 5
                 })

@@ -33,166 +33,17 @@ class Witch: Opponent {
     }
     
     override func comboAttack1(){
-        self.addEvent(event: .nothing)
         
-        if self.opponent.action(forKey: MOVEMENT_KEY) != nil {
-            self.opponent.removeAction(forKey: MOVEMENT_KEY)
-        }
-        if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil {
-            self.opponent.removeAction(forKey: COMBO_ATTACK_KEY)
-        }
-        
-        self.delegate?.turnOffLights()
-        self.opponent?.alpha = 1.0
-        
-        
-        let sequence = SKAction.sequence([
-            SKAction.wait(forDuration: 0.5),
-            SKAction.run({
-                self.head?.texture = SKTextureAtlas(named: "\(self.opponentName)Head.atlas").textureNamed("\(self.opponentName)_head_frontopen_punch.png")
-            }),
-            SKAction.wait(forDuration: 0.5),
-            SKAction.run({
-                self.block?.texture = SKTexture(imageNamed: "\(self.opponentName)_grapple")
-                self.block?.isHidden = false
-                self.leftArm?.isHidden = true
-                self.rightArm?.isHidden = true
-            }),
-            SKAction.wait(forDuration: 0.5),
-            SKAction.sequence([
-                    SKAction.run({
-                        self.fireball(pos: CGPoint(x: 0, y: 200))
-                    }),
-                    SKAction.wait(forDuration: 0.3),
-                    SKAction.run({
-                        self.delegate?.explosion()
-                        self.block?.texture = SKTexture(imageNamed: "\(self.opponentName)_block")
-                        self.block?.isHidden = true
-                        self.leftArm?.isHidden = false
-                        self.rightArm?.isHidden = false
-                        self.delegate?.turnOnLights()
-                    })
-                ])
-            ])
-        
-        self.opponent?.run(sequence , withKey:COMBO_ATTACK_KEY)
-    }
-    
-    func comboAttack2(){
-        self.addEvent(event: .nothing)
-        
-        if self.opponent.action(forKey: MOVEMENT_KEY) != nil {
-            self.opponent.removeAction(forKey: MOVEMENT_KEY)
-        }
-        if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil {
-            self.opponent.removeAction(forKey: COMBO_ATTACK_KEY)
-        }
-        
-//        self.delegate?.turnOffLights()
-        self.opponent?.alpha = 1.0
-        
-        
-        let sequence = SKAction.sequence([
-            SKAction.wait(forDuration: 0.5),
-            SKAction.run({
-                self.head?.texture = SKTextureAtlas(named: "\(self.opponentName)Head.atlas").textureNamed("\(self.opponentName)_head_frontopen_punch.png")
-            }),
-            SKAction.wait(forDuration: 0.1),
-            SKAction.sequence([
-                SKAction.run({
-                    self.fireball(pos: CGPoint(x: -100, y: 200))
-                    self.leftArm?.texture = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas").textureNamed("\(self.opponentName)_left4.png")
-                    self.rightArm?.texture = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas").textureNamed("\(self.opponentName)_right1.png")
-                }),
-                SKAction.wait(forDuration: 0.3),
-                SKAction.run({
-                    self.fireball(pos: CGPoint(x: 100, y: 200))
-                    self.leftArm?.texture = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas").textureNamed("\(self.opponentName)_left1.png")
-                    self.rightArm?.texture = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas").textureNamed("\(self.opponentName)_right4.png")
-                }),
-                SKAction.wait(forDuration: 0.3),
-                SKAction.run({
-                    self.fireball(pos: CGPoint(x: -100, y: 200))
-                    self.leftArm?.texture = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas").textureNamed("\(self.opponentName)_left4.png")
-                    self.rightArm?.texture = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas").textureNamed("\(self.opponentName)_right1.png")
-                }),
-                SKAction.wait(forDuration: 0.3),
-                SKAction.run({
-                    self.leftArm?.texture = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas").textureNamed("\(self.opponentName)_left1.png")
-                    self.rightArm?.texture = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas").textureNamed("\(self.opponentName)_right1.png")
-                })
-                ])
-            ])
-        
-        self.opponent?.run(sequence , withKey:COMBO_ATTACK_KEY)
-    }
-    
-    override func update(_ currentTime: TimeInterval){
-        
-        currentSceneTime = currentTime
-        
-        if self.isBlocking {
-//            print("BREAK: is blocking")
-            return
-        }
-        
-        if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil {
-//            print("BREAK: combo attack")
-            return
-        }
-        
-        if self.checkDodging() {
-//            print("BREAK: is dodging")
-            return
-        }
-        
-        if self.opponent.action(forKey: MOVEMENT_KEY) == nil {
-            let newPos:CGPoint = CGPoint(x: startPosition.x + CGFloat(arc4random_uniform(UInt32(100))) - CGFloat(arc4random_uniform(UInt32(100))), y: startPosition.y + CGFloat(arc4random_uniform(UInt32(20))) - CGFloat(arc4random_uniform(UInt32(20))))
-            
-            let movement:SKAction = SKAction.move(to: newPos, duration: 4)
-            self.opponent.run(movement, withKey: MOVEMENT_KEY)
-        }
-        
-        if self.opponent.alpha < 1.0 {
-            
-            return
-        }
-        
-        if self.checkForAttackTime()
-        {
-            
-//            if Int(arc4random_uniform(UInt32(4))) == 1  && !self.checkLast(10, eventsEqualAny: [.ghostBlock],  excluding:[]) {
-//                self.blockAttack()
-//            }else {
-                let amount = max(arc4random_uniform(UInt32(2)), 1)
-                
-                for _ in 0...amount {
-                    self.randomAttack()
-                }
-//            }
-            return
+        if Int(arc4random_uniform(UInt32(2))) == 1 {
+            self.multiFireballAttack()
         } else {
-           
-        }
-        
-        
-         let comboFrequency = self.fightParams?.comboFrequency ?? 40
-        
-        if !self.checkFor(events: [.ghostComboAttack1, .ghostComboAttack2], withinLast: comboFrequency){
-            if Int(arc4random_uniform(UInt32(2))) == 1 {
-                self.addEvent(event: .ghostComboAttack1)
-            } else {
-                self.addEvent(event: .ghostComboAttack2)
-            }
-            return
-        }
-        
-        
-        
-        if currentSceneTime - lastActivityCheck > INACTIVITY_TIME_TO_CHECK {
-            self.addEvent(event: .nothing)
+            
+            self.fireballAttack()
         }
     }
+        
+    
+    
     
     override func punchedToHell(){
         self.opponent?.removeAllActions()
@@ -213,17 +64,7 @@ class Witch: Opponent {
     }
     
     
-    func fireball(pos:CGPoint){
-        let sparkEmmiter = SKEmitterNode(fileNamed: "FireBall.sks")!
-        sparkEmmiter.position = pos
-        sparkEmmiter.name = "fireBall"
-        sparkEmmiter.zPosition = 200
-        sparkEmmiter.targetNode = self
-        sparkEmmiter.zRotation = CGFloat(45.degreesToRadians)
-        self.body?.addChild(sparkEmmiter)
-        sparkEmmiter.run(SKAction.scale(to: 4.0, duration: 0.5))
-        self.delegate?.fireBall()
-    }
+    
     
     override func addGlows(){
         sparkEmmiter = SKEmitterNode(fileNamed: "Smoke.sks")!
@@ -251,6 +92,27 @@ class Witch: Opponent {
         bodyGlow?.particlePositionRange = CGVector(dx: 240.0, dy: 290.0)
         
         self.opponent?.addChild(bodyGlow!)
+    }
+    
+    override func spark(_ direction:Direction, _ power:CGFloat){
+        
+        let sparkEmmiter = SKEmitterNode(fileNamed: "devilBlood.sks")!
+        sparkEmmiter.position = CGPoint(x: (direction == .right ? -30 : 30), y: -5)
+        sparkEmmiter.name = "devilBlood"
+        sparkEmmiter.zPosition = 1200
+        sparkEmmiter.targetNode = self.head!
+        sparkEmmiter.particleLifetime = 3
+        sparkEmmiter.particleColor = SKColor.blue
+        sparkEmmiter.particleColorBlendFactor = 1.0
+        sparkEmmiter.alpha = 1.0
+        sparkEmmiter.particleBlendMode = SKBlendMode.alpha
+        sparkEmmiter.particleColorSequence = nil
+        sparkEmmiter.emissionAngle = (CGFloat(direction == .right ? 180.0.radiansToDegrees : 0.0.radiansToDegrees))
+        sparkEmmiter.xAcceleration = (direction == .right ? -900 : 900)
+        sparkEmmiter.numParticlesToEmit = Int(power.multiplied(by: 10))
+        
+        
+        self.head?.addChild(sparkEmmiter)
     }
     
     /*
@@ -288,65 +150,65 @@ class Witch: Opponent {
      }
  */
     
-    override func checkDodging()->Bool {
-        
-        let comboAggression = self.fightParams?.comboAggression ?? 10
-        
-        if self.checkLast(comboAggression, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect, .playerLeftKickConnect, .playerRightKickConnect],
-                          excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail, .playerRightKickFail, .playerLeftKickFail, .ghostGoInvisible, .ghostLeftAttackFail, .ghostRightAttackFail]){
-            
-            if !self.checkFor(events: [.ghostComboAttack1, .ghostComboAttack2], withinLast: 10){
-                if Int(arc4random_uniform(UInt32(2))) == 1 {
-                    self.addEvent(event: .ghostComboAttack1)
-                } else {
-                    self.addEvent(event: .ghostComboAttack2)
-                }
-                return true
-            }
-        }
-        
-        let dodgeFrequency = self.fightParams?.dodgeFrequency ?? 3
-        
-        if self.checkLast(dodgeFrequency, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect],
-                          excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail]){
-            
-            
-            if Int(arc4random_uniform(UInt32(4))) == 1  && !self.checkLast(10, eventsEqualAny: [.ghostBlock],  excluding:[]) {
-                self.blockAttack()
-            } else {
-                if self.checkMoreRecent(events: [.playerLeftPunchConnect, .playerRightPunchConnect]) == .playerLeftPunchConnect {
-                    self.addEvent(event: .ghostDodgeRight)
-                } else {
-                    self.addEvent(event: .ghostDodgeLeft)
-                }
-            }
-            
-            
-            
-            return true
-        }
-        
-        if self.checkLast(1, eventsEqual: .ghostDodgeRight){
-            self.dodgeRight()
-            return true
-        }
-        
-        if self.checkLast(1, eventsEqual: .ghostDodgeLeft){
-            self.dodgeLeft()
-            return true
-        }
-        
-        if self.checkLast(1, eventsEqual: .ghostComboAttack1){
-            self.comboAttack1()
-            return true
-        }
-        
-        if self.checkLast(1, eventsEqual: .ghostComboAttack2){
-            self.comboAttack2()
-            return true
-        }
-        
-        return false
-    }
+//    override func checkDodging()->Bool {
+//        
+//        let comboAggression = self.fightParams?.comboAggression ?? 10
+//        
+//        if self.checkLast(comboAggression, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect, .playerLeftKickConnect, .playerRightKickConnect],
+//                          excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail, .playerRightKickFail, .playerLeftKickFail, .ghostGoInvisible, .ghostLeftAttackFail, .ghostRightAttackFail]){
+//            
+//            if !self.checkFor(events: [.ghostComboAttack1, .ghostComboAttack2], withinLast: 10){
+//                if Int(arc4random_uniform(UInt32(2))) == 1 {
+//                    self.addEvent(event: .ghostComboAttack1)
+//                } else {
+//                    self.addEvent(event: .ghostComboAttack2)
+//                }
+//                return true
+//            }
+//        }
+//        
+//        let dodgeFrequency = self.fightParams?.dodgeFrequency ?? 3
+//        
+//        if self.checkLast(dodgeFrequency, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect],
+//                          excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail]){
+//            
+//            
+//            if Int(arc4random_uniform(UInt32(4))) == 1  && !self.checkLast(10, eventsEqualAny: [.ghostBlock],  excluding:[]) {
+//                self.blockAttack()
+//            } else {
+//                if self.checkMoreRecent(events: [.playerLeftPunchConnect, .playerRightPunchConnect]) == .playerLeftPunchConnect {
+//                    self.addEvent(event: .ghostDodgeRight)
+//                } else {
+//                    self.addEvent(event: .ghostDodgeLeft)
+//                }
+//            }
+//            
+//            
+//            
+//            return true
+//        }
+//        
+//        if self.checkLast(1, eventsEqual: .ghostDodgeRight){
+//            self.dodgeRight()
+//            return true
+//        }
+//        
+//        if self.checkLast(1, eventsEqual: .ghostDodgeLeft){
+//            self.dodgeLeft()
+//            return true
+//        }
+//        
+//        if self.checkLast(1, eventsEqual: .ghostComboAttack1){
+//            self.comboAttack1()
+//            return true
+//        }
+//        
+//        if self.checkLast(1, eventsEqual: .ghostComboAttack2){
+//            self.comboAttack2()
+//            return true
+//        }
+//        
+//        return false
+//    }
     
 }

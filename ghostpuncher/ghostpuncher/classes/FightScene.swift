@@ -34,19 +34,23 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     let youLoseSound = SKAction.playSoundFileNamed("deathblow.wav", waitForCompletion: false)
     let youWinSound = SKAction.playSoundFileNamed("ghostshock.wav", waitForCompletion: false)
     let fireballSFX = SKAction.playSoundFileNamed("fireball.wav", waitForCompletion: false)
-    
+    let thunderSFX = SKAction.playSoundFileNamed("thunder.wav", waitForCompletion: false)
     
     
     init(frame: CGRect, backgroundColor : UIColor, opponent:String = "ghost", _ level:Int = 1) {
         self.room = Room(frame:frame, name:opponent)
         super.init(size: frame.size)
         self.backgroundColor = backgroundColor
-        self.addChild(self.room)
+        
         
         
         
         self.effectsLayer = EffectsLayer(frame: frame)
+        if opponent == "boss" {
+        self.effectsLayer?.turnOffLights(true)
+        }
 //        self.effectsLayer?.zPosition = 3
+        self.addChild(self.room)
         self.addChild(self.effectsLayer!)
         
         
@@ -54,6 +58,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.addChild(self.ghostHolder!)
         
         self.opponent = Opponent.makeOpponent(frame: frame, named: opponent, level)
+        
         self.ghostHolder?.addChild(self.opponent!)
         
         self.opponent?.position = CGPoint(x:frame.size.width/2, y:frame.size.height/2)
@@ -72,9 +77,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         battleManager = BattleManager()
         battleManager?.delegate = self
         
-         dump(frame)
         
-        self.gameMode.setGame(mode: .ready)
         
         let backgroundMusic = SKAudioNode(fileNamed: "atmos_loop1.wav")
         backgroundMusic.run(SKAction.changeVolume(to: 0.25, duration: 0))
@@ -85,6 +88,20 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.addChild(backgroundMusic2)
         
         self.run(SKAction.sequence([SKAction.wait(forDuration: 1.0), startSound]))
+        
+        if opponent == "boss" {
+        self.opponent?.isHidden = true
+            
+            
+            self.run(SKAction.sequence([SKAction.wait(forDuration: 2.0),thunderSFX,
+            SKAction.run({
+                self.opponent?.isHidden = false
+                self.gameMode.setGame(mode: .ready)
+                self.turnOnLights()
+            })]))
+        } else {
+            self.gameMode.setGame(mode: .ready)
+        }
     }
     
     override func didMove(to view: SKView) {
@@ -149,12 +166,17 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
                 return
             }
             if let gyroData = motionManager.gyroData {
-                let adjustedTilt = Int(gyroData.rotationRate.z * 10)
+                let adjustedTilt = Int(gyroData.rotationRate.x * 5)
 //               print("accelerometerData.acceleration.x = \(Int(gyroData.rotationRate.z * 10))")
                 if abs(adjustedTilt) > 10 {
                     self.juke(amount: adjustedTilt)
                 }
                 
+                let adjustedYTilt = Int(gyroData.rotationRate.y * 5)
+                //               print("accelerometerData.acceleration.x = \(Int(gyroData.rotationRate.z * 10))")
+                if abs(adjustedYTilt) > 10 {
+                    self.enemyZoom(amount: adjustedYTilt)
+                }
             }
         #endif
     }
@@ -284,16 +306,13 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         let scene:MenuScene
         
         
-        
         if (self.opponent as? Ghost) != nil {
-            scene = MenuScene(frame: frame, opponents:MenuScene.opponentNames, startWith:1, true)
+            scene = MenuScene(frame: frame, opponents:BattleManager.opponentNames, startWith:1, true)
         } else if (self.opponent as? Witch) != nil {
-            scene = MenuScene(frame: frame, opponents:MenuScene.opponentNames, startWith:2, true)
-        } else  if (self.opponent as? Devil) != nil {
-            scene = MenuScene(frame: frame, opponents:MenuScene.opponentNames, startWith:3, true)
-            } else {
-                scene = MenuScene(frame: frame, opponents:MenuScene.opponentNames, startWith:4, true)
-            }
+            scene = MenuScene(frame: frame, opponents:BattleManager.opponentNames, startWith:2, true)
+        } else{
+            scene = MenuScene(frame: frame, opponents:BattleManager.opponentNames, startWith:3, true)
+        }
         
         
 //        self.view?.presentScene(scene)
@@ -321,8 +340,10 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
             scene = MenuScene(frame: frame, diedAt:0)
         } else if (self.opponent as? Witch) != nil {
             scene = MenuScene(frame: frame, diedAt:1)
-        } else {
+        } else if (self.opponent as? Devil) != nil {
             scene = MenuScene(frame: frame, diedAt:2)
+        } else {
+            scene = MenuScene(frame: frame, diedAt:0)
         }
         
         
@@ -442,5 +463,9 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     }
     func showDamage(node:SKSpriteNode){
         self.effectsLayer?.addChild(node)
+    }
+    func enemyZoom(amount:Int){
+        let scaleAmount:CGFloat = CGFloat(100 + amount)/100.0
+        self.opponent?.run(SKAction.scale(to: min(max(0.9, scaleAmount), 1.1), duration: 0.3))
     }
 }

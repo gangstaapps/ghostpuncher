@@ -15,10 +15,15 @@ protocol BattleManagerDelegate: class {
     func playerLost()
 }
 
+
+
 class BattleManager
 {
     static var playerHealth:CGFloat?
     static var opponentHealth:CGFloat?
+    
+    static let opponentNames = ["ghost", "witch", "devil"]
+    
     
     let opponentHealthStart:CGFloat = 100.0
     let playerHealthStart:CGFloat = 100.0

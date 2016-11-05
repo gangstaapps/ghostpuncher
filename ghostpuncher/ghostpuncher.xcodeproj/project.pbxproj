@@ -90,6 +90,7 @@
 		A2D7B9C01DBC42B300DC2DD9 /* Witch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D7B9BF1DBC42B300DC2DD9 /* Witch.swift */; };
 		A2D7B9C21DBC47CA00DC2DD9 /* FireBall.sks in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9C11DBC47CA00DC2DD9 /* FireBall.sks */; };
 		A2EB9F201DAB35AF0046CB93 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2EB9F1E1DAB351F0046CB93 /* HockeySDK.framework */; };
+		A2F0DC841DCC5CBB002439E7 /* thunder.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2F0DC831DCC5CBB002439E7 /* thunder.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,6 +201,7 @@
 		A2D7B9C11DBC47CA00DC2DD9 /* FireBall.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = FireBall.sks; path = opponents/FireBall.sks; sourceTree = "<group>"; };
 		A2EB9F1E1DAB351F0046CB93 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		A2EB9F1F1DAB351F0046CB93 /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
+		A2F0DC831DCC5CBB002439E7 /* thunder.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = thunder.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,6 +385,7 @@
 		A2D7B9961DBB0F6800DC2DD9 /* sound_fx */ = {
 			isa = PBXGroup;
 			children = (
+				A2F0DC831DCC5CBB002439E7 /* thunder.wav */,
 				A2519B471DC7088F001925F8 /* evilLaugh.wav */,
 				A2CEC09B1DC69BC900FFE128 /* fireball.wav */,
 				A2CEC09D1DC69D7200FFE128 /* enemySlash.wav */,
@@ -541,6 +544,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A227C7A91DA758A900EFFD7B /* Main.storyboard in Resources */,
+				A2F0DC841DCC5CBB002439E7 /* thunder.wav in Resources */,
 				A2519B4C1DC9B859001925F8 /* Buttons.xcassets in Resources */,
 				A2519B501DCB10CB001925F8 /* bossHead.atlas in Resources */,
 				A216F0E61DB6EE18003DD5BB /* portal.atlas in Resources */,

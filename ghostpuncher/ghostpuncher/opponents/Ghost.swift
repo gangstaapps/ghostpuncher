@@ -14,6 +14,10 @@ class Ghost: Opponent {
         self.initParams(params: FightParams(params: GhostParams(), multiplier: multiplier))
     }
     
+    override func fadeOnRecoil()->Bool {
+        return true
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

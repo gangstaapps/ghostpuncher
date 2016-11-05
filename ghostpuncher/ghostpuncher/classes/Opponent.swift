@@ -51,7 +51,6 @@ enum GameEvents:UInt8
     case ghostDodgeLeft
     case ghostGoInvisible
     case ghostComboAttack1
-    case ghostComboAttack2
     case ghostBlock
     
 }
@@ -133,6 +132,8 @@ class Opponent:SKNode
             return Witch(frame: frame, level)
         case "devil":
             return Devil(frame: frame, level)
+        case "boss":
+            return Boss(frame: frame, level)
         default:
             return Opponent(frame: frame, name: named)
         }
@@ -479,8 +480,117 @@ class Opponent:SKNode
 //        self.run(flashingLights)
         
         
+    }
+    
+    func multiFireballAttack(){
+        self.addEvent(event: .nothing)
+        
+        if self.opponent.action(forKey: MOVEMENT_KEY) != nil {
+            self.opponent.removeAction(forKey: MOVEMENT_KEY)
+        }
+        if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil {
+            self.opponent.removeAction(forKey: COMBO_ATTACK_KEY)
+        }
+        
+        self.opponent?.alpha = 1.0
+        
+        let sequence = SKAction.sequence([
+            SKAction.wait(forDuration: 0.5),
+            SKAction.run({
+                self.head?.texture = SKTextureAtlas(named: "\(self.opponentName)Head.atlas").textureNamed("\(self.opponentName)_head_frontopen_punch.png")
+            }),
+            SKAction.wait(forDuration: 0.1),
+            SKAction.sequence([
+                SKAction.run({
+                    self.fireball(pos: CGPoint(x: -100, y: 200))
+                    self.leftArm?.texture = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas").textureNamed("\(self.opponentName)_left4.png")
+                    self.rightArm?.texture = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas").textureNamed("\(self.opponentName)_right1.png")
+                }),
+                SKAction.wait(forDuration: 0.3),
+                SKAction.run({
+                    self.fireball(pos: CGPoint(x: 100, y: 200))
+                    self.leftArm?.texture = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas").textureNamed("\(self.opponentName)_left1.png")
+                    self.rightArm?.texture = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas").textureNamed("\(self.opponentName)_right4.png")
+                }),
+                SKAction.wait(forDuration: 0.3),
+                SKAction.run({
+                    self.fireball(pos: CGPoint(x: -100, y: 200))
+                    self.leftArm?.texture = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas").textureNamed("\(self.opponentName)_left4.png")
+                    self.rightArm?.texture = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas").textureNamed("\(self.opponentName)_right1.png")
+                }),
+                SKAction.wait(forDuration: 0.3),
+                SKAction.run({
+                    self.leftArm?.texture = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas").textureNamed("\(self.opponentName)_left1.png")
+                    self.rightArm?.texture = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas").textureNamed("\(self.opponentName)_right1.png")
+                })
+                ])
+            ])
+        
+        self.opponent?.run(sequence , withKey:COMBO_ATTACK_KEY)
+    }
+    
+    func fireballAttack(){
+        
+        self.addEvent(event: .nothing)
+        
+        if self.opponent.action(forKey: MOVEMENT_KEY) != nil {
+            self.opponent.removeAction(forKey: MOVEMENT_KEY)
+        }
+        if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil {
+            self.opponent.removeAction(forKey: COMBO_ATTACK_KEY)
+        }
+        
+        self.delegate?.turnOffLights()
+        self.opponent?.alpha = 1.0
         
         
+        let sequence = SKAction.sequence([
+            SKAction.wait(forDuration: 0.5),
+            SKAction.run({
+                self.head?.texture = SKTextureAtlas(named: "\(self.opponentName)Head.atlas").textureNamed("\(self.opponentName)_head_frontopen_punch.png")
+            }),
+            SKAction.wait(forDuration: 0.5),
+            SKAction.run({
+                self.block?.texture = SKTexture(imageNamed: "\(self.opponentName)_grapple")
+                self.block?.isHidden = false
+                self.leftArm?.isHidden = true
+                self.rightArm?.isHidden = true
+            }),
+            SKAction.wait(forDuration: 0.5),
+            SKAction.sequence([
+                SKAction.run({
+                    self.fireball(pos: CGPoint(x: 0, y: 200))
+                }),
+                SKAction.wait(forDuration: 0.3),
+                SKAction.run({
+                    self.delegate?.explosion()
+                    self.block?.texture = SKTexture(imageNamed: "\(self.opponentName)_block")
+                    self.block?.isHidden = true
+                    self.leftArm?.isHidden = false
+                    self.rightArm?.isHidden = false
+                    self.delegate?.turnOnLights()
+                })
+                ])
+            ])
+        
+        self.opponent?.run(sequence , withKey:COMBO_ATTACK_KEY)
+    }
+
+    
+    func fireball(pos:CGPoint){
+        let sparkEmmiter = SKEmitterNode(fileNamed: "FireBall.sks")!
+        sparkEmmiter.position = pos
+        sparkEmmiter.name = "fireBall"
+        sparkEmmiter.zPosition = 200
+        sparkEmmiter.targetNode = self
+        sparkEmmiter.zRotation = CGFloat(45.degreesToRadians)
+        self.body?.addChild(sparkEmmiter)
+        sparkEmmiter.run(SKAction.scale(to: 4.0, duration: 0.5))
+        self.delegate?.fireBall()
+    }
+    
+    func fadeOnRecoil()->Bool {
+        return false
     }
     
     func hitRecoil(_ direction:Direction, power:CGFloat){
@@ -517,8 +627,12 @@ class Opponent:SKNode
         let scaleUp = SKAction.scale(to: 1.0, duration: 0.2)
         
         let sequence = SKAction.sequence([scaleDown, scaleUp])
-        
-        let fadeDown = SKAction.fadeAlpha(to: 0.6, duration: 0.2)
+        let fadeDown:SKAction
+        if self.fadeOnRecoil() {
+            fadeDown = SKAction.fadeAlpha(to: 0.6, duration: 0.2)
+        } else {
+            fadeDown = SKAction.fadeAlpha(to: 1.0, duration: 0.2)
+        }
         let fadeUp = SKAction.fadeAlpha(to: 1.0, duration: 0.3)
         let fadeSequence = SKAction.sequence([fadeDown, fadeUp])
         
@@ -583,20 +697,28 @@ class Opponent:SKNode
     
     func checkForAttackTime()->Bool{
         
-        let attackDeficit:CGFloat
+//        let attackDeficit:CGFloat
         
-        let attackAggression = self.fightParams?.attackAggression ?? 4.0
+        let attackAggression:Int //= self.fightParams?.attackAggression ?? 4.0
         
+        let playerHealth = BattleManager.playerHealth!
+        let opponentHealth = BattleManager.opponentHealth!
+        
+        if Int(opponentHealth) < Int(playerHealth) {
+            attackAggression = Int((self.fightParams?.attackAggression)!)
+        } else {
+            attackAggression = Int(arc4random_uniform(10)).advanced(by: Int((self.fightParams?.attackAggression)!))
+        }
         
 //        if Int(arc4random_uniform(UInt32(attackAggression))) == 1 {
-            attackDeficit = ((100 - (BattleManager.playerHealth! - BattleManager.opponentHealth!))/40) * attackAggression
+//            attackDeficit = ((100 - (BattleManager.playerHealth! - BattleManager.opponentHealth!))/40) * attackAggression
 //        print("attackDeficit = \(attackDeficit)")
 //        } else {
 //            attackDeficit = CGFloat(arc4random_uniform(UInt32(10))) + 10
 //        }
         
         
-        return !self.checkFor(events: [.ghostLeftAttackConnect, .ghostRightAttackConnect], withinLast: Int(attackDeficit))
+        return !self.checkFor(events: [.ghostLeftAttackConnect, .ghostRightAttackConnect, .ghostLeftAttackFail, .ghostRightAttackFail], withinLast:attackAggression)
         
     }
     
@@ -777,11 +899,11 @@ class Opponent:SKNode
 //            if Int(arc4random_uniform(UInt32(4))) == 1  && !self.checkLast(10, eventsEqualAny: [.ghostBlock],  excluding:[]) {
 //                self.blockAttack()
 //            }else {
-                let amount = max(arc4random_uniform(UInt32(2)), 1)
-                
-                for _ in 0...amount {
+//                let amount = max(arc4random_uniform(UInt32(2)), 1)
+            
+//                for _ in 0...amount {
                     self.randomAttack()
-                }
+//                }
 //            }
             return
         } else {

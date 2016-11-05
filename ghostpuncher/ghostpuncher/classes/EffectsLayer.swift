@@ -55,8 +55,8 @@ class EffectsLayer: SKNode
                                                     SKAction.fadeAlpha(to: 0.0, duration: 0.1)]))
     }
     
-    func turnOffLights(){
-        self.roomLightNode.run(SKAction.fadeAlpha(to: 0.85, duration: 0.3))
+    func turnOffLights(_ immediate:Bool = false){
+        self.roomLightNode.run(SKAction.fadeAlpha(to: 0.85, duration: immediate ? 0.0 : 0.3))
     }
     
     func turnOnLights(){

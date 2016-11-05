@@ -32,7 +32,7 @@ class Room: SKNode
         portal = SKSpriteNode(texture: portalFrames[0])
         
         super.init()
-        self.background.size = CGSize(width: self.roomFrame.size.width * 1.1, height: self.roomFrame.size.height * 1.1)
+        self.background.size = CGSize(width: self.roomFrame.size.height * 2.2, height: self.roomFrame.size.height * 1.1)
         self.background.position = CGPoint(x: frame.midX, y: frame.midY)
         self.addChild(self.background)
         

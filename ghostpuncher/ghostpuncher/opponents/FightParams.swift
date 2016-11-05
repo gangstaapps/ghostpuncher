@@ -9,11 +9,11 @@
 import SpriteKit
 
 protocol FightParamProto {
-    var fullPowerPunch:CGFloat { get }
-    var blockedPunch:CGFloat { get }
-    var attackAggression:CGFloat { get } // the lower the number the more aggressive
-    var comboAggression:Int { get } // the lower the number the more aggressive
-    var dodgeFrequency:Int { get } // the lower the number the more dodging
+    var fullPowerPunch:[CGFloat] { get }
+    var blockedPunch:[CGFloat] { get }
+    var attackAggression:[CGFloat] { get } // the lower the number the more aggressive
+    var comboAggression:[Int] { get } // the lower the number the more aggressive
+    var dodgeFrequency:[Int] { get } // the lower the number the more dodging
     
 }
 
@@ -26,27 +26,27 @@ struct FightParams {
     }
     var fullPowerHit:CGFloat {
         get {
-            return  self.opponentParams.fullPowerPunch
+            return  self.opponentParams.fullPowerPunch[self.multiplier]
         }
     }
     var blockedHit:CGFloat {
         get {
-            return  self.opponentParams.blockedPunch
+            return  self.opponentParams.blockedPunch[self.multiplier]
         }
     }
     var attackAggression:CGFloat {
         get {
-            return self.opponentParams.attackAggression/CGFloat(self.multiplier)
+            return self.opponentParams.attackAggression[self.multiplier]
         }
     }
     var comboAggression:Int {
         get {
-            return Int(self.opponentParams.comboAggression/self.multiplier)
+            return self.opponentParams.comboAggression[self.multiplier]
         }
     }
     var dodgeFrequency:Int {
         get {
-            return self.opponentParams.dodgeFrequency
+            return self.opponentParams.dodgeFrequency[self.multiplier]
         }
     }
     var comboFrequency:Int {
@@ -57,34 +57,34 @@ struct FightParams {
 }
 
 class GhostParams:FightParamProto {
-    var fullPowerPunch: CGFloat = 2.0
-    var blockedPunch: CGFloat = 0.5
-    var attackAggression:CGFloat = 4.5
-    var comboAggression:Int = 10
-    var dodgeFrequency:Int = 3
+    let fullPowerPunch: [CGFloat] = [2.0, 2.5, 3.0]
+    let blockedPunch: [CGFloat] = [0.5, 0.5, 1.0]
+    let attackAggression:[CGFloat] = [10,9,8]
+    let comboAggression:[Int] = [6,5,4]
+    let dodgeFrequency:[Int] = [3,3,3]
 }
 
 class WitchParams:FightParamProto {
-    var fullPowerPunch: CGFloat = 3.0
-    var blockedPunch: CGFloat = 1.0
-    var attackAggression:CGFloat = 3.5
-    var comboAggression:Int = 9
-    var dodgeFrequency:Int = 3
+    let fullPowerPunch: [CGFloat] = [3.0, 3.5, 4.0]
+    let blockedPunch: [CGFloat] = [1.0, 1.0, 1.5]
+    let attackAggression:[CGFloat] = [8,8,7]
+    let comboAggression:[Int] = [5,4,3]
+    let dodgeFrequency:[Int] = [3,3,3]
 }
 
 class DevilParams:FightParamProto {
-    var fullPowerPunch: CGFloat = 4.0
-    var blockedPunch: CGFloat = 1.5
-    var attackAggression:CGFloat = 3.0
-    var comboAggression:Int = 8
-    var dodgeFrequency:Int = 2
+    let fullPowerPunch: [CGFloat] = [3.5,3.5, 4.0]
+    let blockedPunch: [CGFloat] = [1.0, 1.0, 1.5]
+    let attackAggression:[CGFloat] = [7,7,6]
+    let comboAggression:[Int] = [5,4,3]
+    let dodgeFrequency:[Int] = [3]
 }
 
 class BossParams:FightParamProto {
-    var fullPowerPunch: CGFloat = 4.0
-    var blockedPunch: CGFloat = 1.5
-    var attackAggression:CGFloat = 3.0
-    var comboAggression:Int = 8
-    var dodgeFrequency:Int = 2
+    let fullPowerPunch: [CGFloat] = [0,0,0,4.0]
+    let blockedPunch: [CGFloat] = [0,0,0,1.5]
+    let attackAggression:[CGFloat] = [0,0,0,5]
+    let comboAggression:[Int] = [0,0,0,3]
+    let dodgeFrequency:[Int] = [0,0,0,3]
 }
 
