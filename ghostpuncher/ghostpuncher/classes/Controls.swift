@@ -286,7 +286,7 @@ class Controls:SKNode
                 self.leftPunch.isHidden = false
                 self.leftPunch.userData = nil
                 if !(delegate?.checkBlockEndLeft())! {
-                    delegate?.punchLeft(power: leftButtonPower/2.0)
+                    delegate?.punchLeft(power: leftButtonPower * 0.75)
                     leftButtonPowerMeter.path = nil
                     leftButtonGainingPower = false
                     leftButtonPowerSmoke.particleSpeed = 0
@@ -299,7 +299,7 @@ class Controls:SKNode
                 self.rightPunch.isHidden = false
                 self.rightPunch.userData = nil
                 if !(delegate?.checkBlockEndRight())! {
-                    delegate?.punchRight(power: rightButtonPower/2.0)
+                    delegate?.punchRight(power: rightButtonPower * 0.75)
                     rightButtonPowerMeter.path = nil
                     rightButtonGainingPower = false
                     rightButtonPowerSmoke.particleSpeed = 0
@@ -318,7 +318,7 @@ class Controls:SKNode
             rightButtonPowerSmoke.particleSpeed = rightButtonPower * 20
             if rightButtonPower >= 10 {
                 rightButtonGainingPower = false
-                delegate?.punchRight(power:rightButtonPower * 0.8)
+                delegate?.punchRight(power:rightButtonPower * 1.25)
                 self.rightPunch.isHidden = false
                 self.rightPunch.userData = nil
                 rightButtonPowerMeter.path = nil
@@ -333,7 +333,7 @@ class Controls:SKNode
            leftButtonPowerSmoke.particleSpeed = leftButtonPower * 20
             if leftButtonPower >= 10 {
                 leftButtonGainingPower = false
-                delegate?.punchLeft(power:leftButtonPower * 0.8)
+                delegate?.punchLeft(power:leftButtonPower * 1.25)
                 self.leftPunch.isHidden = false
                 self.leftPunch.userData = nil
                 leftButtonPowerMeter.path = nil

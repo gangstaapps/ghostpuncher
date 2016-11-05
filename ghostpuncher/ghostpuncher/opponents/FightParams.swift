@@ -59,7 +59,7 @@ struct FightParams {
 class GhostParams:FightParamProto {
     let fullPowerPunch: [CGFloat] = [2.0, 2.5, 3.0]
     let blockedPunch: [CGFloat] = [0.5, 0.5, 1.0]
-    let attackAggression:[CGFloat] = [10,9,8]
+    let attackAggression:[CGFloat] = [8,7,7]
     let comboAggression:[Int] = [6,5,4]
     let dodgeFrequency:[Int] = [3,3,3]
 }
@@ -67,7 +67,7 @@ class GhostParams:FightParamProto {
 class WitchParams:FightParamProto {
     let fullPowerPunch: [CGFloat] = [3.0, 3.5, 4.0]
     let blockedPunch: [CGFloat] = [1.0, 1.0, 1.5]
-    let attackAggression:[CGFloat] = [8,8,7]
+    let attackAggression:[CGFloat] = [7,6,6]
     let comboAggression:[Int] = [5,4,3]
     let dodgeFrequency:[Int] = [3,3,3]
 }
@@ -75,9 +75,9 @@ class WitchParams:FightParamProto {
 class DevilParams:FightParamProto {
     let fullPowerPunch: [CGFloat] = [3.5,3.5, 4.0]
     let blockedPunch: [CGFloat] = [1.0, 1.0, 1.5]
-    let attackAggression:[CGFloat] = [7,7,6]
+    let attackAggression:[CGFloat] = [6,5,5]
     let comboAggression:[Int] = [5,4,3]
-    let dodgeFrequency:[Int] = [3]
+    let dodgeFrequency:[Int] = [3,3,3]
 }
 
 class BossParams:FightParamProto {

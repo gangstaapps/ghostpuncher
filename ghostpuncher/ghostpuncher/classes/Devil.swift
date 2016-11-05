@@ -129,6 +129,38 @@ class Devil: Opponent {
         return willConnect
     }
     
+    override func showDamage(direction:Direction){
+        
+        let damageArt:String
+        if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil {
+            damageArt = "fireball"
+        } else {
+            damageArt = "ghost_slash"
+        }
+        
+        
+        let node:SKSpriteNode
+        let xPositionAdjust:CGFloat
+        if direction == .right {
+            node = SKSpriteNode(imageNamed: "\(damageArt)_right")
+            xPositionAdjust = (self.body?.frame.size.width)!/3
+        } else {
+            node = SKSpriteNode(imageNamed: "\(damageArt)_left")
+            xPositionAdjust = -(self.body?.frame.size.width)!/3
+        }
+        
+        if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil {
+            node.alpha = 0.5
+        }
+        
+        node.position = CGPoint(x: self.opponent.position.x + xPositionAdjust + self.opponentFrame.size.width/2, y: self.opponentFrame.size.height/2)
+        node.zPosition = 20
+        self.delegate?.showDamage(node: node)
+        node.run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.removeFromParent()]))
+        
+        
+    }
+    
     override func spark(_ direction:Direction, _ power:CGFloat){
         
         let sparkEmmiter = SKEmitterNode(fileNamed: "devilBlood.sks")!
@@ -149,6 +181,30 @@ class Devil: Opponent {
         
         self.head?.addChild(sparkEmmiter)
     }
+    
+    
+    
+    override func randomAttack(){
+        
+                
+        if Int(arc4random_uniform(UInt32(2))) == 1 {
+            
+            
+            self.opponent?.run(SKAction.sequence([SKAction.scale(to: 0.9, duration: 0.1),
+                  SKAction.run {
+                    self.delegate?.opponentAttackLeft()
+                }]))
+            
+        } else {
+            self.opponent?.run(SKAction.sequence([SKAction.scale(to: 0.9, duration: 0.1),
+                                                  SKAction.run {
+                                                    self.delegate?.opponentAttackRight()
+                }]))
+        }
+        self.isBlocking = false
+    }
+    
+    
     
     override func returnGlowColor()->SKColor {
         return SKColor.black

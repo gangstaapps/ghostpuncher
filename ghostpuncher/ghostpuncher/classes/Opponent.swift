@@ -82,9 +82,6 @@ class Opponent:SKNode
     var leftArmAttack:SKAction?
     var headAnimation:SKAction?
     
-    let ghostDeathCycle:SKAction
-    let ghostDeath:SKSpriteNode
-    
     var headRightPunchAnimation:SKAction?
     var headLeftPunchAnimation:SKAction?
     var headRightPunchAnimationSlow:SKAction?
@@ -117,9 +114,11 @@ class Opponent:SKNode
     
     static let LENGTH_OF_MEMORY = 100
     let INACTIVITY_TIME_TO_CHECK = 1.0
+    let MIN_TIME_BETWEEN_ATTACKS = 0.5
     
     var lastActivityCheck = 0.0
     var currentSceneTime = 0.0
+    var lastAttack = 0.0
     
     var ghostMemory:[GameEvents] = Array(repeating: .empty, count: LENGTH_OF_MEMORY)
     
@@ -162,14 +161,14 @@ class Opponent:SKNode
         ghostEffectNode = SKEffectNode()
         
         
-        let deathAtlas = SKTextureAtlas(named: "\(self.opponentName)_portal.atlas")
-        var deathFrames:[SKTexture] = []
-        for i in 1...3 {
-            deathFrames.append(deathAtlas.textureNamed("\(self.opponentName)\(i).png"))
-        }
-        
-        ghostDeathCycle = SKAction.repeatForever(SKAction.animate(with: deathFrames, timePerFrame: 0.2))
-        ghostDeath = SKSpriteNode(texture: deathFrames[0])
+//        let deathAtlas = SKTextureAtlas(named: "\(self.opponentName)_portal.atlas")
+//        var deathFrames:[SKTexture] = []
+//        for i in 1...3 {
+//            deathFrames.append(deathAtlas.textureNamed("\(self.opponentName)\(i).png"))
+//        }
+//        
+//        ghostDeathCycle = SKAction.repeatForever(SKAction.animate(with: deathFrames, timePerFrame: 0.2))
+//        ghostDeath = SKSpriteNode(texture: deathFrames[0])
         
         super.init()
         
@@ -297,19 +296,19 @@ class Opponent:SKNode
         return 1.0
     }
     
-    func defeated(){
-        self.ghostDeath.position = self.opponent!.position
-        self.opponent?.removeFromParent()
-        self.addChild(self.ghostDeath)
-        self.ghostDeath.run(self.ghostDeathCycle)
-        
-        let scaleMoveGroup:SKAction = SKAction.group([SKAction.scale(to: 0.0, duration: 2.0), SKAction.move(to: CGPoint(x:0, y:0), duration: 2.0)])
-        
-        self.ghostDeath.run(SKAction.sequence([
-            SKAction.wait(forDuration: 1.0),
-            scaleMoveGroup, SKAction.run({self.delegate?.ghostIsGone()})
-            ]))
-    }
+//    func defeated(){
+//        self.ghostDeath.position = self.opponent!.position
+//        self.opponent?.removeFromParent()
+//        self.addChild(self.ghostDeath)
+//        self.ghostDeath.run(self.ghostDeathCycle)
+//        
+//        let scaleMoveGroup:SKAction = SKAction.group([SKAction.scale(to: 0.0, duration: 2.0), SKAction.move(to: CGPoint(x:0, y:0), duration: 2.0)])
+//        
+//        self.ghostDeath.run(SKAction.sequence([
+//            SKAction.wait(forDuration: 1.0),
+//            scaleMoveGroup, SKAction.run({self.delegate?.ghostIsGone()})
+//            ]))
+//    }
     
     func punchedToHell(){
         self.opponent?.removeAllActions()
@@ -374,6 +373,7 @@ class Opponent:SKNode
     }
     
     func doRightArmAttack(connected:Bool){
+        
         self.rightArm?.run(self.rightArmAttack!, withKey: RIGHT_ARM_KEY)
         
         let scaleUp = SKAction.scale(to: 1.5, duration: 0.2)
@@ -423,7 +423,6 @@ class Opponent:SKNode
     func goInvisible() {
         let sequence = SKAction.sequence([SKAction.fadeAlpha(to: 0.1, duration: 0.1),
                                           SKAction.wait(forDuration: 1.0),
-                                          SKAction.run({self.randomAttack()}),
                                           SKAction.fadeAlpha(to: 1.0, duration: 0.1)])
         
         let sequence2 = SKAction.sequence([SKAction.wait(forDuration: 0.25),
@@ -704,10 +703,12 @@ class Opponent:SKNode
         let playerHealth = BattleManager.playerHealth!
         let opponentHealth = BattleManager.opponentHealth!
         
+        
+        
         if Int(opponentHealth) < Int(playerHealth) {
             attackAggression = Int((self.fightParams?.attackAggression)!)
         } else {
-            attackAggression = Int(arc4random_uniform(10)).advanced(by: Int((self.fightParams?.attackAggression)!))
+            attackAggression = Int(arc4random_uniform(10)).advanced(by: Int(arc4random_uniform(10)))
         }
         
 //        if Int(arc4random_uniform(UInt32(attackAggression))) == 1 {
@@ -727,7 +728,7 @@ class Opponent:SKNode
         let comboAggression = self.fightParams?.comboAggression ?? 10
         
         if self.checkLast(comboAggression, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect, .playerLeftKickConnect, .playerRightKickConnect],
-                          excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail, .playerRightKickFail, .playerLeftKickFail, .ghostGoInvisible, .ghostLeftAttackFail, .ghostRightAttackFail]){
+                          excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail, .ghostGoInvisible, .ghostLeftAttackFail, .ghostRightAttackFail]){
             
             if !self.checkFor(events: [.ghostComboAttack1], withinLast: comboAggression){
                 self.addEvent(event: .ghostComboAttack1)
@@ -741,8 +742,11 @@ class Opponent:SKNode
         if self.checkLast(dodgeFrequency, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect],
                           excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail, .ghostBlock]){
             
+            if arc4random_uniform(UInt32(2)) == 1 {
+                return false
+            }
             
-            if Int(arc4random_uniform(UInt32(2))) == 1 && !self.checkLast(10, eventsEqualAny: [.ghostBlock],  excluding:[]) {
+            if !self.checkLast(10, eventsEqualAny: [.ghostBlock],  excluding:[]) {
                 self.blockAttack()
                 print("Block attack")
             }else if self.checkMoreRecent(events: [.playerLeftPunchConnect, .playerRightPunchConnect]) == .playerLeftPunchConnect {
@@ -855,6 +859,7 @@ class Opponent:SKNode
     }
     func randomAttack(){
         
+        
         if Int(arc4random_uniform(UInt32(2))) == 1 {
             delegate?.opponentAttackLeft()
         } else {
@@ -876,10 +881,7 @@ class Opponent:SKNode
             return
         }
         
-        if self.checkDodging() {
-            
-            return
-        }
+        
         
         if self.opponent.action(forKey: MOVEMENT_KEY) == nil {
             let newPos:CGPoint = CGPoint(x: startPosition.x + CGFloat(arc4random_uniform(UInt32(100))) - CGFloat(arc4random_uniform(UInt32(100))), y: startPosition.y + CGFloat(arc4random_uniform(UInt32(20))) - CGFloat(arc4random_uniform(UInt32(20))))
@@ -893,9 +895,9 @@ class Opponent:SKNode
             return
         }
         
-        if self.checkForAttackTime()
+        if currentSceneTime - lastAttack > MIN_TIME_BETWEEN_ATTACKS  && self.checkForAttackTime()
         {
-            
+            lastAttack = currentSceneTime
 //            if Int(arc4random_uniform(UInt32(4))) == 1  && !self.checkLast(10, eventsEqualAny: [.ghostBlock],  excluding:[]) {
 //                self.blockAttack()
 //            }else {
@@ -907,7 +909,10 @@ class Opponent:SKNode
 //            }
             return
         } else {
-            
+            if self.checkDodging() {
+                lastAttack = currentSceneTime
+                return
+            }
         }
         
         let comboFrequency = self.fightParams?.comboFrequency ?? 40
