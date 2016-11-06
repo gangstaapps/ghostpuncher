@@ -161,15 +161,6 @@ class Opponent:SKNode
         ghostEffectNode = SKEffectNode()
         
         
-//        let deathAtlas = SKTextureAtlas(named: "\(self.opponentName)_portal.atlas")
-//        var deathFrames:[SKTexture] = []
-//        for i in 1...3 {
-//            deathFrames.append(deathAtlas.textureNamed("\(self.opponentName)\(i).png"))
-//        }
-//        
-//        ghostDeathCycle = SKAction.repeatForever(SKAction.animate(with: deathFrames, timePerFrame: 0.2))
-//        ghostDeath = SKSpriteNode(texture: deathFrames[0])
-        
         super.init()
         
         if let ghostScene:SKScene = SKScene(fileNamed: self.opponentName.capitalized){
@@ -575,6 +566,49 @@ class Opponent:SKNode
         self.opponent?.run(sequence , withKey:COMBO_ATTACK_KEY)
     }
 
+    func lightningAttack(){
+        
+        self.addEvent(event: .nothing)
+        
+        if self.opponent.action(forKey: MOVEMENT_KEY) != nil {
+            self.opponent.removeAction(forKey: MOVEMENT_KEY)
+        }
+        if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil {
+            self.opponent.removeAction(forKey: COMBO_ATTACK_KEY)
+        }
+        
+        self.delegate?.turnOffLights()
+        self.opponent?.alpha = 1.0
+        
+        
+        let sequence = SKAction.sequence([
+            SKAction.run({
+                self.head?.texture = SKTextureAtlas(named: "\(self.opponentName)Head.atlas").textureNamed("\(self.opponentName)_head_frontopen_punch.png")
+            }),
+            SKAction.wait(forDuration: 1.0),
+            SKAction.run({
+                self.lightning()
+                self.block?.texture = SKTexture(imageNamed: "\(self.opponentName)_grapple")
+                self.block?.isHidden = false
+                self.leftArm?.isHidden = true
+                self.rightArm?.isHidden = true
+            }),
+            SKAction.wait(forDuration: 0.5),
+            SKAction.sequence([
+                SKAction.wait(forDuration: 0.3),
+                SKAction.run({
+                    self.delegate?.explosion()
+                    self.block?.texture = SKTexture(imageNamed: "\(self.opponentName)_block")
+                    self.block?.isHidden = true
+                    self.leftArm?.isHidden = false
+                    self.rightArm?.isHidden = false
+                    self.delegate?.turnOnLights()
+                })
+                ])
+            ])
+        
+        self.opponent?.run(sequence , withKey:COMBO_ATTACK_KEY)
+    }
     
     func fireball(pos:CGPoint){
         let sparkEmmiter = SKEmitterNode(fileNamed: "FireBall.sks")!
@@ -585,6 +619,19 @@ class Opponent:SKNode
         sparkEmmiter.zRotation = CGFloat(45.degreesToRadians)
         self.body?.addChild(sparkEmmiter)
         sparkEmmiter.run(SKAction.scale(to: 4.0, duration: 0.5))
+        self.delegate?.fireBall()
+    }
+    
+    func lightning(){
+        let lightning = SKSpriteNode(imageNamed: "\(self.opponentName)_lightning")
+        let pos = (self.opponent?.position)!
+        lightning.position = CGPoint(x: pos.x, y: pos.y - 20)
+        self.addChild(lightning)
+        lightning.run(SKAction.sequence([SKAction.wait(forDuration: 0.2), SKAction.fadeAlpha(to: 0, duration: 0),
+                                         SKAction.wait(forDuration: 0.1), SKAction.fadeAlpha(to: 1, duration: 0),
+                                         SKAction.wait(forDuration: 0.2), SKAction.fadeAlpha(to: 0, duration: 0),
+                                         SKAction.wait(forDuration: 0.1), SKAction.fadeAlpha(to: 1, duration: 0),
+                                         SKAction.wait(forDuration: 0.2),SKAction.removeFromParent()]))
         self.delegate?.fireBall()
     }
     
@@ -708,7 +755,7 @@ class Opponent:SKNode
         if Int(opponentHealth) < Int(playerHealth) {
             attackAggression = Int((self.fightParams?.attackAggression)!)
         } else {
-            attackAggression = Int(arc4random_uniform(10)).advanced(by: Int(arc4random_uniform(10)))
+            attackAggression = Int(arc4random_uniform(30)).advanced(by: Int(arc4random_uniform(30)))
         }
         
 //        if Int(arc4random_uniform(UInt32(attackAggression))) == 1 {

@@ -11,6 +11,9 @@ import SpriteKit
 class Devil: Opponent {
     
     let batwingCycle:SKAction
+    let shockCycle:SKAction
+    let shockSprite:SKSpriteNode
+    let shockAtlas:SKTextureAtlas
     var batwings:SKSpriteNode?
     
     init(frame:CGRect, _ multiplier:Int = 1) {
@@ -19,6 +22,16 @@ class Devil: Opponent {
                                          batwingAtlas.textureNamed("batwing2.png"),
                                          batwingAtlas.textureNamed("batwing3.png")]
         batwingCycle = SKAction.animate(with: batwingFrames, timePerFrame: 0.1)
+        
+        
+        shockAtlas = SKTextureAtlas(named: "shock.atlas")
+        let shockFrames:[SKTexture] = [shockAtlas.textureNamed("shock1.png"),
+                                       shockAtlas.textureNamed("shock2.png"),
+                                         shockAtlas.textureNamed("shock3.png")]
+        
+        shockCycle = SKAction.animate(with: shockFrames, timePerFrame: 0.16)
+        shockSprite = SKSpriteNode(texture: shockAtlas.textureNamed("shock1.png"))
+        
 //        batwings = SKSpriteNode(texture: batwingFrames[0])
         super.init(frame: frame, name: "devil")
         
@@ -58,6 +71,31 @@ class Devil: Opponent {
     }
     
     override func comboAttack1(){
+        let random = Int(arc4random_uniform(2))
+        
+        switch  random {
+        case 0:
+            self.comboAttackWithWings()
+        default:
+            super.lightningAttack()
+        }
+        
+    }
+    
+    override func lightning(){
+        let lightning = SKSpriteNode(imageNamed: "\(self.opponentName)_lightning")
+        let pos = (self.opponent?.position)!
+        lightning.position = CGPoint(x: pos.x, y: pos.y - 100)
+        self.addChild(lightning)
+        lightning.run(SKAction.sequence([SKAction.wait(forDuration: 0.2), SKAction.fadeAlpha(to: 0, duration: 0),
+                                         SKAction.wait(forDuration: 0.1), SKAction.fadeAlpha(to: 1, duration: 0),
+                                         SKAction.wait(forDuration: 0.2), SKAction.fadeAlpha(to: 0, duration: 0),
+                                         SKAction.wait(forDuration: 0.1), SKAction.fadeAlpha(to: 1, duration: 0),
+                                         SKAction.wait(forDuration: 0.2),SKAction.removeFromParent()]))
+        self.delegate?.fireBall()
+    }
+    
+    func comboAttackWithWings(){
         self.addEvent(event: .ghostComboAttack1)
         self.batwings?.isHidden = false
         self.batwings?.run(self.batwingCycle)
@@ -132,26 +170,32 @@ class Devil: Opponent {
     override func showDamage(direction:Direction){
         
         let damageArt:String
-        if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil {
-            damageArt = "fireball"
-        } else {
-            damageArt = "ghost_slash"
-        }
-        
-        
-        let node:SKSpriteNode
+         let node:SKSpriteNode
         let xPositionAdjust:CGFloat
+        
+//        if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil {
+//            damageArt = "fireball"
+            node = SKSpriteNode(texture: shockAtlas.textureNamed("shock1.png"))
+            node.run(shockCycle)
+//        } else {
+//            damageArt = "ghost_slash"
+//            if direction == .right {
+//                node = SKSpriteNode(imageNamed: "\(damageArt)_right")
+//            } else {
+//                node = SKSpriteNode(imageNamed: "\(damageArt)_left")
+//            }
+//        }
+        
         if direction == .right {
-            node = SKSpriteNode(imageNamed: "\(damageArt)_right")
             xPositionAdjust = (self.body?.frame.size.width)!/3
         } else {
-            node = SKSpriteNode(imageNamed: "\(damageArt)_left")
             xPositionAdjust = -(self.body?.frame.size.width)!/3
         }
+       
         
-        if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil {
-            node.alpha = 0.5
-        }
+        
+        
+        
         
         node.position = CGPoint(x: self.opponent.position.x + xPositionAdjust + self.opponentFrame.size.width/2, y: self.opponentFrame.size.height/2)
         node.zPosition = 20

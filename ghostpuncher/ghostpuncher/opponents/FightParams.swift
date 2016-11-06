@@ -26,27 +26,27 @@ struct FightParams {
     }
     var fullPowerHit:CGFloat {
         get {
-            return  self.opponentParams.fullPowerPunch[self.multiplier]
+            return  self.opponentParams.fullPowerPunch[self.multiplier - 1]
         }
     }
     var blockedHit:CGFloat {
         get {
-            return  self.opponentParams.blockedPunch[self.multiplier]
+            return  self.opponentParams.blockedPunch[self.multiplier - 1]
         }
     }
     var attackAggression:CGFloat {
         get {
-            return self.opponentParams.attackAggression[self.multiplier]
+            return self.opponentParams.attackAggression[self.multiplier - 1]
         }
     }
     var comboAggression:Int {
         get {
-            return self.opponentParams.comboAggression[self.multiplier]
+            return self.opponentParams.comboAggression[self.multiplier - 1]
         }
     }
     var dodgeFrequency:Int {
         get {
-            return self.opponentParams.dodgeFrequency[self.multiplier]
+            return self.opponentParams.dodgeFrequency[self.multiplier - 1]
         }
     }
     var comboFrequency:Int {

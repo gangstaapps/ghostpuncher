@@ -23,13 +23,15 @@ class Boss: Opponent {
     }
     
     override func comboAttack1(){
-        let random = Int(arc4random_uniform(3))
+        let random = Int(arc4random_uniform(4))
             
         switch  random {
         case 0:
             super.fireballAttack()
         case 1:
             super.multiFireballAttack()
+        case 2:
+            super.lightningAttack()
         default:
             super.comboAttack1()
         }

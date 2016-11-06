@@ -22,26 +22,22 @@ class Witch: Opponent {
         return SKColor.black
     }
     
-    override func returnFullPowerHit()->CGFloat
-    {
-        return 4.0
-    }
     
-    override func returnBlockedHit()->CGFloat
-    {
-        return 1.0
-    }
     
     override func comboAttack1(){
+        let random = Int(arc4random_uniform(3))
         
-        if Int(arc4random_uniform(UInt32(2))) == 1 {
-            self.multiFireballAttack()
-        } else {
-            
-            self.fireballAttack()
+        switch  random {
+        case 0:
+            super.fireballAttack()
+        case 1:
+            super.multiFireballAttack()
+        default:
+            super.lightningAttack()
         }
-    }
         
+    }
+    
     
     
     
@@ -115,100 +111,6 @@ class Witch: Opponent {
         self.head?.addChild(sparkEmmiter)
     }
     
-    /*
-     let comboAggression = self.fightParams?.comboAggression ?? 10
-     
-     if self.checkLast(comboAggression, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect, .playerLeftKickConnect, .playerRightKickConnect],
-     excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail, .playerRightKickFail, .playerLeftKickFail, .ghostGoInvisible, .ghostLeftAttackFail, .ghostRightAttackFail]){
-     
-     if !self.checkFor(events: [.ghostComboAttack1], withinLast: comboAggression){
-     self.addEvent(event: .ghostComboAttack1)
-     
-     return true
-     }
-     }
-     
-     let dodgeFrequency = self.fightParams?.dodgeFrequency ?? 3
-     
-     if self.checkLast(dodgeFrequency, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect],
-     excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail]){
-     
-     
-     if Int(arc4random_uniform(UInt32(2))) == 1 {
-     self.blockAttack()
-     }
-     if self.checkMoreRecent(events: [.playerLeftPunchConnect, .playerRightPunchConnect]) == .playerLeftPunchConnect {
-     self.addEvent(event: .ghostDodgeRight)
-     } else {
-     self.addEvent(event: .ghostDodgeLeft)
-     }
-     
-     
-     
-     
-     return true
-     }
- */
-    
-//    override func checkDodging()->Bool {
-//        
-//        let comboAggression = self.fightParams?.comboAggression ?? 10
-//        
-//        if self.checkLast(comboAggression, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect, .playerLeftKickConnect, .playerRightKickConnect],
-//                          excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail, .playerRightKickFail, .playerLeftKickFail, .ghostGoInvisible, .ghostLeftAttackFail, .ghostRightAttackFail]){
-//            
-//            if !self.checkFor(events: [.ghostComboAttack1, .ghostComboAttack2], withinLast: 10){
-//                if Int(arc4random_uniform(UInt32(2))) == 1 {
-//                    self.addEvent(event: .ghostComboAttack1)
-//                } else {
-//                    self.addEvent(event: .ghostComboAttack2)
-//                }
-//                return true
-//            }
-//        }
-//        
-//        let dodgeFrequency = self.fightParams?.dodgeFrequency ?? 3
-//        
-//        if self.checkLast(dodgeFrequency, eventsEqualAny: [.playerRightPunchConnect, .playerLeftPunchConnect],
-//                          excluding: [.nothing, .playerRightPunchFail, .playerLeftPunchFail]){
-//            
-//            
-//            if Int(arc4random_uniform(UInt32(4))) == 1  && !self.checkLast(10, eventsEqualAny: [.ghostBlock],  excluding:[]) {
-//                self.blockAttack()
-//            } else {
-//                if self.checkMoreRecent(events: [.playerLeftPunchConnect, .playerRightPunchConnect]) == .playerLeftPunchConnect {
-//                    self.addEvent(event: .ghostDodgeRight)
-//                } else {
-//                    self.addEvent(event: .ghostDodgeLeft)
-//                }
-//            }
-//            
-//            
-//            
-//            return true
-//        }
-//        
-//        if self.checkLast(1, eventsEqual: .ghostDodgeRight){
-//            self.dodgeRight()
-//            return true
-//        }
-//        
-//        if self.checkLast(1, eventsEqual: .ghostDodgeLeft){
-//            self.dodgeLeft()
-//            return true
-//        }
-//        
-//        if self.checkLast(1, eventsEqual: .ghostComboAttack1){
-//            self.comboAttack1()
-//            return true
-//        }
-//        
-//        if self.checkLast(1, eventsEqual: .ghostComboAttack2){
-//            self.comboAttack2()
-//            return true
-//        }
-//        
-//        return false
-//    }
+   
     
 }

@@ -304,7 +304,7 @@ class MenuScene: SKScene
             logo?.run(SKAction.moveBy(x: -self.frame.size.width/2, y: 0, duration: 0.2))
             fightButton?.run(SKAction.sequence([SKAction.moveBy(x: -self.frame.size.width/2, y: 0, duration: 0.2),
                                                 SKAction.run({
-                                                   
+//                                                   MenuScene.level  = 3
                                                     let scene = MenuScene(frame: self.frame, opponents:BattleManager.opponentNames, startWith:0)
                                                     self.view?.presentScene(scene)
                                                 })]))

@@ -64,7 +64,9 @@ class Room: SKNode
     
     func openPortal (){
         self.portal.run(self.portalEffect)
-        self.addChild(self.portal)
+        if self.portal.parent == nil {
+            self.addChild(self.portal)
+        }
         self.portal.run(SKAction.fadeIn(withDuration: 0.4))
     }
     func closePortal(){

@@ -23,6 +23,7 @@
 		A227C7AE1DA758AA00EFFD7B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A227C7AC1DA758AA00EFFD7B /* LaunchScreen.storyboard */; };
 		A227C7B91DA758AA00EFFD7B /* ghostpuncherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C7B81DA758AA00EFFD7B /* ghostpuncherTests.swift */; };
 		A227C7C41DA758AA00EFFD7B /* ghostpuncherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A227C7C31DA758AA00EFFD7B /* ghostpuncherUITests.swift */; };
+		A238631D1DCEABBC00AD6731 /* shock.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A238631C1DCEABBC00AD6731 /* shock.atlas */; };
 		A2519B431DC70454001925F8 /* devilBlood.sks in Resources */ = {isa = PBXBuildFile; fileRef = A2519B411DC70454001925F8 /* devilBlood.sks */; };
 		A2519B441DC70454001925F8 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = A2519B421DC70454001925F8 /* spark.png */; };
 		A2519B481DC7088F001925F8 /* evilLaugh.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2519B471DC7088F001925F8 /* evilLaugh.wav */; };
@@ -133,6 +134,7 @@
 		A227C7BF1DA758AA00EFFD7B /* ghostpuncherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ghostpuncherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A227C7C31DA758AA00EFFD7B /* ghostpuncherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ghostpuncherUITests.swift; sourceTree = "<group>"; };
 		A227C7C51DA758AA00EFFD7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A238631C1DCEABBC00AD6731 /* shock.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = shock.atlas; sourceTree = "<group>"; };
 		A2519B411DC70454001925F8 /* devilBlood.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = devilBlood.sks; sourceTree = "<group>"; };
 		A2519B421DC70454001925F8 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		A2519B471DC7088F001925F8 /* evilLaugh.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = evilLaugh.wav; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 		A216F0E21DB6DD6C003DD5BB /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				A238631C1DCEABBC00AD6731 /* shock.atlas */,
 				A2D7B9961DBB0F6800DC2DD9 /* sound_fx */,
 				A28A10931DBAC21800029818 /* gp_audio 2 */,
 				A216F0E51DB6EE18003DD5BB /* portal.atlas */,
@@ -563,6 +566,7 @@
 				A25C9FE11DBF29E7006CDA73 /* Devil.xcassets in Resources */,
 				A2D7B9A41DBB0F6800DC2DD9 /* atmos_loop1.wav in Resources */,
 				A20600F91DB1A45900035330 /* ectoPlasm.sks in Resources */,
+				A238631D1DCEABBC00AD6731 /* shock.atlas in Resources */,
 				A2D7B9BA1DBBBFC300DC2DD9 /* Witch.sks in Resources */,
 				A2CEC08F1DC690DC00FFE128 /* slash.wav in Resources */,
 				A25C9FE61DBF2A83006CDA73 /* devilLeftArm.atlas in Resources */,
