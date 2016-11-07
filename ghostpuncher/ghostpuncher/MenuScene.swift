@@ -19,7 +19,7 @@ class MenuScene: SKScene
     var tombstoneButton:SKSpriteNode?
     var continueFrom:Int = 0
     
-    static var level = 1
+    
     
     let selectSound = SKAction.playSoundFileNamed("select.wav", waitForCompletion: false)
     let buzzSound = SKAction.playSoundFileNamed("buzz.wav", waitForCompletion: false)
@@ -147,14 +147,14 @@ class MenuScene: SKScene
         
         var opponentsToDisplay = opponents
         
-        var theLevel = min(MenuScene.level, 3)
+        var theLevel = min(BattleManager.level, 3)
         
-        if MenuScene.level == 2 || MenuScene.level == 3 {
+        if BattleManager.level == 2 || BattleManager.level == 3 {
             let bossbkg = SKSpriteNode(imageNamed: "boss_background\(theLevel - 1)")
             bossbkg.size = frame.size
             bossbkg.position = CGPoint(x: frame.midX, y: frame.midY)
             self.addChild(bossbkg)
-        } else if MenuScene.level > 3 {
+        } else if BattleManager.level > 3 {
             opponentsToDisplay = ["boss"]
             theLevel = 0
         }
@@ -224,7 +224,7 @@ class MenuScene: SKScene
         if startWith == self.opponents?.count {
             
             self.run(SKAction.sequence([SKAction.wait(forDuration: 2.0), SKAction.run {
-                MenuScene.level += 1
+                BattleManager.level += 1
                 let reveal = SKTransition.crossFade(withDuration: 1.0)
                 let scene = MenuScene(frame: self.frame, opponents:BattleManager.opponentNames, startWith:0)
                 self.view?.presentScene(scene, transition: reveal)
@@ -251,7 +251,7 @@ class MenuScene: SKScene
             self.run(self.buzzSound)
             button?.texture = SKTexture(imageNamed: "\(button?.userData?["name"] as! String)_reg")
         }), SKAction.wait(forDuration: 1.0), SKAction.run({
-            let scene = FightScene(frame: self.frame, backgroundColor: UIColor.black, opponent: button?.userData?["name"] as! String, MenuScene.level)
+            let scene = FightScene(frame: self.frame, backgroundColor: UIColor.black, opponent: button?.userData?["name"] as! String, BattleManager.level)
             
             self.view?.presentScene(scene)
         })]) )
@@ -304,7 +304,7 @@ class MenuScene: SKScene
             logo?.run(SKAction.moveBy(x: -self.frame.size.width/2, y: 0, duration: 0.2))
             fightButton?.run(SKAction.sequence([SKAction.moveBy(x: -self.frame.size.width/2, y: 0, duration: 0.2),
                                                 SKAction.run({
-//                                                   MenuScene.level  = 3
+//                                                   BattleManager.level  = 4
                                                     let scene = MenuScene(frame: self.frame, opponents:BattleManager.opponentNames, startWith:0)
                                                     self.view?.presentScene(scene)
                                                 })]))

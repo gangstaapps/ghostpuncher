@@ -24,6 +24,8 @@ class BattleManager
     
     static let opponentNames = ["ghost", "witch", "devil"]
     
+    static var level = 1
+    static var multiplier = 1
     
     let opponentHealthStart:CGFloat = 100.0
     let playerHealthStart:CGFloat = 100.0

@@ -26,12 +26,12 @@ struct FightParams {
     }
     var fullPowerHit:CGFloat {
         get {
-            return  self.opponentParams.fullPowerPunch[self.multiplier - 1]
+            return  self.opponentParams.fullPowerPunch[self.multiplier - 1] * CGFloat(BattleManager.multiplier)
         }
     }
     var blockedHit:CGFloat {
         get {
-            return  self.opponentParams.blockedPunch[self.multiplier - 1]
+            return  self.opponentParams.blockedPunch[self.multiplier - 1] * CGFloat(BattleManager.multiplier)
         }
     }
     var attackAggression:CGFloat {
@@ -57,34 +57,34 @@ struct FightParams {
 }
 
 class GhostParams:FightParamProto {
-    let fullPowerPunch: [CGFloat] = [2.0, 2.5, 3.0]
+    let fullPowerPunch: [CGFloat] = [3.0, 3.5, 4.0]
     let blockedPunch: [CGFloat] = [0.5, 0.5, 1.0]
-    let attackAggression:[CGFloat] = [8,7,7]
+    let attackAggression:[CGFloat] = [6,5,4]
     let comboAggression:[Int] = [6,5,4]
     let dodgeFrequency:[Int] = [3,3,3]
 }
 
 class WitchParams:FightParamProto {
-    let fullPowerPunch: [CGFloat] = [3.0, 3.5, 4.0]
+    let fullPowerPunch: [CGFloat] = [3.0, 4, 5.0]
     let blockedPunch: [CGFloat] = [1.0, 1.0, 1.5]
-    let attackAggression:[CGFloat] = [7,6,6]
+    let attackAggression:[CGFloat] = [6,5,4]
     let comboAggression:[Int] = [5,4,3]
     let dodgeFrequency:[Int] = [3,3,3]
 }
 
 class DevilParams:FightParamProto {
-    let fullPowerPunch: [CGFloat] = [3.5,3.5, 4.0]
+    let fullPowerPunch: [CGFloat] = [3.5,4.5, 5.5]
     let blockedPunch: [CGFloat] = [1.0, 1.0, 1.5]
-    let attackAggression:[CGFloat] = [6,5,5]
-    let comboAggression:[Int] = [5,4,3]
+    let attackAggression:[CGFloat] = [6,4,3]
+    let comboAggression:[Int] = [5,3,2]
     let dodgeFrequency:[Int] = [3,3,3]
 }
 
 class BossParams:FightParamProto {
-    let fullPowerPunch: [CGFloat] = [0,0,0,4.0]
+    let fullPowerPunch: [CGFloat] = [0,0,0,6.0]
     let blockedPunch: [CGFloat] = [0,0,0,1.5]
-    let attackAggression:[CGFloat] = [0,0,0,5]
-    let comboAggression:[Int] = [0,0,0,3]
+    let attackAggression:[CGFloat] = [0,0,0,2]
+    let comboAggression:[Int] = [0,0,0,2]
     let dodgeFrequency:[Int] = [0,0,0,3]
 }
 

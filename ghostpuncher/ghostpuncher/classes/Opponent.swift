@@ -28,6 +28,7 @@ protocol OpponentDelegate: class {
     func playerPunchBlocked()
     func explosion()
     func fireBall()
+    func lightning()
     func showDamage(node:SKSpriteNode)
 }
 
@@ -114,7 +115,7 @@ class Opponent:SKNode
     
     static let LENGTH_OF_MEMORY = 100
     let INACTIVITY_TIME_TO_CHECK = 1.0
-    let MIN_TIME_BETWEEN_ATTACKS = 0.5
+    let MIN_TIME_BETWEEN_ATTACKS = 0.25
     
     var lastActivityCheck = 0.0
     var currentSceneTime = 0.0
@@ -632,7 +633,7 @@ class Opponent:SKNode
                                          SKAction.wait(forDuration: 0.2), SKAction.fadeAlpha(to: 0, duration: 0),
                                          SKAction.wait(forDuration: 0.1), SKAction.fadeAlpha(to: 1, duration: 0),
                                          SKAction.wait(forDuration: 0.2),SKAction.removeFromParent()]))
-        self.delegate?.fireBall()
+        self.delegate?.lightning()
     }
     
     func fadeOnRecoil()->Bool {
@@ -752,10 +753,12 @@ class Opponent:SKNode
         
         
         
-        if Int(opponentHealth) < Int(playerHealth) {
+        if Int(opponentHealth) > Int(playerHealth) {
             attackAggression = Int((self.fightParams?.attackAggression)!)
         } else {
-            attackAggression = Int(arc4random_uniform(30)).advanced(by: Int(arc4random_uniform(30)))
+            let modifiedAggression = (100 - (playerHealth - opponentHealth)) * CGFloat(5 - BattleManager.level)
+            
+            attackAggression = Int(arc4random_uniform( UInt32(modifiedAggression) ))
         }
         
 //        if Int(arc4random_uniform(UInt32(attackAggression))) == 1 {
@@ -957,7 +960,7 @@ class Opponent:SKNode
             return
         } else {
             if self.checkDodging() {
-                lastAttack = currentSceneTime
+//                lastAttack = currentSceneTime
                 return
             }
         }

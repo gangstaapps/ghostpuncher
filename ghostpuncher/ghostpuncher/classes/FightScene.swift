@@ -35,7 +35,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     let youWinSound = SKAction.playSoundFileNamed("ghostshock.wav", waitForCompletion: false)
     let fireballSFX = SKAction.playSoundFileNamed("fireball.wav", waitForCompletion: false)
     let thunderSFX = SKAction.playSoundFileNamed("thunder.wav", waitForCompletion: false)
-    
+    let lightningSFX = SKAction.playSoundFileNamed("lightning.wav", waitForCompletion: false)
     
     init(frame: CGRect, backgroundColor : UIColor, opponent:String = "ghost", _ level:Int = 1) {
         self.room = Room(frame:frame, name:opponent)
@@ -310,8 +310,12 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
             scene = MenuScene(frame: frame, opponents:BattleManager.opponentNames, startWith:1, true)
         } else if (self.opponent as? Witch) != nil {
             scene = MenuScene(frame: frame, opponents:BattleManager.opponentNames, startWith:2, true)
-        } else{
+        } else if (self.opponent as? Devil) != nil {
             scene = MenuScene(frame: frame, opponents:BattleManager.opponentNames, startWith:3, true)
+        } else {
+            BattleManager.multiplier += 1
+            BattleManager.level = 1
+            scene = MenuScene(frame: frame, opponents:BattleManager.opponentNames, startWith:0)
         }
         
         
@@ -426,6 +430,10 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     
     func fireBall(){
         self.run(fireballSFX)
+    }
+    
+    func lightning(){
+        self.run(lightningSFX)
     }
     
     func turnOffLights(){

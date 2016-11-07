@@ -16,6 +16,8 @@ class Devil: Opponent {
     let shockAtlas:SKTextureAtlas
     var batwings:SKSpriteNode?
     
+    let devilPunch = SKAction.playSoundFileNamed("devilPunch.wav", waitForCompletion: false)
+    
     init(frame:CGRect, _ multiplier:Int = 1) {
         let batwingAtlas = SKTextureAtlas(named: "batwing.atlas")
         let batwingFrames:[SKTexture] = [batwingAtlas.textureNamed("batwing1.png"),
@@ -92,7 +94,7 @@ class Devil: Opponent {
                                          SKAction.wait(forDuration: 0.2), SKAction.fadeAlpha(to: 0, duration: 0),
                                          SKAction.wait(forDuration: 0.1), SKAction.fadeAlpha(to: 1, duration: 0),
                                          SKAction.wait(forDuration: 0.2),SKAction.removeFromParent()]))
-        self.delegate?.fireBall()
+        self.delegate?.lightning()
     }
     
     func comboAttackWithWings(){
@@ -252,6 +254,9 @@ class Devil: Opponent {
     
     override func returnGlowColor()->SKColor {
         return SKColor.black
+    }
+    override func enemyConnectSFX() -> SKAction {
+        return devilPunch
     }
     
     required init?(coder aDecoder: NSCoder) {
