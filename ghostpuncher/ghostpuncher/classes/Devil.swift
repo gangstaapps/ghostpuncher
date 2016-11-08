@@ -31,7 +31,7 @@ class Devil: Opponent {
                                        shockAtlas.textureNamed("shock2.png"),
                                          shockAtlas.textureNamed("shock3.png")]
         
-        shockCycle = SKAction.animate(with: shockFrames, timePerFrame: 0.16)
+        shockCycle = SKAction.animate(with: shockFrames, timePerFrame: 0.1)
         shockSprite = SKSpriteNode(texture: shockAtlas.textureNamed("shock1.png"))
         
 //        batwings = SKSpriteNode(texture: batwingFrames[0])
@@ -261,5 +261,18 @@ class Devil: Opponent {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func fireballAppear(){
+        //        self.opponent?.alpha = 0
+        //        self.opponent.setScale(0)
+        let sparkEmmiter = SKEmitterNode(fileNamed: "FireBall.sks")!
+        sparkEmmiter.position = (self.opponent?.position)! //CGPoint(x:(self.opponent?.position)!.x, y:(self.opponent?.position)!.y + 100)
+        sparkEmmiter.name = "fireBall"
+        sparkEmmiter.zPosition = 200
+        sparkEmmiter.targetNode = self
+        sparkEmmiter.run(SKAction.group([SKAction.scale(to: 8.0, duration: 0.3), SKAction.moveBy(x: 0, y: 100, duration: 0.3)]) )
+        self.addChild(sparkEmmiter)
+        self.opponent?.run(SKAction.sequence([SKAction.wait(forDuration: 0.2),SKAction.fadeIn(withDuration: 0.5)]))
     }
 }

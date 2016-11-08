@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ghostpuncher/classes/FightScene.swift"
-            timestampString = "500003182.808066"
+            timestampString = "500279050.933938"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
             landmarkName = "sceneDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ghostpuncher/classes/FightScene.swift"
-            timestampString = "499932684.86074"
+            timestampString = "500279050.933938"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "init(frame:backgroundColor:opponent:_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ghostpuncher/classes/FightScene.swift"
-            timestampString = "500183057.720783"
+            timestampString = "500279050.933938"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "423"
-            endingLineNumber = "423"
+            startingLineNumber = "460"
+            endingLineNumber = "460"
             landmarkName = "superAttack()"
             landmarkType = "7">
          </BreakpointContent>
@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ghostpuncher/classes/Opponent.swift"
-            timestampString = "500183659.933401"
+            timestampString = "500277449.059406"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1041"
-            endingLineNumber = "1041"
+            startingLineNumber = "1053"
+            endingLineNumber = "1053"
             landmarkName = "willLeftComboConnect()"
             landmarkType = "7">
          </BreakpointContent>
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ghostpuncher/classes/FightScene.swift"
-            timestampString = "500003182.808066"
+            timestampString = "500279050.933938"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
+            startingLineNumber = "289"
+            endingLineNumber = "289"
             landmarkName = "comboRight()"
             landmarkType = "7">
             <Locations>
@@ -234,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ghostpuncher/classes/Opponent.swift"
-            timestampString = "500183659.933401"
+            timestampString = "500277449.059406"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "784"
-            endingLineNumber = "784"
+            startingLineNumber = "796"
+            endingLineNumber = "796"
             landmarkName = "checkDodging()"
             landmarkType = "7">
          </BreakpointContent>
@@ -250,11 +250,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ghostpuncher/classes/Opponent.swift"
-            timestampString = "500183659.933401"
+            timestampString = "500277449.059406"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "800"
-            endingLineNumber = "800"
+            startingLineNumber = "812"
+            endingLineNumber = "812"
             landmarkName = "checkDodging()"
             landmarkType = "7">
          </BreakpointContent>
@@ -266,11 +266,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ghostpuncher/classes/Opponent.swift"
-            timestampString = "500183659.933401"
+            timestampString = "500277449.059406"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "952"
-            endingLineNumber = "952"
+            startingLineNumber = "964"
+            endingLineNumber = "964"
             landmarkName = "update(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -282,11 +282,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ghostpuncher/classes/FightScene.swift"
-            timestampString = "500003182.808066"
+            timestampString = "500279050.933938"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "309"
-            endingLineNumber = "309"
+            startingLineNumber = "346"
+            endingLineNumber = "346"
             landmarkName = "ghostIsGone()"
             landmarkType = "7">
          </BreakpointContent>
@@ -314,11 +314,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ghostpuncher/MenuScene.swift"
-            timestampString = "499928484.588345"
+            timestampString = "500272088.246095"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
             landmarkName = "init(frame:opponents:startWith:_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -330,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ghostpuncher/MenuScene.swift"
-            timestampString = "500182321.551867"
+            timestampString = "500272088.246095"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
             landmarkName = "init(frame:opponents:startWith:_:)"
             landmarkType = "7">
          </BreakpointContent>

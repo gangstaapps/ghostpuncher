@@ -29,6 +29,8 @@ class MenuScene: SKScene
     let mediumPunchSound = SKAction.playSoundFileNamed("sfx_punch3.wav", waitForCompletion: false)
     let evilLaughSound = SKAction.playSoundFileNamed("evilLaugh.wav", waitForCompletion: false)
     
+    let levelAppear = SKAction.playSoundFileNamed("LevelAppear.wav", waitForCompletion: false)
+    
     
     
     init(frame:CGRect) {
@@ -157,6 +159,10 @@ class MenuScene: SKScene
         } else if BattleManager.level > 3 {
             opponentsToDisplay = ["boss"]
             theLevel = 0
+        }
+        
+        if !animateIn {
+            self.run(levelAppear)
         }
         
         self.opponents = []

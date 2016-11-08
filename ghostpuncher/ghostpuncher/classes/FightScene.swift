@@ -36,6 +36,9 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     let fireballSFX = SKAction.playSoundFileNamed("fireball.wav", waitForCompletion: false)
     let thunderSFX = SKAction.playSoundFileNamed("thunder.wav", waitForCompletion: false)
     let lightningSFX = SKAction.playSoundFileNamed("lightning.wav", waitForCompletion: false)
+    let ghostAppearSFX = SKAction.playSoundFileNamed("ghostAppear.wav", waitForCompletion: false)
+    let witchAppearSFX = SKAction.playSoundFileNamed("witchAppear.wav", waitForCompletion: false)
+    let devilAppearSFX = SKAction.playSoundFileNamed("devilAppear.wav", waitForCompletion: false)
     
     init(frame: CGRect, backgroundColor : UIColor, opponent:String = "ghost", _ level:Int = 1) {
         self.room = Room(frame:frame, name:opponent)
@@ -47,8 +50,9 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         
         self.effectsLayer = EffectsLayer(frame: frame)
         if opponent == "boss" {
-        self.effectsLayer?.turnOffLights(true)
+            self.effectsLayer?.turnOffLights(true)
         }
+        
 //        self.effectsLayer?.zPosition = 3
         self.addChild(self.room)
         self.addChild(self.effectsLayer!)
@@ -87,10 +91,10 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         backgroundMusic2.run(SKAction.changeVolume(to: 0.25, duration: 0))
         self.addChild(backgroundMusic2)
         
-        self.run(SKAction.sequence([SKAction.wait(forDuration: 1.0), startSound]))
+        self.run(SKAction.sequence([SKAction.wait(forDuration: 2.0), startSound]))
         
         if opponent == "boss" {
-        self.opponent?.isHidden = true
+            self.opponent?.isHidden = true
             
             
             self.run(SKAction.sequence([SKAction.wait(forDuration: 2.0),thunderSFX,
@@ -99,7 +103,40 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
                 self.gameMode.setGame(mode: .ready)
                 self.turnOnLights()
             })]))
-        } else {
+        } else if opponent == "ghost" {
+            self.opponent?.alpha = 0
+            self.run(SKAction.sequence([ghostAppearSFX,
+                                        SKAction.run({
+                                            self.opponent?.run(SKAction.fadeIn(withDuration: 1.0))
+                                        }),SKAction.wait(forDuration: 1.0),
+                                        SKAction.run({
+                                            self.gameMode.setGame(mode: .ready)
+                                            self.opponent?.head?.run((self.opponent?.headFrontPunchAnimation!)!)
+                                        })]))
+            
+        } else if opponent == "witch" {
+            self.opponent?.opponent?.alpha = 0
+            self.run(SKAction.sequence([witchAppearSFX,
+                                        SKAction.run({
+                                            self.opponent?.fireballAppear()
+                                        }),SKAction.wait(forDuration: 1.0),
+                                           SKAction.run({
+                                            self.gameMode.setGame(mode: .ready)
+                                            self.opponent?.head?.run((self.opponent?.headFrontPunchAnimation!)!)
+                                           })]))
+            
+        }else if opponent == "devil" {
+            self.opponent?.opponent?.alpha = 0
+            self.run(SKAction.sequence([devilAppearSFX,
+                                        SKAction.run({
+                                            self.opponent?.fireballAppear()
+                                        }),SKAction.wait(forDuration: 1.0),
+                                           SKAction.run({
+                                            self.gameMode.setGame(mode: .ready)
+                                            self.opponent?.head?.run((self.opponent?.headFrontPunchAnimation!)!)
+                                           })]))
+            
+        }else {
             self.gameMode.setGame(mode: .ready)
         }
     }

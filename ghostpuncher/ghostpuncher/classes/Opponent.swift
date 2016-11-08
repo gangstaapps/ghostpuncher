@@ -623,6 +623,18 @@ class Opponent:SKNode
         self.delegate?.fireBall()
     }
     
+    func fireballAppear(){
+//        self.opponent?.alpha = 0
+//        self.opponent.setScale(0)
+        let sparkEmmiter = SKEmitterNode(fileNamed: "WitchAppear.sks")!
+        sparkEmmiter.position = CGPoint(x:(self.opponent?.position)!.x, y:(self.opponent?.position)!.y + 100)
+        sparkEmmiter.name = "fireBall"
+        sparkEmmiter.zPosition = 200
+        sparkEmmiter.targetNode = self
+        self.addChild(sparkEmmiter)
+        self.opponent?.run(SKAction.sequence([SKAction.wait(forDuration: 0.2),SKAction.fadeIn(withDuration: 0.5)]))
+    }
+    
     func lightning(){
         let lightning = SKSpriteNode(imageNamed: "\(self.opponentName)_lightning")
         let pos = (self.opponent?.position)!

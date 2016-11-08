@@ -53,6 +53,11 @@
 		A27117881DB31D5A00B36F06 /* ghostRightArm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A27117851DB31D5A00B36F06 /* ghostRightArm.atlas */; };
 		A271178D1DB405FF00B36F06 /* Smoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = A271178B1DB405FF00B36F06 /* Smoke.sks */; };
 		A271178E1DB405FF00B36F06 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = A271178C1DB405FF00B36F06 /* spark.png */; };
+		A27C72B81DD18A7D0064F1F2 /* LevelAppear.wav in Resources */ = {isa = PBXBuildFile; fileRef = A27C72B71DD18A7D0064F1F2 /* LevelAppear.wav */; };
+		A27C72BA1DD18DA30064F1F2 /* ghostAppear.wav in Resources */ = {isa = PBXBuildFile; fileRef = A27C72B91DD18DA30064F1F2 /* ghostAppear.wav */; };
+		A27C72C21DD191690064F1F2 /* WitchAppear.sks in Resources */ = {isa = PBXBuildFile; fileRef = A27C72C11DD191690064F1F2 /* WitchAppear.sks */; };
+		A27C72C41DD1A1AA0064F1F2 /* witchAppear.wav in Resources */ = {isa = PBXBuildFile; fileRef = A27C72C31DD1A1AA0064F1F2 /* witchAppear.wav */; };
+		A27C72C61DD1A6E40064F1F2 /* devilAppear.wav in Resources */ = {isa = PBXBuildFile; fileRef = A27C72C51DD1A6E40064F1F2 /* devilAppear.wav */; };
 		A28A10991DBAC21800029818 /* splashloop.wav in Resources */ = {isa = PBXBuildFile; fileRef = A28A10961DBAC21800029818 /* splashloop.wav */; };
 		A2B49AEB1DA88C1900F86F40 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEA1DA88C1900F86F40 /* Room.swift */; };
 		A2B49AED1DA88CB600F86F40 /* Opponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B49AEC1DA88CB600F86F40 /* Opponent.swift */; };
@@ -166,6 +171,11 @@
 		A27117851DB31D5A00B36F06 /* ghostRightArm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ghostRightArm.atlas; sourceTree = "<group>"; };
 		A271178B1DB405FF00B36F06 /* Smoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Smoke.sks; path = opponents/Smoke.sks; sourceTree = "<group>"; };
 		A271178C1DB405FF00B36F06 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = opponents/spark.png; sourceTree = "<group>"; };
+		A27C72B71DD18A7D0064F1F2 /* LevelAppear.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = LevelAppear.wav; sourceTree = "<group>"; };
+		A27C72B91DD18DA30064F1F2 /* ghostAppear.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ghostAppear.wav; sourceTree = "<group>"; };
+		A27C72C11DD191690064F1F2 /* WitchAppear.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = WitchAppear.sks; sourceTree = "<group>"; };
+		A27C72C31DD1A1AA0064F1F2 /* witchAppear.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = witchAppear.wav; sourceTree = "<group>"; };
+		A27C72C51DD1A6E40064F1F2 /* devilAppear.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = devilAppear.wav; sourceTree = "<group>"; };
 		A28A10961DBAC21800029818 /* splashloop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = splashloop.wav; sourceTree = "<group>"; };
 		A2B49AEA1DA88C1900F86F40 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Room.swift; path = classes/Room.swift; sourceTree = "<group>"; };
 		A2B49AEC1DA88CB600F86F40 /* Opponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Opponent.swift; path = classes/Opponent.swift; sourceTree = "<group>"; };
@@ -288,6 +298,7 @@
 				A227C7A71DA758A900EFFD7B /* Main.storyboard */,
 				A227C7AC1DA758AA00EFFD7B /* LaunchScreen.storyboard */,
 				A227C7AF1DA758AA00EFFD7B /* Info.plist */,
+				A27C72C11DD191690064F1F2 /* WitchAppear.sks */,
 			);
 			path = ghostpuncher;
 			sourceTree = "<group>";
@@ -392,6 +403,10 @@
 		A2D7B9961DBB0F6800DC2DD9 /* sound_fx */ = {
 			isa = PBXGroup;
 			children = (
+				A27C72C51DD1A6E40064F1F2 /* devilAppear.wav */,
+				A27C72C31DD1A1AA0064F1F2 /* witchAppear.wav */,
+				A27C72B91DD18DA30064F1F2 /* ghostAppear.wav */,
+				A27C72B71DD18A7D0064F1F2 /* LevelAppear.wav */,
 				A24BBE481DD033CC00155A54 /* devilPunch.wav */,
 				A24BBE461DD031DD00155A54 /* lightning.wav */,
 				A2F0DC831DCC5CBB002439E7 /* thunder.wav */,
@@ -558,6 +573,7 @@
 				A2519B501DCB10CB001925F8 /* bossHead.atlas in Resources */,
 				A216F0E61DB6EE18003DD5BB /* portal.atlas in Resources */,
 				A2519B4A1DC84311001925F8 /* ButtonPowerMeter.sks in Resources */,
+				A27C72C41DD1A1AA0064F1F2 /* witchAppear.wav in Resources */,
 				A2D7B9A61DBB0F6800DC2DD9 /* deathblow.wav in Resources */,
 				A2D7B9AD1DBB0F6800DC2DD9 /* select.wav in Resources */,
 				A25C9FE91DBF2AB2006CDA73 /* Devil.sks in Resources */,
@@ -572,6 +588,7 @@
 				A25C9FE11DBF29E7006CDA73 /* Devil.xcassets in Resources */,
 				A2D7B9A41DBB0F6800DC2DD9 /* atmos_loop1.wav in Resources */,
 				A20600F91DB1A45900035330 /* ectoPlasm.sks in Resources */,
+				A27C72B81DD18A7D0064F1F2 /* LevelAppear.wav in Resources */,
 				A238631D1DCEABBC00AD6731 /* shock.atlas in Resources */,
 				A2D7B9BA1DBBBFC300DC2DD9 /* Witch.sks in Resources */,
 				A2CEC08F1DC690DC00FFE128 /* slash.wav in Resources */,
@@ -580,6 +597,7 @@
 				A2D7B9AC1DBB0F6800DC2DD9 /* phaser.wav in Resources */,
 				A2D7B9B71DBBBFA000DC2DD9 /* witchLeftArm.atlas in Resources */,
 				A2D7B9B81DBBBFA000DC2DD9 /* witchRightArm.atlas in Resources */,
+				A27C72BA1DD18DA30064F1F2 /* ghostAppear.wav in Resources */,
 				A2519B541DCB10DA001925F8 /* Boss.xcassets in Resources */,
 				A2519B561DCB1142001925F8 /* Boss.sks in Resources */,
 				A2CEC09A1DC69A3200FFE128 /* enemyBlocked.wav in Resources */,
@@ -604,6 +622,8 @@
 				A2519B521DCB10CB001925F8 /* bossRightArm.atlas in Resources */,
 				A2D7B9A51DBB0F6800DC2DD9 /* atmos_loop2.wav in Resources */,
 				A2519B431DC70454001925F8 /* devilBlood.sks in Resources */,
+				A27C72C21DD191690064F1F2 /* WitchAppear.sks in Resources */,
+				A27C72C61DD1A6E40064F1F2 /* devilAppear.wav in Resources */,
 				A2CEC09C1DC69BC900FFE128 /* fireball.wav in Resources */,
 				A2D7B9C21DBC47CA00DC2DD9 /* FireBall.sks in Resources */,
 				A27117871DB31D5A00B36F06 /* ghostLeftArm.atlas in Resources */,
