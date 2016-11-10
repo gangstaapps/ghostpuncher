@@ -120,19 +120,24 @@ class Devil: Opponent {
         let scaleUp = SKAction.scale(to: 2.0, duration: 0.2)
         let fadeUp = SKAction.fadeAlpha(to: 0.9, duration: 0.3)
         let moveIn = SKAction.moveBy(x: startPosition.x, y: startPosition.y - 100, duration: 0.2)
-        let group1 = SKAction.group([SKAction.run({ self.head?.texture = SKTextureAtlas(named: "\(self.opponentName)Head.atlas").textureNamed("\(self.opponentName)_head_uppercut.png") }),scaleUp, fadeUp,moveIn,
-                                     SKAction.run({ self.delegate?.superAttack() })])
+        let group1 = SKAction.group([SKAction.run({[weak self] in
+            self?.head?.texture = SKTextureAtlas(named: "\((self?.opponentName)!)Head.atlas").textureNamed("\((self?.opponentName)!)_head_uppercut.png") }),scaleUp, fadeUp,moveIn,
+                                     SKAction.run({[weak self] in
+                                        self?.delegate?.superAttack() })])
         
-        let attackLeft = SKAction.sequence([SKAction.run({ self.delegate?.opponentAttackLeft() }), SKAction.wait(forDuration: 0.3)])
-        let attackRight = SKAction.sequence([SKAction.run({ self.delegate?.opponentAttackRight() }), SKAction.wait(forDuration: 0.3)])
-        let lightsOn = SKAction.run({self.delegate?.turnOnLights()})
+        let attackLeft = SKAction.sequence([SKAction.run({[weak self] in
+            self?.delegate?.opponentAttackLeft() }), SKAction.wait(forDuration: 0.3)])
+        let attackRight = SKAction.sequence([SKAction.run({[weak self] in
+            self?.delegate?.opponentAttackRight() }), SKAction.wait(forDuration: 0.3)])
+        let lightsOn = SKAction.run({[weak self] in
+            self?.delegate?.turnOnLights()})
         
         
         let attack = SKAction.sequence([SKAction.fadeOut(withDuration: 0.1), SKAction.run({ self.opponent.setScale(0.0) }), SKAction.wait(forDuration: 3.0), group1, SKAction.run({ self.opponent.position = startPos }), attackLeft, attackRight,attackLeft,attackRight,attackLeft,attackRight,attackLeft,attackRight,lightsOn,SKAction.scale(to: 1.0, duration: 0.2),SKAction.fadeIn(withDuration: 0.1),
-                                        SKAction.run({
-                                            self.batwings?.run(SKAction.sequence([self.batwingCycle.reversed(),
-                                                                                  SKAction.run({
-                                                                                    self.batwings?.isHidden = true
+                                        SKAction.run({[weak self] in
+                                            self?.batwings?.run(SKAction.sequence([(self?.batwingCycle.reversed())!,
+                                                                                  SKAction.run({[weak self] in
+                                                                                    self?.batwings?.isHidden = true
                                                                                   })]))
                                             
                                         })])
@@ -149,8 +154,8 @@ class Devil: Opponent {
         
         if willConnect {
             self.batwings?.run(SKAction.sequence([self.batwingCycle.reversed(),
-                                                  SKAction.run({
-                                                    self.batwings?.isHidden = true
+                                                  SKAction.run({[weak self] in
+                                                    self?.batwings?.isHidden = true
                                                   })]))
         }
         
@@ -161,8 +166,8 @@ class Devil: Opponent {
         
         if willConnect {
             self.batwings?.run(SKAction.sequence([self.batwingCycle.reversed(),
-                                                  SKAction.run({
-                                                    self.batwings?.isHidden = true
+                                                  SKAction.run({[weak self] in
+                                                    self?.batwings?.isHidden = true
                                                   })]))
         }
         
@@ -171,7 +176,7 @@ class Devil: Opponent {
     
     override func showDamage(direction:Direction){
         
-        let damageArt:String
+//        let damageArt:String
          let node:SKSpriteNode
         let xPositionAdjust:CGFloat
         
@@ -224,7 +229,7 @@ class Devil: Opponent {
         sparkEmmiter.xAcceleration = (direction == .right ? -900 : 900)
         sparkEmmiter.numParticlesToEmit = Int(power.multiplied(by: 10))
         
-        
+        self.cleanUpParticle(particle: sparkEmmiter)
         self.head?.addChild(sparkEmmiter)
     }
     
@@ -243,8 +248,8 @@ class Devil: Opponent {
             
         } else {
             self.opponent?.run(SKAction.sequence([SKAction.scale(to: 0.9, duration: 0.1),
-                                                  SKAction.run {
-                                                    self.delegate?.opponentAttackRight()
+                                                  SKAction.run {[weak self] in
+                                                    self?.delegate?.opponentAttackRight()
                 }]))
         }
         self.isBlocking = false
@@ -274,5 +279,7 @@ class Devil: Opponent {
         sparkEmmiter.run(SKAction.group([SKAction.scale(to: 8.0, duration: 0.3), SKAction.moveBy(x: 0, y: 100, duration: 0.3)]) )
         self.addChild(sparkEmmiter)
         self.opponent?.run(SKAction.sequence([SKAction.wait(forDuration: 0.2),SKAction.fadeIn(withDuration: 0.5)]))
+        
+        self.cleanUpParticle(particle: sparkEmmiter)
     }
 }

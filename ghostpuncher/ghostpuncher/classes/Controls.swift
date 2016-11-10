@@ -361,11 +361,11 @@ class Controls:SKNode
             
             leftButtonPowerMeter.run(SKAction.sequence([
                 SKAction.wait(forDuration: 0.5),
-                SKAction.run({
-                    self.leftButtonPowerMeter.path = nil
-                    self.leftButtonPowerMeter.strokeColor = SKColor.init(hex: 0xff9b14)
-                    self.leftButtonPowerMeter.lineWidth = 4
-                    self.leftButtonPowerMeter.glowWidth = 5
+                SKAction.run({[weak self] in
+                    self?.leftButtonPowerMeter.path = nil
+                    self?.leftButtonPowerMeter.strokeColor = SKColor.init(hex: 0xff9b14)
+                    self?.leftButtonPowerMeter.lineWidth = 4
+                    self?.leftButtonPowerMeter.glowWidth = 5
                 })
                 ]))
             
@@ -385,11 +385,11 @@ class Controls:SKNode
             
             rightButtonPowerMeter.run(SKAction.sequence([
                 SKAction.wait(forDuration: 0.5),
-                SKAction.run({
-                    self.rightButtonPowerMeter.path = nil
-                    self.rightButtonPowerMeter.strokeColor = SKColor.init(hex: 0xff9b14)
-                    self.rightButtonPowerMeter.lineWidth = 4
-                    self.rightButtonPowerMeter.glowWidth = 5
+                SKAction.run({[weak self] in
+                    self?.rightButtonPowerMeter.path = nil
+                    self?.rightButtonPowerMeter.strokeColor = SKColor.init(hex: 0xff9b14)
+                    self?.rightButtonPowerMeter.lineWidth = 4
+                    self?.rightButtonPowerMeter.glowWidth = 5
                 })
             ]))
             

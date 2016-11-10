@@ -24,21 +24,20 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     
     var motionManager: CMMotionManager!
     
-    let lightPunchSound = SKAction.playSoundFileNamed("light_punch.wav", waitForCompletion: false)
-    let mediumPunchSound = SKAction.playSoundFileNamed("med_punch.wav", waitForCompletion: false)
-    let heavyPunchSound = SKAction.playSoundFileNamed("hard_punch.wav", waitForCompletion: false)
-    let goInvisibleSound = SKAction.playSoundFileNamed("phaser.wav", waitForCompletion: false)
-    let startSound = SKAction.playSoundFileNamed("start.wav", waitForCompletion: false)
-    let lightsOutSound = SKAction.playSoundFileNamed("soulgrab.wav", waitForCompletion: false)
-    let superAttackSound = SKAction.playSoundFileNamed("laugh_reverse.wav", waitForCompletion: false)
-    let youLoseSound = SKAction.playSoundFileNamed("deathblow.wav", waitForCompletion: false)
-    let youWinSound = SKAction.playSoundFileNamed("ghostshock.wav", waitForCompletion: false)
-    let fireballSFX = SKAction.playSoundFileNamed("fireball.wav", waitForCompletion: false)
-    let thunderSFX = SKAction.playSoundFileNamed("thunder.wav", waitForCompletion: false)
-    let lightningSFX = SKAction.playSoundFileNamed("lightning.wav", waitForCompletion: false)
-    let ghostAppearSFX = SKAction.playSoundFileNamed("ghostAppear.wav", waitForCompletion: false)
-    let witchAppearSFX = SKAction.playSoundFileNamed("witchAppear.wav", waitForCompletion: false)
-    let devilAppearSFX = SKAction.playSoundFileNamed("devilAppear.wav", waitForCompletion: false)
+    static let lightPunchSound = SKAction.playSoundFileNamed("light_punch.wav", waitForCompletion: false)
+    static let goInvisibleSound = SKAction.playSoundFileNamed("phaser.wav", waitForCompletion: false)
+    static let startSound = SKAction.playSoundFileNamed("start.wav", waitForCompletion: false)
+    static let lightsOutSound = SKAction.playSoundFileNamed("soulgrab.wav", waitForCompletion: false)
+    static let superAttackSound = SKAction.playSoundFileNamed("laugh_reverse.wav", waitForCompletion: false)
+    static let youLoseSound = SKAction.playSoundFileNamed("deathblow.wav", waitForCompletion: false)
+    static let youWinSound = SKAction.playSoundFileNamed("ghostshock.wav", waitForCompletion: false)
+    static let fireballSFX = SKAction.playSoundFileNamed("fireball.wav", waitForCompletion: false)
+    static let thunderSFX = SKAction.playSoundFileNamed("thunder.wav", waitForCompletion: false)
+    static let lightningSFX = SKAction.playSoundFileNamed("lightning.wav", waitForCompletion: false)
+    static let ghostAppearSFX = SKAction.playSoundFileNamed("ghostAppear.wav", waitForCompletion: false)
+    static let witchAppearSFX = SKAction.playSoundFileNamed("witchAppear.wav", waitForCompletion: false)
+    static let devilAppearSFX = SKAction.playSoundFileNamed("devilAppear.wav", waitForCompletion: false)
+    
     
     init(frame: CGRect, backgroundColor : UIColor, opponent:String = "ghost", _ level:Int = 1) {
         self.room = Room(frame:frame, name:opponent)
@@ -91,49 +90,49 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         backgroundMusic2.run(SKAction.changeVolume(to: 0.25, duration: 0))
         self.addChild(backgroundMusic2)
         
-        self.run(SKAction.sequence([SKAction.wait(forDuration: 2.0), startSound]))
+        self.run(SKAction.sequence([SKAction.wait(forDuration: 2.0), FightScene.startSound]))
         
         if opponent == "boss" {
             self.opponent?.isHidden = true
             
             
-            self.run(SKAction.sequence([SKAction.wait(forDuration: 2.0),thunderSFX,
-            SKAction.run({
-                self.opponent?.isHidden = false
-                self.gameMode.setGame(mode: .ready)
-                self.turnOnLights()
+            self.run(SKAction.sequence([SKAction.wait(forDuration: 2.0),FightScene.thunderSFX,
+            SKAction.run({[weak self] in
+                self?.opponent?.isHidden = false
+                self?.gameMode.setGame(mode: .ready)
+                self?.turnOnLights()
             })]))
         } else if opponent == "ghost" {
             self.opponent?.alpha = 0
-            self.run(SKAction.sequence([ghostAppearSFX,
-                                        SKAction.run({
-                                            self.opponent?.run(SKAction.fadeIn(withDuration: 1.0))
+            self.run(SKAction.sequence([FightScene.ghostAppearSFX,
+                                        SKAction.run({[weak self] in
+                                            self?.opponent?.run(SKAction.fadeIn(withDuration: 1.0))
                                         }),SKAction.wait(forDuration: 1.0),
-                                        SKAction.run({
-                                            self.gameMode.setGame(mode: .ready)
-                                            self.opponent?.head?.run((self.opponent?.headFrontPunchAnimation!)!)
+                                        SKAction.run({[weak self] in
+                                            self?.gameMode.setGame(mode: .ready)
+                                            self?.opponent?.head?.run((self?.opponent?.headFrontPunchAnimation!)!)
                                         })]))
             
         } else if opponent == "witch" {
             self.opponent?.opponent?.alpha = 0
-            self.run(SKAction.sequence([witchAppearSFX,
-                                        SKAction.run({
-                                            self.opponent?.fireballAppear()
+            self.run(SKAction.sequence([FightScene.witchAppearSFX,
+                                        SKAction.run({[weak self] in
+                                            self?.opponent?.fireballAppear()
                                         }),SKAction.wait(forDuration: 1.0),
-                                           SKAction.run({
-                                            self.gameMode.setGame(mode: .ready)
-                                            self.opponent?.head?.run((self.opponent?.headFrontPunchAnimation!)!)
+                                           SKAction.run({[weak self] in
+                                            self?.gameMode.setGame(mode: .ready)
+                                            self?.opponent?.head?.run((self?.opponent?.headFrontPunchAnimation!)!)
                                            })]))
             
         }else if opponent == "devil" {
             self.opponent?.opponent?.alpha = 0
-            self.run(SKAction.sequence([devilAppearSFX,
-                                        SKAction.run({
-                                            self.opponent?.fireballAppear()
+            self.run(SKAction.sequence([FightScene.devilAppearSFX,
+                                        SKAction.run({[weak self] in
+                                            self?.opponent?.fireballAppear()
                                         }),SKAction.wait(forDuration: 1.0),
-                                           SKAction.run({
-                                            self.gameMode.setGame(mode: .ready)
-                                            self.opponent?.head?.run((self.opponent?.headFrontPunchAnimation!)!)
+                                           SKAction.run({[weak self] in
+                                            self?.gameMode.setGame(mode: .ready)
+                                            self?.opponent?.head?.run((self?.opponent?.headFrontPunchAnimation!)!)
                                            })]))
             
         }else {
@@ -258,7 +257,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.player?.punchRight(power)
         if (self.opponent?.willRightPunchConnect(power))! {
             if power < 3 {
-                self.run(lightPunchSound)
+                self.run(FightScene.lightPunchSound)
             } else if power < 7 {
                 self.run((self.opponent?.mediumPunchSFX())!)
             } else {
@@ -273,7 +272,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.player?.punchLeft(power)
         if (self.opponent?.willLeftPunchConnect(power))! {
             if power < 3 {
-                self.run(lightPunchSound)
+                self.run(FightScene.lightPunchSound)
             } else if power < 7 {
                 self.run((self.opponent?.mediumPunchSFX())!)
             } else {
@@ -328,8 +327,8 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.gameMode.setGame(mode: .locked)
         self.room.openPortal()
         self.controls?.removeFromParent()
-        self.run(SKAction.sequence([ youWinSound, SKAction.wait(forDuration: 0.5), SKAction.run({
-            self.opponent?.punchedToHell()
+        self.run(SKAction.sequence([ FightScene.youWinSound, SKAction.wait(forDuration: 0.5), SKAction.run({[weak self] in
+            self?.opponent?.punchedToHell()
         })]))
 //        self.run(SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.run({
 //            self.ghostIsGone()
@@ -365,7 +364,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.effectsLayer?.turnOffLights()
         self.controls?.removeFromParent()
         self.player?.removeFromParent()
-        self.run(youLoseSound)
+        self.run(FightScene.youLoseSound)
         self.gameMode.setGame(mode: .locked)
 //        self.room.openPortal()
         self.opponent?.victory()
@@ -454,27 +453,27 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     }
     
     func goingInvisible(){
-        self.run(goInvisibleSound)
+        self.run(FightScene.goInvisibleSound)
     }
     
     func superAttack(){
-        self.run(superAttackSound)
+        self.run(FightScene.superAttackSound)
     }
     
     func playerPunchBlocked(){
-        self.run(lightPunchSound)
+        self.run(FightScene.lightPunchSound)
     }
     
     func fireBall(){
-        self.run(fireballSFX)
+        self.run(FightScene.fireballSFX)
     }
     
     func lightning(){
-        self.run(lightningSFX)
+        self.run(FightScene.lightningSFX)
     }
     
     func turnOffLights(){
-        self.run(lightsOutSound)
+        self.run(FightScene.lightsOutSound)
         self.effectsLayer?.turnOffLights()
     }
     func turnOnLights(){
@@ -485,8 +484,8 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         listenForTilt = false
         
         
-        self.ghostHolder?.run(SKAction.sequence([SKAction.move(to: CGPoint(x:amount * 10, y:0), duration: 0.3), SKAction.wait(forDuration: 0.1), SKAction.move(to: CGPoint(x:0, y:0), duration: 0.4), SKAction.run({
-            self.listenForTilt = true
+        self.ghostHolder?.run(SKAction.sequence([SKAction.move(to: CGPoint(x:amount * 10, y:0), duration: 0.3), SKAction.wait(forDuration: 0.1), SKAction.move(to: CGPoint(x:0, y:0), duration: 0.4), SKAction.run({[weak self] in
+            self?.listenForTilt = true
         })]))
         self.room.run(SKAction.sequence([SKAction.move(to: CGPoint(x:amount * 3, y:0), duration: 0.3), SKAction.wait(forDuration: 0.1),SKAction.move(to: CGPoint(x:0, y:0), duration: 0.4)]))
     }
@@ -494,15 +493,15 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     func jukeRight() {
         listenForTilt = false
         
-        self.ghostHolder?.run(SKAction.sequence([SKAction.move(to: CGPoint(x:-300, y:0), duration: 0.3), SKAction.wait(forDuration: 0.1), SKAction.move(to: CGPoint(x:0, y:0), duration: 0.4), SKAction.run({
-            self.listenForTilt = true
+        self.ghostHolder?.run(SKAction.sequence([SKAction.move(to: CGPoint(x:-300, y:0), duration: 0.3), SKAction.wait(forDuration: 0.1), SKAction.move(to: CGPoint(x:0, y:0), duration: 0.4), SKAction.run({[weak self] in
+            self?.listenForTilt = true
         })]))
         self.room.run(SKAction.sequence([SKAction.move(to: CGPoint(x:-200, y:0), duration: 0.3), SKAction.wait(forDuration: 0.1),SKAction.move(to: CGPoint(x:0, y:0), duration: 0.4)]))
     }
     func jukeLeft() {
         listenForTilt = false
-        self.ghostHolder?.run(SKAction.sequence([SKAction.move(to: CGPoint(x:300, y:0), duration: 0.3), SKAction.wait(forDuration: 0.1),SKAction.move(to: CGPoint(x:0, y:0), duration: 0.4), SKAction.run({
-            self.listenForTilt = true
+        self.ghostHolder?.run(SKAction.sequence([SKAction.move(to: CGPoint(x:300, y:0), duration: 0.3), SKAction.wait(forDuration: 0.1),SKAction.move(to: CGPoint(x:0, y:0), duration: 0.4), SKAction.run({[weak self] in
+            self?.listenForTilt = true
         })]))
         self.room.run(SKAction.sequence([SKAction.move(to: CGPoint(x:200, y:0), duration: 0.3), SKAction.wait(forDuration: 0.1),SKAction.move(to: CGPoint(x:0, y:0), duration: 0.4)]))
     }

@@ -55,6 +55,7 @@ class Boss: Opponent {
         sparkEmmiter.xAcceleration = (direction == .right ? -900 : 900)
         sparkEmmiter.numParticlesToEmit = Int(power.multiplied(by: 10))
         
+        self.cleanUpParticle(particle: sparkEmmiter)
         
         self.head?.addChild(sparkEmmiter)
     }

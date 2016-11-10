@@ -21,15 +21,15 @@ class MenuScene: SKScene
     
     
     
-    let selectSound = SKAction.playSoundFileNamed("select.wav", waitForCompletion: false)
-    let buzzSound = SKAction.playSoundFileNamed("buzz.wav", waitForCompletion: false)
-    let thumpSound = SKAction.playSoundFileNamed("groundThump.wav", waitForCompletion: false)
-    let slashSound = SKAction.playSoundFileNamed("slash.wav", waitForCompletion: false)
-    let slash2Sound = SKAction.playSoundFileNamed("slash2.wav", waitForCompletion: false)
-    let mediumPunchSound = SKAction.playSoundFileNamed("sfx_punch3.wav", waitForCompletion: false)
-    let evilLaughSound = SKAction.playSoundFileNamed("evilLaugh.wav", waitForCompletion: false)
+    static let selectSound = SKAction.playSoundFileNamed("select.wav", waitForCompletion: false)
+    static let buzzSound = SKAction.playSoundFileNamed("buzz.wav", waitForCompletion: false)
+    static let thumpSound = SKAction.playSoundFileNamed("groundThump.wav", waitForCompletion: false)
+    static let slashSound = SKAction.playSoundFileNamed("slash.wav", waitForCompletion: false)
+    static let slash2Sound = SKAction.playSoundFileNamed("slash2.wav", waitForCompletion: false)
+    static let mediumPunchSound = SKAction.playSoundFileNamed("sfx_punch3.wav", waitForCompletion: false)
+    static let evilLaughSound = SKAction.playSoundFileNamed("evilLaugh.wav", waitForCompletion: false)
     
-    let levelAppear = SKAction.playSoundFileNamed("LevelAppear.wav", waitForCompletion: false)
+    static let levelAppear = SKAction.playSoundFileNamed("LevelAppear.wav", waitForCompletion: false)
     
     
     
@@ -54,13 +54,13 @@ class MenuScene: SKScene
         
         fist.run(SKAction.sequence([
             SKAction.moveTo(x: 0, duration: 0.2),
-            self.mediumPunchSound
+            MenuScene.mediumPunchSound
         ]))
         
         logo?.run(SKAction.sequence([
             SKAction.wait(forDuration: 0.4),
             SKAction.moveTo(x: frame.midX, duration: 0.0),
-            evilLaughSound
+            MenuScene.evilLaughSound
             ]))
         
         fightButton = SKSpriteNode(imageNamed: "fight_reg")
@@ -162,7 +162,7 @@ class MenuScene: SKScene
         }
         
         if !animateIn {
-            self.run(levelAppear)
+            self.run(MenuScene.levelAppear)
         }
         
         self.opponents = []
@@ -199,12 +199,12 @@ class MenuScene: SKScene
                 
                 if animateIn && i == (startWith - 1) {
                     button.position = CGPoint(x: frame.midX, y: frame.midY + frame.size.height)
-                    var sequence:[SKAction] = [SKAction.moveTo(y: frame.midY, duration: 0.3), self.thumpSound]
+                    var sequence:[SKAction] = [SKAction.moveTo(y: frame.midY, duration: 0.3), MenuScene.thumpSound]
                     slashes.forEach({slash in
                         sequence.append(SKAction.wait(forDuration: 0.3))
-                        sequence.append(self.slash2Sound)
-                        sequence.append(SKAction.run({
-                            self.addChild(slash)
+                        sequence.append(MenuScene.slash2Sound)
+                        sequence.append(SKAction.run({[weak self] in
+                            self?.addChild(slash)
                         }))
                     })
                     
@@ -229,11 +229,11 @@ class MenuScene: SKScene
         
         if startWith == self.opponents?.count {
             
-            self.run(SKAction.sequence([SKAction.wait(forDuration: 2.0), SKAction.run {
+            self.run(SKAction.sequence([SKAction.wait(forDuration: 2.0), SKAction.run {[weak self] in
                 BattleManager.level += 1
                 let reveal = SKTransition.crossFade(withDuration: 1.0)
-                let scene = MenuScene(frame: self.frame, opponents:BattleManager.opponentNames, startWith:0)
-                self.view?.presentScene(scene, transition: reveal)
+                let scene = MenuScene(frame: (self?.frame)!, opponents:BattleManager.opponentNames, startWith:0)
+                self?.view?.presentScene(scene, transition: reveal)
                 }]))
             
             return
@@ -243,23 +243,23 @@ class MenuScene: SKScene
         
         
         
-        button?.run(SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.run({
-            self.run(self.buzzSound)
+        button?.run(SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.run({[weak self] in
+            self?.run(MenuScene.buzzSound)
             button?.texture = SKTexture(imageNamed: "\(button?.userData?["name"] as! String)_reg")
         }),SKAction.wait(forDuration: 0.5), SKAction.run({
             button?.texture = SKTexture(imageNamed: "\(button?.userData?["name"] as! String)_rol")
-        }),SKAction.wait(forDuration: 0.1), SKAction.run({
-            self.run(self.buzzSound)
+        }),SKAction.wait(forDuration: 0.1), SKAction.run({[weak self] in
+            self?.run(MenuScene.buzzSound)
             button?.texture = SKTexture(imageNamed: "\(button?.userData?["name"] as! String)_reg")
         }),SKAction.wait(forDuration: 0.2), SKAction.run({
             button?.texture = SKTexture(imageNamed: "\(button?.userData?["name"] as! String)_rol")
-        }),SKAction.wait(forDuration: 0.1), SKAction.run({
-            self.run(self.buzzSound)
+        }),SKAction.wait(forDuration: 0.1), SKAction.run({[weak self] in
+            self?.run(MenuScene.buzzSound)
             button?.texture = SKTexture(imageNamed: "\(button?.userData?["name"] as! String)_reg")
-        }), SKAction.wait(forDuration: 1.0), SKAction.run({
-            let scene = FightScene(frame: self.frame, backgroundColor: UIColor.black, opponent: button?.userData?["name"] as! String, BattleManager.level)
+        }), SKAction.wait(forDuration: 1.0), SKAction.run({[weak self] in
+            let scene = FightScene(frame: (self?.frame)!, backgroundColor: UIColor.black, opponent: button?.userData?["name"] as! String, BattleManager.level)
             
-            self.view?.presentScene(scene)
+            self?.view?.presentScene(scene)
         })]) )
     }
     
@@ -304,15 +304,16 @@ class MenuScene: SKScene
         
         self.fightButton?.isHidden = false
         if self.checkFightPressed(atPoint: pos) {
-            self.run(selectSound)
+            self.run(MenuScene.selectSound)
             //            let reveal = SKTransition.push(with: SKTransitionDirection.right, duration: 2.0)
             self.fightButtonRol?.isHidden = true
             logo?.run(SKAction.moveBy(x: -self.frame.size.width/2, y: 0, duration: 0.2))
             fightButton?.run(SKAction.sequence([SKAction.moveBy(x: -self.frame.size.width/2, y: 0, duration: 0.2),
-                                                SKAction.run({
-//                                                   BattleManager.level  = 4
-                                                    let scene = MenuScene(frame: self.frame, opponents:BattleManager.opponentNames, startWith:0)
-                                                    self.view?.presentScene(scene)
+                                                SKAction.run({[weak self] in
+//                                                   BattleManager.level  = 3
+//                                                    BattleManager.multiplier = 2
+                                                    let scene = MenuScene(frame: (self?.frame)!, opponents:BattleManager.opponentNames, startWith:0)
+                                                    self?.view?.presentScene(scene)
                                                 })]))
             return
         }

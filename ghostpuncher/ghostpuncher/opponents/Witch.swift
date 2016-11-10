@@ -55,7 +55,8 @@ class Witch: Opponent {
         
         self.opponent?.run(SKAction.sequence([
             SKAction.wait(forDuration: 1.0),
-            scaleMoveGroup, SKAction.run({self.delegate?.ghostIsGone()})
+            scaleMoveGroup, SKAction.run({[weak self] in
+                self?.delegate?.ghostIsGone()})
             ]))
     }
     
@@ -109,6 +110,8 @@ class Witch: Opponent {
         
         
         self.head?.addChild(sparkEmmiter)
+        
+        self.cleanUpParticle(particle: sparkEmmiter)
     }
     
    

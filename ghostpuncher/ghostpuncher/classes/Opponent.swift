@@ -65,16 +65,22 @@ enum Direction:UInt8
 
 class Opponent:SKNode
 {
+    
+    deinit {
+        opponent = nil
+        
+    }
+    
     var fightParams:FightParams?
     
    
     
     
-    let heavyPunchSound = SKAction.playSoundFileNamed("sfx_punch2.wav", waitForCompletion: false)
-    let mediumPunchSound = SKAction.playSoundFileNamed("sfx_punch3.wav", waitForCompletion: false)
+    static let heavyPunchSound = SKAction.playSoundFileNamed("sfx_punch2.wav", waitForCompletion: false)
+    static let mediumPunchSound = SKAction.playSoundFileNamed("sfx_punch3.wav", waitForCompletion: false)
     
-    let slashSound = SKAction.playSoundFileNamed("enemySlash.wav", waitForCompletion: false)
-    let slashBlockedSound = SKAction.playSoundFileNamed("enemyBlocked.wav", waitForCompletion: false)
+    static let slashSound = SKAction.playSoundFileNamed("enemySlash.wav", waitForCompletion: false)
+    static let slashBlockedSound = SKAction.playSoundFileNamed("enemyBlocked.wav", waitForCompletion: false)
     
     var opponent:SKNode!
     var opponentName:String
@@ -316,7 +322,8 @@ class Opponent:SKNode
         
         self.opponent?.run(SKAction.sequence([
             SKAction.wait(forDuration: 1.0),
-            scaleMoveGroup, SKAction.run({self.delegate?.ghostIsGone()})
+            scaleMoveGroup, SKAction.run({[weak self] in
+                self?.delegate?.ghostIsGone()})
             ]))
     }
     
@@ -328,16 +335,16 @@ class Opponent:SKNode
         
         let sequence = SKAction.sequence([
             SKAction.wait(forDuration: 0.5),
-            SKAction.run({
-                self.head?.texture = SKTextureAtlas(named: "\(self.opponentName)Head.atlas").textureNamed("\(self.opponentName)_head_frontopen_punch.png")
+            SKAction.run({[weak self] in
+                self?.head?.texture = SKTextureAtlas(named: "\((self?.opponentName)!)Head.atlas").textureNamed("\((self?.opponentName)!)_head_frontopen_punch.png")
             }),
             SKAction.wait(forDuration: 1.0),
-            SKAction.run({
-                self.block?.texture = SKTexture(imageNamed: "\(self.opponentName)_grapple")
-                self.isBlocking = true
-                self.block?.isHidden = false
-                self.leftArm?.isHidden = true
-                self.rightArm?.isHidden = true
+            SKAction.run({[weak self] in
+                self?.block?.texture = SKTexture(imageNamed: "\((self?.opponentName)!)_grapple")
+                self?.isBlocking = true
+                self?.block?.isHidden = false
+                self?.leftArm?.isHidden = true
+                self?.rightArm?.isHidden = true
             }),
             SKAction.wait(forDuration: 1.0),
             SKAction.group([SKAction.sequence([SKAction.wait(forDuration: 0.5),SKAction.run({self.delegate?.youAreDead()})]), SKAction.move(to: CGPoint(x: 0, y: -self.opponentFrame.size.height * 0.8), duration: 0.6) ,SKAction.scale(to: 2.0, duration: 0.6), SKAction.fadeAlpha(to: 0.4, duration: 0.6)])
@@ -402,11 +409,11 @@ class Opponent:SKNode
         self.opponent.run(SKAction.group([
             SKAction.sequence([
             SKAction.wait(forDuration: 1.5),
-            SKAction.run({
-                self.block?.isHidden = true
-                self.leftArm?.isHidden = false
-                self.rightArm?.isHidden = false
-                self.isBlocking = false
+            SKAction.run({[weak self] in
+                self?.block?.isHidden = true
+                self?.leftArm?.isHidden = false
+                self?.rightArm?.isHidden = false
+                self?.isBlocking = false
             })
             ]), movement
         ]), withKey: MOVEMENT_KEY)
@@ -452,16 +459,18 @@ class Opponent:SKNode
         let fadeUp = SKAction.fadeAlpha(to: 0.9, duration: 0.3)
         let moveIn = SKAction.moveBy(x: startPosition.x, y: startPosition.y - 100, duration: 0.2)
         let group1 = SKAction.group([SKAction.run({ self.head?.texture = SKTextureAtlas(named: "\(self.opponentName)Head.atlas").textureNamed("\(self.opponentName)_head_uppercut.png") }),scaleUp, fadeUp,moveIn,
-                                     SKAction.run({ self.delegate?.superAttack() })])
+                                     SKAction.run({[weak self] in
+                                        self?.delegate?.superAttack() })])
         
         let attackLeft = SKAction.sequence([SKAction.run({ self.delegate?.opponentAttackLeft() }), SKAction.wait(forDuration: 0.3)])
         let attackRight = SKAction.sequence([SKAction.run({ self.delegate?.opponentAttackRight() }), SKAction.wait(forDuration: 0.3)])
-        let lightsOn = SKAction.run({self.delegate?.turnOnLights()})
-        let lightsOff = SKAction.run({self.delegate?.turnOffLights()})
+        let lightsOn = SKAction.run({[weak self] in
+            self?.delegate?.turnOnLights()})
+//        let lightsOff = SKAction.run({self.delegate?.turnOffLights()})
         
         let attack = SKAction.sequence([SKAction.fadeOut(withDuration: 0.1), SKAction.run({ self.opponent.setScale(0.0) }), SKAction.wait(forDuration: 3.0), group1, SKAction.run({ self.opponent.position = startPos }), attackLeft, attackRight,attackLeft,attackRight,attackLeft,attackRight,attackLeft,attackRight,lightsOn,SKAction.scale(to: 1.0, duration: 0.2),SKAction.fadeIn(withDuration: 0.1)])
         
-        let flashPause = SKAction.wait(forDuration: 0.3)
+//        let flashPause = SKAction.wait(forDuration: 0.3)
         
 //        let flashingLights = SKAction.sequence([SKAction.wait(forDuration: 3.2),lightsOn,flashPause,lightsOff,flashPause,lightsOn,flashPause
 //            ,lightsOff,flashPause,lightsOn,flashPause,lightsOff,flashPause,lightsOn,flashPause,lightsOff,flashPause,lightsOn])
@@ -486,33 +495,35 @@ class Opponent:SKNode
         self.opponent?.alpha = 1.0
         
         let sequence = SKAction.sequence([
+            
+            
             SKAction.wait(forDuration: 0.5),
-            SKAction.run({
-                self.head?.texture = SKTextureAtlas(named: "\(self.opponentName)Head.atlas").textureNamed("\(self.opponentName)_head_frontopen_punch.png")
+            SKAction.run({[weak self] in
+                self?.head?.texture = SKTextureAtlas(named: "\((self?.opponentName)!)Head.atlas").textureNamed("\((self?.opponentName)!)_head_frontopen_punch.png")
             }),
             SKAction.wait(forDuration: 0.1),
             SKAction.sequence([
-                SKAction.run({
-                    self.fireball(pos: CGPoint(x: -100, y: 200))
-                    self.leftArm?.texture = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas").textureNamed("\(self.opponentName)_left4.png")
-                    self.rightArm?.texture = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas").textureNamed("\(self.opponentName)_right1.png")
+                SKAction.run({[weak self] in
+                    self?.fireball(pos: CGPoint(x: -100, y: 200))
+                    self?.leftArm?.texture = SKTextureAtlas(named: "\((self?.opponentName)!)LeftArm.atlas").textureNamed("\((self?.opponentName)!)_left4.png")
+                    self?.rightArm?.texture = SKTextureAtlas(named: "\((self?.opponentName)!)RightArm.atlas").textureNamed("\((self?.opponentName)!)_right1.png")
                 }),
                 SKAction.wait(forDuration: 0.3),
-                SKAction.run({
-                    self.fireball(pos: CGPoint(x: 100, y: 200))
-                    self.leftArm?.texture = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas").textureNamed("\(self.opponentName)_left1.png")
-                    self.rightArm?.texture = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas").textureNamed("\(self.opponentName)_right4.png")
+                SKAction.run({[weak self] in
+                    self?.fireball(pos: CGPoint(x: 100, y: 200))
+                    self?.leftArm?.texture = SKTextureAtlas(named: "\((self?.opponentName)!)LeftArm.atlas").textureNamed("\((self?.opponentName)!)_left1.png")
+                    self?.rightArm?.texture = SKTextureAtlas(named: "\((self?.opponentName)!)RightArm.atlas").textureNamed("\((self?.opponentName)!)_right4.png")
                 }),
                 SKAction.wait(forDuration: 0.3),
-                SKAction.run({
-                    self.fireball(pos: CGPoint(x: -100, y: 200))
-                    self.leftArm?.texture = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas").textureNamed("\(self.opponentName)_left4.png")
-                    self.rightArm?.texture = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas").textureNamed("\(self.opponentName)_right1.png")
+                SKAction.run({[weak self] in
+                    self?.fireball(pos: CGPoint(x: -100, y: 200))
+                    self?.leftArm?.texture = SKTextureAtlas(named: "\((self?.opponentName)!)LeftArm.atlas").textureNamed("\((self?.opponentName)!)_left4.png")
+                    self?.rightArm?.texture = SKTextureAtlas(named: "\((self?.opponentName)!)RightArm.atlas").textureNamed("\((self?.opponentName)!)_right1.png")
                 }),
                 SKAction.wait(forDuration: 0.3),
-                SKAction.run({
-                    self.leftArm?.texture = SKTextureAtlas(named: "\(self.opponentName)LeftArm.atlas").textureNamed("\(self.opponentName)_left1.png")
-                    self.rightArm?.texture = SKTextureAtlas(named: "\(self.opponentName)RightArm.atlas").textureNamed("\(self.opponentName)_right1.png")
+                SKAction.run({[weak self] in
+                    self?.leftArm?.texture = SKTextureAtlas(named: "\((self?.opponentName)!)LeftArm.atlas").textureNamed("\((self?.opponentName)!)_left1.png")
+                    self?.rightArm?.texture = SKTextureAtlas(named: "\((self?.opponentName)!)RightArm.atlas").textureNamed("\((self?.opponentName)!)_right1.png")
                 })
                 ])
             ])
@@ -537,29 +548,29 @@ class Opponent:SKNode
         
         let sequence = SKAction.sequence([
             SKAction.wait(forDuration: 0.5),
-            SKAction.run({
-                self.head?.texture = SKTextureAtlas(named: "\(self.opponentName)Head.atlas").textureNamed("\(self.opponentName)_head_frontopen_punch.png")
+            SKAction.run({[weak self] in
+                self?.head?.texture = SKTextureAtlas(named: "\((self?.opponentName)!)Head.atlas").textureNamed("\((self?.opponentName)!)_head_frontopen_punch.png")
             }),
             SKAction.wait(forDuration: 0.5),
-            SKAction.run({
-                self.block?.texture = SKTexture(imageNamed: "\(self.opponentName)_grapple")
-                self.block?.isHidden = false
-                self.leftArm?.isHidden = true
-                self.rightArm?.isHidden = true
+            SKAction.run({[weak self] in
+                self?.block?.texture = SKTexture(imageNamed: "\((self?.opponentName)!)_grapple")
+                self?.block?.isHidden = false
+                self?.leftArm?.isHidden = true
+                self?.rightArm?.isHidden = true
             }),
             SKAction.wait(forDuration: 0.5),
             SKAction.sequence([
-                SKAction.run({
-                    self.fireball(pos: CGPoint(x: 0, y: 200))
+                SKAction.run({[weak self] in
+                    self?.fireball(pos: CGPoint(x: 0, y: 200))
                 }),
                 SKAction.wait(forDuration: 0.3),
-                SKAction.run({
-                    self.delegate?.explosion()
-                    self.block?.texture = SKTexture(imageNamed: "\(self.opponentName)_block")
-                    self.block?.isHidden = true
-                    self.leftArm?.isHidden = false
-                    self.rightArm?.isHidden = false
-                    self.delegate?.turnOnLights()
+                SKAction.run({[weak self] in
+                    self?.delegate?.explosion()
+                    self?.block?.texture = SKTexture(imageNamed: "\((self?.opponentName)!)_block")
+                    self?.block?.isHidden = true
+                    self?.leftArm?.isHidden = false
+                    self?.rightArm?.isHidden = false
+                    self?.delegate?.turnOnLights()
                 })
                 ])
             ])
@@ -583,27 +594,27 @@ class Opponent:SKNode
         
         
         let sequence = SKAction.sequence([
-            SKAction.run({
-                self.head?.texture = SKTextureAtlas(named: "\(self.opponentName)Head.atlas").textureNamed("\(self.opponentName)_head_frontopen_punch.png")
+            SKAction.run({[weak self] in
+                self?.head?.texture = SKTextureAtlas(named: "\((self?.opponentName)!)Head.atlas").textureNamed("\((self?.opponentName)!)_head_frontopen_punch.png")
             }),
             SKAction.wait(forDuration: 1.0),
-            SKAction.run({
-                self.lightning()
-                self.block?.texture = SKTexture(imageNamed: "\(self.opponentName)_grapple")
-                self.block?.isHidden = false
-                self.leftArm?.isHidden = true
-                self.rightArm?.isHidden = true
+            SKAction.run({[weak self] in
+                self?.lightning()
+                self?.block?.texture = SKTexture(imageNamed: "\((self?.opponentName)!)_grapple")
+                self?.block?.isHidden = false
+                self?.leftArm?.isHidden = true
+                self?.rightArm?.isHidden = true
             }),
             SKAction.wait(forDuration: 0.5),
             SKAction.sequence([
                 SKAction.wait(forDuration: 0.3),
-                SKAction.run({
-                    self.delegate?.explosion()
-                    self.block?.texture = SKTexture(imageNamed: "\(self.opponentName)_block")
-                    self.block?.isHidden = true
-                    self.leftArm?.isHidden = false
-                    self.rightArm?.isHidden = false
-                    self.delegate?.turnOnLights()
+                SKAction.run({[weak self] in
+                    self?.delegate?.explosion()
+                    self?.block?.texture = SKTexture(imageNamed: "\((self?.opponentName)!)_block")
+                    self?.block?.isHidden = true
+                    self?.leftArm?.isHidden = false
+                    self?.rightArm?.isHidden = false
+                    self?.delegate?.turnOnLights()
                 })
                 ])
             ])
@@ -621,6 +632,7 @@ class Opponent:SKNode
         self.body?.addChild(sparkEmmiter)
         sparkEmmiter.run(SKAction.scale(to: 4.0, duration: 0.5))
         self.delegate?.fireBall()
+        self.cleanUpParticle(particle: sparkEmmiter)
     }
     
     func fireballAppear(){
@@ -633,6 +645,11 @@ class Opponent:SKNode
         sparkEmmiter.targetNode = self
         self.addChild(sparkEmmiter)
         self.opponent?.run(SKAction.sequence([SKAction.wait(forDuration: 0.2),SKAction.fadeIn(withDuration: 0.5)]))
+        self.cleanUpParticle(particle: sparkEmmiter)
+    }
+    
+    func cleanUpParticle(particle part:SKNode){
+        part.run(SKAction.sequence([SKAction.wait(forDuration: 4.0), SKAction.removeFromParent()]))
     }
     
     func lightning(){
@@ -646,6 +663,8 @@ class Opponent:SKNode
                                          SKAction.wait(forDuration: 0.1), SKAction.fadeAlpha(to: 1, duration: 0),
                                          SKAction.wait(forDuration: 0.2),SKAction.removeFromParent()]))
         self.delegate?.lightning()
+        
+        
     }
     
     func fadeOnRecoil()->Bool {
@@ -916,7 +935,7 @@ class Opponent:SKNode
         sparkEmmiter.xAcceleration = (direction == .right ? -900 : 900)
         sparkEmmiter.numParticlesToEmit = Int(power.multiplied(by: 10))
         
-        
+        self.cleanUpParticle(particle: sparkEmmiter)
         self.head?.addChild(sparkEmmiter)
     }
     func randomAttack(){
@@ -1085,15 +1104,15 @@ class Opponent:SKNode
         return willConnect
     }
     func mediumPunchSFX()->SKAction {
-        return mediumPunchSound
+        return Opponent.mediumPunchSound
     }
     func heavyPunchSFX()->SKAction {
-        return heavyPunchSound
+        return Opponent.heavyPunchSound
     }
     func enemyConnectSFX()->SKAction {
-        return slashSound
+        return Opponent.slashSound
     }
     func enemyBlockedSFX()->SKAction {
-        return slashBlockedSound
+        return Opponent.slashBlockedSound
     }
 }

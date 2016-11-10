@@ -70,7 +70,6 @@
 		A2CEC08E1DC690DC00FFE128 /* groundThump.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC08A1DC690DC00FFE128 /* groundThump.wav */; };
 		A2CEC08F1DC690DC00FFE128 /* slash.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC08B1DC690DC00FFE128 /* slash.wav */; };
 		A2CEC0901DC690DC00FFE128 /* slash2.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC08C1DC690DC00FFE128 /* slash2.wav */; };
-		A2CEC0921DC695A800FFE128 /* skeletonHit.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC0911DC695A800FFE128 /* skeletonHit.wav */; };
 		A2CEC0941DC697F800FFE128 /* sfx_punch3.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC0931DC697F800FFE128 /* sfx_punch3.wav */; };
 		A2CEC0961DC6984400FFE128 /* sfx_punch2.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC0951DC6984400FFE128 /* sfx_punch2.wav */; };
 		A2CEC09A1DC69A3200FFE128 /* enemyBlocked.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2CEC0991DC69A3200FFE128 /* enemyBlocked.wav */; };
@@ -80,15 +79,12 @@
 		A2D7B9A51DBB0F6800DC2DD9 /* atmos_loop2.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9981DBB0F6800DC2DD9 /* atmos_loop2.wav */; };
 		A2D7B9A61DBB0F6800DC2DD9 /* deathblow.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9991DBB0F6800DC2DD9 /* deathblow.wav */; };
 		A2D7B9A71DBB0F6800DC2DD9 /* ghostshock.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B99A1DBB0F6800DC2DD9 /* ghostshock.wav */; };
-		A2D7B9A81DBB0F6800DC2DD9 /* hard_punch.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B99B1DBB0F6800DC2DD9 /* hard_punch.wav */; };
 		A2D7B9A91DBB0F6800DC2DD9 /* laugh_reverse.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B99C1DBB0F6800DC2DD9 /* laugh_reverse.wav */; };
 		A2D7B9AA1DBB0F6800DC2DD9 /* light_punch.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B99D1DBB0F6800DC2DD9 /* light_punch.wav */; };
-		A2D7B9AB1DBB0F6800DC2DD9 /* med_punch.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B99E1DBB0F6800DC2DD9 /* med_punch.wav */; };
 		A2D7B9AC1DBB0F6800DC2DD9 /* phaser.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B99F1DBB0F6800DC2DD9 /* phaser.wav */; };
 		A2D7B9AD1DBB0F6800DC2DD9 /* select.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9A01DBB0F6800DC2DD9 /* select.wav */; };
 		A2D7B9AE1DBB0F6800DC2DD9 /* soulgrab.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9A11DBB0F6800DC2DD9 /* soulgrab.wav */; };
 		A2D7B9AF1DBB0F6800DC2DD9 /* start.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9A21DBB0F6800DC2DD9 /* start.wav */; };
-		A2D7B9B01DBB0F6800DC2DD9 /* witchtalk.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9A31DBB0F6800DC2DD9 /* witchtalk.wav */; };
 		A2D7B9B21DBBBF0500DC2DD9 /* Witch.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9B11DBBBF0500DC2DD9 /* Witch.xcassets */; };
 		A2D7B9B71DBBBFA000DC2DD9 /* witchLeftArm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9B41DBBBFA000DC2DD9 /* witchLeftArm.atlas */; };
 		A2D7B9B81DBBBFA000DC2DD9 /* witchRightArm.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9B51DBBBFA000DC2DD9 /* witchRightArm.atlas */; };
@@ -188,7 +184,6 @@
 		A2CEC08A1DC690DC00FFE128 /* groundThump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = groundThump.wav; sourceTree = "<group>"; };
 		A2CEC08B1DC690DC00FFE128 /* slash.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = slash.wav; sourceTree = "<group>"; };
 		A2CEC08C1DC690DC00FFE128 /* slash2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = slash2.wav; sourceTree = "<group>"; };
-		A2CEC0911DC695A800FFE128 /* skeletonHit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = skeletonHit.wav; sourceTree = "<group>"; };
 		A2CEC0931DC697F800FFE128 /* sfx_punch3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sfx_punch3.wav; sourceTree = "<group>"; };
 		A2CEC0951DC6984400FFE128 /* sfx_punch2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sfx_punch2.wav; sourceTree = "<group>"; };
 		A2CEC0991DC69A3200FFE128 /* enemyBlocked.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = enemyBlocked.wav; sourceTree = "<group>"; };
@@ -198,15 +193,12 @@
 		A2D7B9981DBB0F6800DC2DD9 /* atmos_loop2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = atmos_loop2.wav; sourceTree = "<group>"; };
 		A2D7B9991DBB0F6800DC2DD9 /* deathblow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = deathblow.wav; sourceTree = "<group>"; };
 		A2D7B99A1DBB0F6800DC2DD9 /* ghostshock.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ghostshock.wav; sourceTree = "<group>"; };
-		A2D7B99B1DBB0F6800DC2DD9 /* hard_punch.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hard_punch.wav; sourceTree = "<group>"; };
 		A2D7B99C1DBB0F6800DC2DD9 /* laugh_reverse.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laugh_reverse.wav; sourceTree = "<group>"; };
 		A2D7B99D1DBB0F6800DC2DD9 /* light_punch.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = light_punch.wav; sourceTree = "<group>"; };
-		A2D7B99E1DBB0F6800DC2DD9 /* med_punch.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = med_punch.wav; sourceTree = "<group>"; };
 		A2D7B99F1DBB0F6800DC2DD9 /* phaser.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = phaser.wav; sourceTree = "<group>"; };
 		A2D7B9A01DBB0F6800DC2DD9 /* select.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = select.wav; sourceTree = "<group>"; };
 		A2D7B9A11DBB0F6800DC2DD9 /* soulgrab.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = soulgrab.wav; sourceTree = "<group>"; };
 		A2D7B9A21DBB0F6800DC2DD9 /* start.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = start.wav; sourceTree = "<group>"; };
-		A2D7B9A31DBB0F6800DC2DD9 /* witchtalk.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = witchtalk.wav; sourceTree = "<group>"; };
 		A2D7B9B11DBBBF0500DC2DD9 /* Witch.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Witch.xcassets; sourceTree = "<group>"; };
 		A2D7B9B41DBBBFA000DC2DD9 /* witchLeftArm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = witchLeftArm.atlas; sourceTree = "<group>"; };
 		A2D7B9B51DBBBFA000DC2DD9 /* witchRightArm.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = witchRightArm.atlas; sourceTree = "<group>"; };
@@ -416,7 +408,6 @@
 				A2CEC0991DC69A3200FFE128 /* enemyBlocked.wav */,
 				A2CEC0951DC6984400FFE128 /* sfx_punch2.wav */,
 				A2CEC0931DC697F800FFE128 /* sfx_punch3.wav */,
-				A2CEC0911DC695A800FFE128 /* skeletonHit.wav */,
 				A2CEC0891DC690DC00FFE128 /* buzz.wav */,
 				A2CEC08A1DC690DC00FFE128 /* groundThump.wav */,
 				A2CEC08B1DC690DC00FFE128 /* slash.wav */,
@@ -425,15 +416,12 @@
 				A2D7B9981DBB0F6800DC2DD9 /* atmos_loop2.wav */,
 				A2D7B9991DBB0F6800DC2DD9 /* deathblow.wav */,
 				A2D7B99A1DBB0F6800DC2DD9 /* ghostshock.wav */,
-				A2D7B99B1DBB0F6800DC2DD9 /* hard_punch.wav */,
 				A2D7B99C1DBB0F6800DC2DD9 /* laugh_reverse.wav */,
 				A2D7B99D1DBB0F6800DC2DD9 /* light_punch.wav */,
-				A2D7B99E1DBB0F6800DC2DD9 /* med_punch.wav */,
 				A2D7B99F1DBB0F6800DC2DD9 /* phaser.wav */,
 				A2D7B9A01DBB0F6800DC2DD9 /* select.wav */,
 				A2D7B9A11DBB0F6800DC2DD9 /* soulgrab.wav */,
 				A2D7B9A21DBB0F6800DC2DD9 /* start.wav */,
-				A2D7B9A31DBB0F6800DC2DD9 /* witchtalk.wav */,
 			);
 			path = sound_fx;
 			sourceTree = "<group>";
@@ -593,7 +581,6 @@
 				A2D7B9BA1DBBBFC300DC2DD9 /* Witch.sks in Resources */,
 				A2CEC08F1DC690DC00FFE128 /* slash.wav in Resources */,
 				A25C9FE61DBF2A83006CDA73 /* devilLeftArm.atlas in Resources */,
-				A2D7B9A81DBB0F6800DC2DD9 /* hard_punch.wav in Resources */,
 				A2D7B9AC1DBB0F6800DC2DD9 /* phaser.wav in Resources */,
 				A2D7B9B71DBBBFA000DC2DD9 /* witchLeftArm.atlas in Resources */,
 				A2D7B9B81DBBBFA000DC2DD9 /* witchRightArm.atlas in Resources */,
@@ -602,14 +589,11 @@
 				A2519B561DCB1142001925F8 /* Boss.sks in Resources */,
 				A2CEC09A1DC69A3200FFE128 /* enemyBlocked.wav in Resources */,
 				A24BBE471DD031DD00155A54 /* lightning.wav in Resources */,
-				A2D7B9B01DBB0F6800DC2DD9 /* witchtalk.wav in Resources */,
 				A2519B441DC70454001925F8 /* spark.png in Resources */,
-				A2CEC0921DC695A800FFE128 /* skeletonHit.wav in Resources */,
 				A2CEC0961DC6984400FFE128 /* sfx_punch2.wav in Resources */,
 				A216F0DD1DB5815A003DD5BB /* fists.atlas in Resources */,
 				A2CEC09E1DC69D7200FFE128 /* enemySlash.wav in Resources */,
 				A271178D1DB405FF00B36F06 /* Smoke.sks in Resources */,
-				A2D7B9AB1DBB0F6800DC2DD9 /* med_punch.wav in Resources */,
 				A27117861DB31D5A00B36F06 /* ghostHead.atlas in Resources */,
 				A28A10991DBAC21800029818 /* splashloop.wav in Resources */,
 				A2B49AF61DA89C1F00F86F40 /* Ghost.xcassets in Resources */,
@@ -845,11 +829,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = EKVU9746UD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HockeySDK-iOS/HockeySDK.embeddedframework",
 				);
+				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = ghostpuncher/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -857,6 +843,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 3.0;
+				"Texture Atlas Format" = RGBA8888_COMPRESSED;
 			};
 			name = Debug;
 		};
@@ -864,6 +851,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = EKVU9746UD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -876,6 +864,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 3.0;
+				"Texture Atlas Format" = RGBA8888_COMPRESSED;
 			};
 			name = Release;
 		};

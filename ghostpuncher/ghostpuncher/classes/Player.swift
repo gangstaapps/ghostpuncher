@@ -64,36 +64,36 @@ class Player:SKNode
         
         let animationTime = 0.08
         
-        leftJab = SKAction.sequence([SKAction.run({
-            self.leftFist.texture = self.fistAtlas.textureNamed("left_head1.png")
-            self.leftFist.position = CGPoint(x: frame.size.width * 0.45, y: 0)
-        }),SKAction.animate(with: leftJabFrames, timePerFrame: animationTime), SKAction.run({
-            self.leftFist.texture = self.fistAtlas.textureNamed("left_upper2.png")
-            self.leftFist.position = CGPoint(x: frame.size.width * 0.4, y: -self.leftFist.frame.size.height * 0.35)
+        leftJab = SKAction.sequence([SKAction.run({[weak self] in
+            self?.leftFist.texture = self?.fistAtlas.textureNamed("left_head1.png")
+            self?.leftFist.position = CGPoint(x: frame.size.width * 0.45, y: 0)
+        }),SKAction.animate(with: leftJabFrames, timePerFrame: animationTime), SKAction.run({[weak self] in
+            self?.leftFist.texture = self?.fistAtlas.textureNamed("left_upper2.png")
+            self?.leftFist.position = CGPoint(x: frame.size.width * 0.4, y: -(self?.leftFist.frame.size.height)! * 0.35)
         })])
         
-        leftHaymaker = SKAction.sequence([SKAction.run({
-            self.leftFist.texture = self.fistAtlas.textureNamed("left_haymaker1.png")
-            self.leftFist.position = CGPoint(x: frame.size.width * 0.5, y: 0)
-        }),SKAction.animate(with: leftHaymakerJabFrames, timePerFrame: animationTime), SKAction.run({
-            self.leftFist.texture = self.fistAtlas.textureNamed("left_upper2.png")
-            self.leftFist.position = CGPoint(x: frame.size.width * 0.4, y: -self.leftFist.frame.size.height * 0.35)
+        leftHaymaker = SKAction.sequence([SKAction.run({[weak self] in
+            self?.leftFist.texture = self?.fistAtlas.textureNamed("left_haymaker1.png")
+            self?.leftFist.position = CGPoint(x: frame.size.width * 0.5, y: 0)
+        }),SKAction.animate(with: leftHaymakerJabFrames, timePerFrame: animationTime), SKAction.run({[weak self] in
+            self?.leftFist.texture = self?.fistAtlas.textureNamed("left_upper2.png")
+            self?.leftFist.position = CGPoint(x: frame.size.width * 0.4, y: -(self?.leftFist.frame.size.height)! * 0.35)
         })])
         
-        rightJab = SKAction.sequence([SKAction.run({
-            self.rightFist.texture = self.fistAtlas.textureNamed("right_head1.png")
-            self.rightFist.position = CGPoint(x: frame.size.width * 0.55, y: 0)
-        }),SKAction.animate(with: rightJabFrames, timePerFrame: animationTime), SKAction.run({
-            self.rightFist.texture = self.fistAtlas.textureNamed("right_upper2.png")
-            self.rightFist.position = CGPoint(x: frame.size.width * 0.6, y: -self.leftFist.frame.size.height * 0.35)
+        rightJab = SKAction.sequence([SKAction.run({[weak self] in
+            self?.rightFist.texture = self?.fistAtlas.textureNamed("right_head1.png")
+            self?.rightFist.position = CGPoint(x: frame.size.width * 0.55, y: 0)
+        }),SKAction.animate(with: rightJabFrames, timePerFrame: animationTime), SKAction.run({[weak self] in
+            self?.rightFist.texture = self?.fistAtlas.textureNamed("right_upper2.png")
+            self?.rightFist.position = CGPoint(x: frame.size.width * 0.6, y: -(self?.leftFist.frame.size.height)! * 0.35)
         })])
         
-        rightHaymaker = SKAction.sequence([SKAction.run({
-            self.rightFist.texture = self.fistAtlas.textureNamed("left_upper2.png")
-            self.rightFist.position = CGPoint(x: frame.size.width * 0.5, y: 0)
-        }),SKAction.animate(with: rightHaymakerJabFrames, timePerFrame: animationTime), SKAction.run({
-            self.rightFist.texture = self.fistAtlas.textureNamed("right_upper2.png")
-            self.rightFist.position = CGPoint(x: frame.size.width * 0.6, y: -self.leftFist.frame.size.height * 0.35)
+        rightHaymaker = SKAction.sequence([SKAction.run({[weak self] in
+            self?.rightFist.texture = self?.fistAtlas.textureNamed("left_upper2.png")
+            self?.rightFist.position = CGPoint(x: frame.size.width * 0.5, y: 0)
+        }),SKAction.animate(with: rightHaymakerJabFrames, timePerFrame: animationTime), SKAction.run({[weak self] in
+            self?.rightFist.texture = self?.fistAtlas.textureNamed("right_upper2.png")
+            self?.rightFist.position = CGPoint(x: frame.size.width * 0.6, y: -(self?.leftFist.frame.size.height)! * 0.35)
         })])
         
         self.addChild(leftFist)
