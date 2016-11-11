@@ -458,7 +458,8 @@ class Opponent:SKNode
         let scaleUp = SKAction.scale(to: 2.0, duration: 0.2)
         let fadeUp = SKAction.fadeAlpha(to: 0.9, duration: 0.3)
         let moveIn = SKAction.moveBy(x: startPosition.x, y: startPosition.y - 100, duration: 0.2)
-        let group1 = SKAction.group([SKAction.run({ self.head?.texture = SKTextureAtlas(named: "\(self.opponentName)Head.atlas").textureNamed("\(self.opponentName)_head_uppercut.png") }),scaleUp, fadeUp,moveIn,
+        let group1 = SKAction.group([SKAction.run({[weak self] in
+            self?.head?.texture = SKTextureAtlas(named: "\((self?.opponentName)!)Head.atlas").textureNamed("\((self?.opponentName)!)_head_uppercut.png") }),scaleUp, fadeUp,moveIn,
                                      SKAction.run({[weak self] in
                                         self?.delegate?.superAttack() })])
         

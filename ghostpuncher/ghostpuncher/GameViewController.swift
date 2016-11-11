@@ -56,7 +56,7 @@ class GameViewController: UIViewController {
         let menuScene = MenuScene(frame: self.view.frame)
         
         if let view = self.view as! SKView? {
-            view.showsFPS = true
+            view.showsFPS = false
             view.presentScene(menuScene)
         }
         
