@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FDC34F38DA6E497F5848C146 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 806D00820620D6C757DAB902 /* PrivacyInfo.xcprivacy */; };
 		A20600F61DADC6DF00035330 /* EffectsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20600F51DADC6DF00035330 /* EffectsLayer.swift */; };
 		A20600F91DB1A45900035330 /* ectoPlasm.sks in Resources */ = {isa = PBXBuildFile; fileRef = A20600F71DB1A45800035330 /* ectoPlasm.sks */; };
 		A20600FE1DB1A99700035330 /* ecto.png in Resources */ = {isa = PBXBuildFile; fileRef = A20600FD1DB1A99700035330 /* ecto.png */; };
@@ -94,6 +93,7 @@
 		A2D7B9C01DBC42B300DC2DD9 /* Witch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D7B9BF1DBC42B300DC2DD9 /* Witch.swift */; };
 		A2D7B9C21DBC47CA00DC2DD9 /* FireBall.sks in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9C11DBC47CA00DC2DD9 /* FireBall.sks */; };
 		A2F0DC841DCC5CBB002439E7 /* thunder.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2F0DC831DCC5CBB002439E7 /* thunder.wav */; };
+		FDC34F38DA6E497F5848C146 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 806D00820620D6C757DAB902 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -286,7 +286,7 @@
 				A227C7AC1DA758AA00EFFD7B /* LaunchScreen.storyboard */,
 				A227C7AF1DA758AA00EFFD7B /* Info.plist */,
 				A27C72C11DD191690064F1F2 /* WitchAppear.sks */,
-							806D00820620D6C757DAB902 /* PrivacyInfo.xcprivacy */,
+				806D00820620D6C757DAB902 /* PrivacyInfo.xcprivacy */,
 			);
 			path = ghostpuncher;
 			sourceTree = "<group>";
@@ -498,18 +498,18 @@
 				TargetAttributes = {
 					A227C7991DA758A900EFFD7B = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = EKVU9746UD;
+						DevelopmentTeam = ZCGF88SZPJ;
 						ProvisioningStyle = Automatic;
 					};
 					A227C7B31DA758AA00EFFD7B = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = EKVU9746UD;
+						DevelopmentTeam = ZCGF88SZPJ;
 						ProvisioningStyle = Automatic;
 						TestTargetID = A227C7991DA758A900EFFD7B;
 					};
 					A227C7BE1DA758AA00EFFD7B = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = EKVU9746UD;
+						DevelopmentTeam = ZCGF88SZPJ;
 						ProvisioningStyle = Automatic;
 						TestTargetID = A227C7991DA758A900EFFD7B;
 					};
@@ -520,6 +520,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -607,7 +608,7 @@
 				A25C9FE71DBF2A83006CDA73 /* devilRightArm.atlas in Resources */,
 				A216F0EE1DB71D64003DD5BB /* ghost_portal.atlas in Resources */,
 				A2CEC0901DC690DC00FFE128 /* slash2.wav in Resources */,
-							FDC34F38DA6E497F5848C146 /* PrivacyInfo.xcprivacy in Resources */,
+				FDC34F38DA6E497F5848C146 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -815,13 +816,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = EKVU9746UD;
+				DEVELOPMENT_TEAM = ZCGF88SZPJ;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = ghostpuncher/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.swanriders.ghostpuncher;
+				PRODUCT_BUNDLE_IDENTIFIER = com.anothererikjames.ghostpuncher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 5.0;
@@ -834,12 +835,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = EKVU9746UD;
+				DEVELOPMENT_TEAM = ZCGF88SZPJ;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ghostpuncher/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.swanriders.ghostpuncher;
+				PRODUCT_BUNDLE_IDENTIFIER = com.anothererikjames.ghostpuncher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 5.0;
@@ -852,10 +853,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = EKVU9746UD;
+				DEVELOPMENT_TEAM = ZCGF88SZPJ;
 				INFOPLIST_FILE = ghostpuncherTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.swanriders.ghostpuncherTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.anothererikjames.ghostpuncherTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ghostpuncher.app/ghostpuncher";
@@ -867,10 +868,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = EKVU9746UD;
+				DEVELOPMENT_TEAM = ZCGF88SZPJ;
 				INFOPLIST_FILE = ghostpuncherTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.swanriders.ghostpuncherTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.anothererikjames.ghostpuncherTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ghostpuncher.app/ghostpuncher";
@@ -881,10 +882,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = EKVU9746UD;
+				DEVELOPMENT_TEAM = ZCGF88SZPJ;
 				INFOPLIST_FILE = ghostpuncherUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.swanriders.ghostpuncherUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.anothererikjames.ghostpuncherUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = ghostpuncher;
@@ -895,10 +896,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = EKVU9746UD;
+				DEVELOPMENT_TEAM = ZCGF88SZPJ;
 				INFOPLIST_FILE = ghostpuncherUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.swanriders.ghostpuncherUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.anothererikjames.ghostpuncherUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = ghostpuncher;
