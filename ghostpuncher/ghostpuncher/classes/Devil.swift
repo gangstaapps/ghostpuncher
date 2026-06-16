@@ -40,6 +40,12 @@ class Devil: Opponent {
         self.batwings = self.body?.childNode(withName: "wings") as! SKSpriteNode?
         self.batwings?.isHidden = true
         self.initParams(params: FightParams(params: DevilParams(), multiplier: multiplier))
+
+        // Devil's head crowns higher than the other opponents. Push the
+        // whole sprite hierarchy down so the head stays inside the frame
+        // on modern landscape aspect ratios (852×393 etc).
+        self.startPosition = CGPoint(x: 0, y: -frame.size.height * 0.5)
+        self.opponent.position = self.startPosition
     }
     
     override func addGlows(){

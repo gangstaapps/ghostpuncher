@@ -110,7 +110,7 @@ class Opponent:SKNode
     
     var ghostEffectNode:SKEffectNode
     
-    let startPosition:CGPoint
+    var startPosition:CGPoint
     
     weak var delegate:OpponentDelegate?
     
