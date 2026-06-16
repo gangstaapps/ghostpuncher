@@ -143,11 +143,11 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     override func didMove(to view: SKView) {
         #if (arch(i386) || arch(x86_64))
             let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-            swipeRight.direction = UISwipeGestureRecognizerDirection.right
+            swipeRight.direction = UISwipeGestureRecognizer.Direction.right
             self.view?.addGestureRecognizer(swipeRight)
             
             let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-            swipeRight.direction = UISwipeGestureRecognizerDirection.left
+            swipeRight.direction = UISwipeGestureRecognizer.Direction.left
             self.view?.addGestureRecognizer(swipeLeft)
         #else
             motionManager = CMMotionManager()
@@ -160,16 +160,16 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
        
     }
     
-    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
-            case UISwipeGestureRecognizerDirection.right:
+            case UISwipeGestureRecognizer.Direction.right:
                 self.jukeRight()
-            case UISwipeGestureRecognizerDirection.down:
+            case UISwipeGestureRecognizer.Direction.down:
                 print("Swiped down")
-            case UISwipeGestureRecognizerDirection.left:
+            case UISwipeGestureRecognizer.Direction.left:
                 self.jukeLeft()
-            case UISwipeGestureRecognizerDirection.up:
+            case UISwipeGestureRecognizer.Direction.up:
                 print("Swiped up")
             default:
                 break
