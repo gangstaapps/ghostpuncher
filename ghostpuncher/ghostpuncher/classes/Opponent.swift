@@ -118,6 +118,10 @@ class Opponent:SKNode
     let LEFT_ARM_KEY  = "leftArmKey"
     let RIGHT_ARM_KEY = "rightArmKey"
     let COMBO_ATTACK_KEY = "comboAttack"
+    let TELEGRAPH_KEY = "telegraphKey"
+    let TELEGRAPH_CUE_KEY = "telegraphCueKey"
+
+    var telegraphPowerScale: CGFloat = 1.0
     
     static let LENGTH_OF_MEMORY = 100
     let INACTIVITY_TIME_TO_CHECK = 1.0
@@ -280,10 +284,13 @@ class Opponent:SKNode
     
     func returnFullPowerHit()->CGFloat
     {
+        let base: CGFloat
         if let fullPower = self.fightParams?.fullPowerHit {
-            return fullPower
+            base = fullPower
+        } else {
+            base = 3.0
         }
-        return 3.0
+        return base * telegraphPowerScale
     }
     
     func returnBlockedHit()->CGFloat
@@ -950,16 +957,20 @@ class Opponent:SKNode
         self.isBlocking = false
     }
     func update(_ currentTime: TimeInterval){
-        
+
        currentSceneTime = currentTime
-        
+
         if self.isBlocking {
-            
+
             return
         }
-        
+
         if self.opponent.action(forKey: COMBO_ATTACK_KEY) != nil {
-            
+
+            return
+        }
+
+        if self.opponent.action(forKey: TELEGRAPH_KEY) != nil {
             return
         }
         
@@ -1115,5 +1126,86 @@ class Opponent:SKNode
     }
     func enemyBlockedSFX()->SKAction {
         return Opponent.slashBlockedSound
+    }
+}
+
+// MARK: - Telegraph
+
+struct Telegraph {
+    enum Cue {
+        case eyeFlash       // brief red on the head — fast attack, small wind-up
+        case armPull        // pull the arm back — heavy hook with a visible loaded shoulder
+        case bodyHunch      // body crouches — wind-up before a big strike
+        case feint          // looks like a heavy, never lands; followed up by something real
+    }
+    let windUp: TimeInterval
+    let cue: Cue
+    let direction: Direction
+    let power: CGFloat
+}
+
+extension Opponent {
+    func telegraphAttack(_ telegraph: Telegraph) {
+        playTelegraphCue(telegraph)
+
+        let dir = telegraph.direction
+        let power = telegraph.power
+        let isFeint = telegraph.cue == .feint
+
+        let fire = SKAction.run { [weak self] in
+            guard let self = self else { return }
+            if isFeint {
+                self.addEvent(event: dir == .left ? .ghostLeftAttackFail : .ghostRightAttackFail)
+                return
+            }
+            self.telegraphPowerScale = power
+            if dir == .left {
+                self.delegate?.opponentAttackLeft()
+            } else {
+                self.delegate?.opponentAttackRight()
+            }
+            self.telegraphPowerScale = 1.0
+        }
+
+        let recovery = SKAction.wait(forDuration: 0.25)
+        self.opponent.run(
+            SKAction.sequence([SKAction.wait(forDuration: telegraph.windUp), fire, recovery]),
+            withKey: TELEGRAPH_KEY
+        )
+    }
+
+    private func playTelegraphCue(_ telegraph: Telegraph) {
+        switch telegraph.cue {
+        case .eyeFlash:
+            let trail = max(0, telegraph.windUp - 0.18)
+            head?.run(SKAction.sequence([
+                SKAction.colorize(with: SKColor.red, colorBlendFactor: 0.7, duration: 0.06),
+                SKAction.wait(forDuration: trail),
+                SKAction.colorize(with: SKColor.red, colorBlendFactor: 0.0, duration: 0.12)
+            ]), withKey: TELEGRAPH_CUE_KEY)
+        case .armPull:
+            let arm = telegraph.direction == .left ? leftArm : rightArm
+            arm?.run(SKAction.sequence([
+                SKAction.scale(to: 1.4, duration: telegraph.windUp * 0.7),
+                SKAction.scale(to: 1.0, duration: max(0.05, telegraph.windUp * 0.3))
+            ]), withKey: TELEGRAPH_CUE_KEY)
+        case .bodyHunch:
+            body?.run(SKAction.sequence([
+                SKAction.scale(to: 0.85, duration: telegraph.windUp * 0.5),
+                SKAction.scale(to: 1.0, duration: telegraph.windUp * 0.5)
+            ]), withKey: TELEGRAPH_CUE_KEY)
+        case .feint:
+            let trail = max(0, telegraph.windUp - 0.2)
+            head?.run(SKAction.sequence([
+                SKAction.colorize(with: SKColor.yellow, colorBlendFactor: 0.6, duration: 0.1),
+                SKAction.wait(forDuration: trail),
+                SKAction.colorize(with: SKColor.yellow, colorBlendFactor: 0.0, duration: 0.1)
+            ]), withKey: TELEGRAPH_CUE_KEY)
+            let arm = telegraph.direction == .left ? leftArm : rightArm
+            arm?.run(SKAction.sequence([
+                SKAction.scale(to: 1.25, duration: telegraph.windUp * 0.5),
+                SKAction.scale(to: 1.0, duration: telegraph.windUp * 0.5)
+            ]))
+        }
     }
 }
