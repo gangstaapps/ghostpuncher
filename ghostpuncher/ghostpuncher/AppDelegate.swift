@@ -5,24 +5,17 @@
 //  Created by Erik James on 10/6/16.
 //  Copyright © 2016 Erik James. All rights reserved.
 //
-import HockeySDK
 import UIKit
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        
-        
-        BITHockeyManager.shared().configure(withIdentifier:"98f1aebd533f432081972cfde1f4c72b")
-        // Do some additional configuration if needed here
-        BITHockeyManager.shared().start()
-        BITHockeyManager.shared().authenticator.authenticateInstallation()
-
-        
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // HockeySDK removed in the 2026 modernization — it was deprecated in
+        // 2019. Crash reporting now uses Apple's built-in TestFlight feedback
+        // and Xcode Organizer; add Sentry/Crashlytics later if desired.
         return true
     }
 

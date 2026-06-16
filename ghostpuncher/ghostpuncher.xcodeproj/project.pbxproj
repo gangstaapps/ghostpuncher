@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FDC34F38DA6E497F5848C146 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 806D00820620D6C757DAB902 /* PrivacyInfo.xcprivacy */; };
 		A20600F61DADC6DF00035330 /* EffectsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20600F51DADC6DF00035330 /* EffectsLayer.swift */; };
 		A20600F91DB1A45900035330 /* ectoPlasm.sks in Resources */ = {isa = PBXBuildFile; fileRef = A20600F71DB1A45800035330 /* ectoPlasm.sks */; };
 		A20600FE1DB1A99700035330 /* ecto.png in Resources */ = {isa = PBXBuildFile; fileRef = A20600FD1DB1A99700035330 /* ecto.png */; };
@@ -27,7 +28,6 @@
 		A24BBE471DD031DD00155A54 /* lightning.wav in Resources */ = {isa = PBXBuildFile; fileRef = A24BBE461DD031DD00155A54 /* lightning.wav */; };
 		A24BBE491DD033CC00155A54 /* devilPunch.wav in Resources */ = {isa = PBXBuildFile; fileRef = A24BBE481DD033CC00155A54 /* devilPunch.wav */; };
 		A2519B431DC70454001925F8 /* devilBlood.sks in Resources */ = {isa = PBXBuildFile; fileRef = A2519B411DC70454001925F8 /* devilBlood.sks */; };
-		A2519B441DC70454001925F8 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = A2519B421DC70454001925F8 /* spark.png */; };
 		A2519B481DC7088F001925F8 /* evilLaugh.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2519B471DC7088F001925F8 /* evilLaugh.wav */; };
 		A2519B4A1DC84311001925F8 /* ButtonPowerMeter.sks in Resources */ = {isa = PBXBuildFile; fileRef = A2519B491DC84311001925F8 /* ButtonPowerMeter.sks */; };
 		A2519B4C1DC9B859001925F8 /* Buttons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2519B4B1DC9B859001925F8 /* Buttons.xcassets */; };
@@ -93,7 +93,6 @@
 		A2D7B9BE1DBC428D00DC2DD9 /* Ghost.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D7B9BD1DBC428D00DC2DD9 /* Ghost.swift */; };
 		A2D7B9C01DBC42B300DC2DD9 /* Witch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D7B9BF1DBC42B300DC2DD9 /* Witch.swift */; };
 		A2D7B9C21DBC47CA00DC2DD9 /* FireBall.sks in Resources */ = {isa = PBXBuildFile; fileRef = A2D7B9C11DBC47CA00DC2DD9 /* FireBall.sks */; };
-		A2EB9F201DAB35AF0046CB93 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2EB9F1E1DAB351F0046CB93 /* HockeySDK.framework */; };
 		A2F0DC841DCC5CBB002439E7 /* thunder.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2F0DC831DCC5CBB002439E7 /* thunder.wav */; };
 /* End PBXBuildFile section */
 
@@ -115,6 +114,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		806D00820620D6C757DAB902 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		A20600F51DADC6DF00035330 /* EffectsLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EffectsLayer.swift; path = classes/EffectsLayer.swift; sourceTree = "<group>"; };
 		A20600F71DB1A45800035330 /* ectoPlasm.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ectoPlasm.sks; sourceTree = "<group>"; };
 		A20600FD1DB1A99700035330 /* ecto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ecto.png; sourceTree = "<group>"; };
@@ -141,7 +141,6 @@
 		A24BBE461DD031DD00155A54 /* lightning.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lightning.wav; sourceTree = "<group>"; };
 		A24BBE481DD033CC00155A54 /* devilPunch.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = devilPunch.wav; sourceTree = "<group>"; };
 		A2519B411DC70454001925F8 /* devilBlood.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = devilBlood.sks; sourceTree = "<group>"; };
-		A2519B421DC70454001925F8 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		A2519B471DC7088F001925F8 /* evilLaugh.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = evilLaugh.wav; sourceTree = "<group>"; };
 		A2519B491DC84311001925F8 /* ButtonPowerMeter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ButtonPowerMeter.sks; sourceTree = "<group>"; };
 		A2519B4B1DC9B859001925F8 /* Buttons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Buttons.xcassets; sourceTree = "<group>"; };
@@ -207,8 +206,6 @@
 		A2D7B9BD1DBC428D00DC2DD9 /* Ghost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Ghost.swift; path = opponents/Ghost.swift; sourceTree = "<group>"; };
 		A2D7B9BF1DBC42B300DC2DD9 /* Witch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Witch.swift; path = opponents/Witch.swift; sourceTree = "<group>"; };
 		A2D7B9C11DBC47CA00DC2DD9 /* FireBall.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = FireBall.sks; path = opponents/FireBall.sks; sourceTree = "<group>"; };
-		A2EB9F1E1DAB351F0046CB93 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
-		A2EB9F1F1DAB351F0046CB93 /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
 		A2F0DC831DCC5CBB002439E7 /* thunder.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = thunder.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -217,7 +214,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2EB9F201DAB35AF0046CB93 /* HockeySDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,7 +246,6 @@
 				A271178B1DB405FF00B36F06 /* Smoke.sks */,
 				A271178C1DB405FF00B36F06 /* spark.png */,
 				A2519B411DC70454001925F8 /* devilBlood.sks */,
-				A2519B421DC70454001925F8 /* spark.png */,
 				A2519B491DC84311001925F8 /* ButtonPowerMeter.sks */,
 			);
 			name = Effects;
@@ -291,6 +286,7 @@
 				A227C7AC1DA758AA00EFFD7B /* LaunchScreen.storyboard */,
 				A227C7AF1DA758AA00EFFD7B /* Info.plist */,
 				A27C72C11DD191690064F1F2 /* WitchAppear.sks */,
+							806D00820620D6C757DAB902 /* PrivacyInfo.xcprivacy */,
 			);
 			path = ghostpuncher;
 			sourceTree = "<group>";
@@ -429,19 +425,8 @@
 		A2EB9F1C1DAB351F0046CB93 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A2EB9F1D1DAB351F0046CB93 /* HockeySDK.embeddedframework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		A2EB9F1D1DAB351F0046CB93 /* HockeySDK.embeddedframework */ = {
-			isa = PBXGroup;
-			children = (
-				A2EB9F1E1DAB351F0046CB93 /* HockeySDK.framework */,
-				A2EB9F1F1DAB351F0046CB93 /* HockeySDKResources.bundle */,
-			);
-			name = HockeySDK.embeddedframework;
-			path = "HockeySDK-iOS/HockeySDK.embeddedframework";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -589,7 +574,6 @@
 				A2519B561DCB1142001925F8 /* Boss.sks in Resources */,
 				A2CEC09A1DC69A3200FFE128 /* enemyBlocked.wav in Resources */,
 				A24BBE471DD031DD00155A54 /* lightning.wav in Resources */,
-				A2519B441DC70454001925F8 /* spark.png in Resources */,
 				A2CEC0961DC6984400FFE128 /* sfx_punch2.wav in Resources */,
 				A216F0DD1DB5815A003DD5BB /* fists.atlas in Resources */,
 				A2CEC09E1DC69D7200FFE128 /* enemySlash.wav in Resources */,
@@ -623,6 +607,7 @@
 				A25C9FE71DBF2A83006CDA73 /* devilRightArm.atlas in Resources */,
 				A216F0EE1DB71D64003DD5BB /* ghost_portal.atlas in Resources */,
 				A2CEC0901DC690DC00FFE128 /* slash2.wav in Resources */,
+							FDC34F38DA6E497F5848C146 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -654,7 +639,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "FILE=\"${SRCROOT}/HockeySDK-iOS/BuildAgent\"\nif [ -f \"$FILE\" ]; then\n\"$FILE\"\nfi";
+			shellScript = "";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -774,7 +759,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -817,7 +802,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -831,18 +816,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = EKVU9746UD;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/HockeySDK-iOS/HockeySDK.embeddedframework",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = ghostpuncher/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.swanriders.ghostpuncher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				"Texture Atlas Format" = RGBA8888_COMPRESSED;
 			};
 			name = Debug;
@@ -853,17 +835,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = EKVU9746UD;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/HockeySDK-iOS/HockeySDK.embeddedframework",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ghostpuncher/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.swanriders.ghostpuncher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				"Texture Atlas Format" = RGBA8888_COMPRESSED;
 			};
 			name = Release;
@@ -878,7 +857,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.swanriders.ghostpuncherTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ghostpuncher.app/ghostpuncher";
 			};
 			name = Debug;
@@ -893,7 +872,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.swanriders.ghostpuncherTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ghostpuncher.app/ghostpuncher";
 			};
 			name = Release;
@@ -907,7 +886,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.swanriders.ghostpuncherUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = ghostpuncher;
 			};
 			name = Debug;
@@ -921,7 +900,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.swanriders.ghostpuncherUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = ghostpuncher;
 			};
 			name = Release;

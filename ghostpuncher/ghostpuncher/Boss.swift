@@ -53,7 +53,7 @@ class Boss: Opponent {
         sparkEmmiter.particleColorSequence = nil
         sparkEmmiter.emissionAngle = (CGFloat(direction == .right ? 180.0.radiansToDegrees : 0.0.radiansToDegrees))
         sparkEmmiter.xAcceleration = (direction == .right ? -900 : 900)
-        sparkEmmiter.numParticlesToEmit = Int(power.multiplied(by: 10))
+        sparkEmmiter.numParticlesToEmit = Int(power * 10)
         
         self.cleanUpParticle(particle: sparkEmmiter)
         

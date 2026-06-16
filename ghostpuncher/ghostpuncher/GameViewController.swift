@@ -25,7 +25,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        var skView = self.view as! SKView
-        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+        try! AVAudioSession.sharedInstance().setCategory(.ambient)
         
         // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
         // including entities and graphs.

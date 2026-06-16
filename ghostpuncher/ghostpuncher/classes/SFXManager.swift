@@ -30,7 +30,7 @@ class SFXManager:SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func playSFX(_ notification : NSNotification){
+    @objc func playSFX(_ notification : NSNotification){
         
          guard let sfxType = notification.userInfo!["sfxType"] as? SFX else {
                 print("No userInfo found in notification")
