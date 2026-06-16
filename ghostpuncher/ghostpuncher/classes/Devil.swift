@@ -248,19 +248,30 @@ class Devil: Opponent {
 
         switch roll {
         case 0...3:
-            telegraph = Telegraph(windUp: 0.85 * paceScale, cue: .armPull,   direction: direction, power: 1.6)
+            telegraph = Telegraph(windUp: 0.7  * paceScale, cue: .armPull,   direction: direction, power: 2.2)
         case 4...6:
-            telegraph = Telegraph(windUp: 1.0  * paceScale, cue: .bodyHunch, direction: direction, power: 2.2)
+            telegraph = Telegraph(windUp: 0.85 * paceScale, cue: .bodyHunch, direction: direction, power: 3.0)
         case 7:
-            telegraph = Telegraph(windUp: 0.4  * paceScale, cue: .eyeFlash,  direction: direction, power: 1.0)
+            telegraph = Telegraph(windUp: 0.35 * paceScale, cue: .eyeFlash,  direction: direction, power: 1.5)
         case 8:
-            telegraph = Telegraph(windUp: 0.7  * paceScale, cue: .feint,     direction: direction, power: 0)
+            telegraph = Telegraph(windUp: 0.6  * paceScale, cue: .feint,     direction: direction, power: 0)
         default:
-            telegraph = Telegraph(windUp: 1.1  * paceScale, cue: .bodyHunch, direction: direction, power: 2.4)
+            telegraph = Telegraph(windUp: 0.95 * paceScale, cue: .bodyHunch, direction: direction, power: 3.2)
         }
 
         self.telegraphAttack(telegraph)
         self.isBlocking = false
+    }
+
+    override func baseSpecialInterval() -> TimeInterval {
+        let level = BattleManager.level
+        return level <= 1 ? 6.0 : (level == 2 ? 4.5 : 3.0)
+    }
+
+    override func pickSpecial() {
+        // Devil already overrides comboAttack1 to dispatch wing-combo /
+        // lightning. Use that.
+        super.comboAttack1()
     }
     
     

@@ -57,32 +57,32 @@ struct FightParams {
 }
 
 class GhostParams:FightParamProto {
-    let fullPowerPunch: [CGFloat] = [3.0, 3.5, 4.0]
-    let blockedPunch: [CGFloat] = [0.5, 0.5, 1.0]
-    let attackAggression:[CGFloat] = [6,5,4]
-    let comboAggression:[Int] = [6,5,4]
+    let fullPowerPunch: [CGFloat] = [4.5, 5.2, 6.0]
+    let blockedPunch: [CGFloat] = [0.8, 1.0, 1.4]
+    let attackAggression:[CGFloat] = [5,4,3]
+    let comboAggression:[Int] = [5,4,3]
     let dodgeFrequency:[Int] = [3,3,3]
 }
 
 class WitchParams:FightParamProto {
-    let fullPowerPunch: [CGFloat] = [3.0, 4, 4.5]
-    let blockedPunch: [CGFloat] = [1.0, 1.0, 1.5]
-    let attackAggression:[CGFloat] = [6,5,4]
-    let comboAggression:[Int] = [5,4,3]
+    let fullPowerPunch: [CGFloat] = [5.0, 6.0, 7.0]
+    let blockedPunch: [CGFloat] = [1.2, 1.4, 1.8]
+    let attackAggression:[CGFloat] = [5,4,3]
+    let comboAggression:[Int] = [4,3,2]
     let dodgeFrequency:[Int] = [3,3,3]
 }
 
 class DevilParams:FightParamProto {
-    let fullPowerPunch: [CGFloat] = [3.5,4.5, 5.0]
-    let blockedPunch: [CGFloat] = [1.0, 1.0, 1.0]
-    let attackAggression:[CGFloat] = [6,4,4]
-    let comboAggression:[Int] = [5,4,3]
+    let fullPowerPunch: [CGFloat] = [5.5, 6.5, 7.5]
+    let blockedPunch: [CGFloat] = [1.4, 1.6, 1.8]
+    let attackAggression:[CGFloat] = [5,3,3]
+    let comboAggression:[Int] = [4,3,2]
     let dodgeFrequency:[Int] = [3,3,3]
 }
 
 class BossParams:FightParamProto {
-    let fullPowerPunch: [CGFloat] = [0,0,0,6.0]
-    let blockedPunch: [CGFloat] = [0,0,0,1.5]
+    let fullPowerPunch: [CGFloat] = [0,0,0,8.5]
+    let blockedPunch: [CGFloat] = [0,0,0,2.0]
     let attackAggression:[CGFloat] = [0,0,0,2]
     let comboAggression:[Int] = [0,0,0,2]
     let dodgeFrequency:[Int] = [0,0,0,3]

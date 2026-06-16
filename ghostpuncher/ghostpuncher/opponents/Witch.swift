@@ -103,20 +103,18 @@ class Witch: Opponent {
 
         switch roll {
         case 0...2:
-            telegraph = Telegraph(windUp: 0.28 * paceScale, cue: .eyeFlash,  direction: direction, power: 0.95)
+            telegraph = Telegraph(windUp: 0.28 * paceScale, cue: .eyeFlash,  direction: direction, power: 1.3)
         case 3, 4:
-            telegraph = Telegraph(windUp: 0.65 * paceScale, cue: .armPull,   direction: direction, power: 1.4)
+            telegraph = Telegraph(windUp: 0.6  * paceScale, cue: .armPull,   direction: direction, power: 1.9)
         case 5, 6:
-            // Feint — Witch's signature. Punishes panic-blocks.
-            telegraph = Telegraph(windUp: 0.55 * paceScale, cue: .feint,     direction: direction, power: 0)
+            telegraph = Telegraph(windUp: 0.5  * paceScale, cue: .feint,     direction: direction, power: 0)
         case 7:
-            // Double feint — same side, twice. Schedule the real follow-up.
             telegraph = Telegraph(windUp: 0.45 * paceScale, cue: .feint,     direction: direction, power: 0)
             self.scheduleFollowup(after: 0.55 * paceScale, direction: direction)
         case 8:
-            telegraph = Telegraph(windUp: 0.7 * paceScale,  cue: .bodyHunch, direction: direction, power: 1.7)
+            telegraph = Telegraph(windUp: 0.65 * paceScale, cue: .bodyHunch, direction: direction, power: 2.3)
         default:
-            telegraph = Telegraph(windUp: 0.3 * paceScale,  cue: .eyeFlash,  direction: direction, power: 1.0)
+            telegraph = Telegraph(windUp: 0.28 * paceScale, cue: .eyeFlash,  direction: direction, power: 1.4)
         }
 
         self.telegraphAttack(telegraph)
@@ -125,11 +123,22 @@ class Witch: Opponent {
 
     private func scheduleFollowup(after delay: TimeInterval, direction: Direction) {
         let realDir: Direction = direction == .left ? .right : .left
-        let followup = Telegraph(windUp: 0.18, cue: .eyeFlash, direction: realDir, power: 1.2)
+        let followup = Telegraph(windUp: 0.18, cue: .eyeFlash, direction: realDir, power: 1.5)
         self.opponent.run(SKAction.sequence([
             SKAction.wait(forDuration: delay + 0.05),
             SKAction.run { [weak self] in self?.telegraphAttack(followup) }
         ]))
+    }
+
+    override func baseSpecialInterval() -> TimeInterval {
+        let level = BattleManager.level
+        return level <= 1 ? 8.0 : (level == 2 ? 6.0 : 4.5)
+    }
+
+    override func pickSpecial() {
+        // Witch already overrides comboAttack1 to dispatch among
+        // fireball / multiFireball / lightning, which is the perfect pool.
+        super.comboAttack1()
     }
 
     override func spark(_ direction:Direction, _ power:CGFloat){

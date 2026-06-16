@@ -34,8 +34,8 @@ class Player:SKNode
     // builds a damage multiplier. Tapping outside the window resets the chain.
     private let CANCEL_WINDOW_OPEN: TimeInterval  = 0.14
     private let CANCEL_WINDOW_CLOSE: TimeInterval = 0.28
-    private let MAX_CHAIN_BONUS: CGFloat = 0.6  // +60% at full chain
-    private let BONUS_PER_LINK:  CGFloat = 0.15
+    private let MAX_CHAIN_BONUS: CGFloat = 0.3   // +30% at full chain
+    private let BONUS_PER_LINK:  CGFloat = 0.08
 
     private var lastPunchTime: TimeInterval = 0
     private(set) var cancelChain: Int = 0

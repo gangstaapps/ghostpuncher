@@ -34,33 +34,54 @@ class Ghost: Opponent {
 
         switch roll {
         case 0...4:
-            // Quick jab — short tell, light damage. The bread and butter.
-            telegraph = Telegraph(windUp: 0.32 * paceScale,
-                                  cue: .eyeFlash,
-                                  direction: direction,
-                                  power: 0.85)
+            telegraph = Telegraph(windUp: 0.32 * paceScale, cue: .eyeFlash,  direction: direction, power: 1.2)
         case 5...7:
-            // Heavy hook — long tell, big damage. Punish-on-read.
-            telegraph = Telegraph(windUp: 0.75 * paceScale,
-                                  cue: .armPull,
-                                  direction: direction,
-                                  power: 1.6)
+            telegraph = Telegraph(windUp: 0.7  * paceScale, cue: .armPull,   direction: direction, power: 2.0)
         case 8:
-            // Body slam — slowest tell, biggest hit.
-            telegraph = Telegraph(windUp: 0.9 * paceScale,
-                                  cue: .bodyHunch,
-                                  direction: direction,
-                                  power: 2.0)
+            telegraph = Telegraph(windUp: 0.9  * paceScale, cue: .bodyHunch, direction: direction, power: 2.6)
         default:
-            // Feint — looks like a heavy, but lands no damage. Teaches the
-            // player to read, not just react.
-            telegraph = Telegraph(windUp: 0.6 * paceScale,
-                                  cue: .feint,
-                                  direction: direction,
-                                  power: 0)
+            telegraph = Telegraph(windUp: 0.55 * paceScale, cue: .feint,     direction: direction, power: 0)
         }
 
         self.telegraphAttack(telegraph)
         self.isBlocking = false
+    }
+
+    override func baseSpecialInterval() -> TimeInterval {
+        // Ghost is the first boss — more breathing room.
+        let level = BattleManager.level
+        return level <= 1 ? 11.0 : (level == 2 ? 9.0 : 7.0)
+    }
+
+    override func pickSpecial() {
+        let roll = Int(arc4random_uniform(10))
+        switch roll {
+        case 0...4:
+            // Vanish — the ghost's signature. Disappear, then strike from
+            // the dark.
+            self.goInvisible()
+            self.opponent.run(SKAction.sequence([
+                SKAction.wait(forDuration: 0.9),
+                SKAction.run { [weak self] in
+                    let dir: Direction = arc4random_uniform(2) == 0 ? .left : .right
+                    self?.telegraphAttack(Telegraph(windUp: 0.18, cue: .eyeFlash, direction: dir, power: 1.8))
+                }
+            ]))
+        case 5, 6:
+            // Lights-out scare into a hard hit.
+            self.delegate?.turnOffLights()
+            self.opponent.run(SKAction.sequence([
+                SKAction.wait(forDuration: 0.6),
+                SKAction.run { [weak self] in
+                    let dir: Direction = arc4random_uniform(2) == 0 ? .left : .right
+                    self?.telegraphAttack(Telegraph(windUp: 0.3, cue: .bodyHunch, direction: dir, power: 2.4))
+                },
+                SKAction.wait(forDuration: 0.8),
+                SKAction.run { [weak self] in self?.delegate?.turnOnLights() }
+            ]))
+        default:
+            // Full combo barrage.
+            super.comboAttack1()
+        }
     }
 }

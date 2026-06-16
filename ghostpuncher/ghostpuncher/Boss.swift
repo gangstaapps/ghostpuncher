@@ -60,35 +60,33 @@ class Boss: Opponent {
         case 1:
             let roll = Int(arc4random_uniform(10))
             switch roll {
-            case 0...5:  telegraph = Telegraph(windUp: 0.85 * paceScale, cue: .armPull,   direction: direction, power: 1.6)
-            case 6, 7:   telegraph = Telegraph(windUp: 1.1  * paceScale, cue: .bodyHunch, direction: direction, power: 2.2)
-            case 8:      telegraph = Telegraph(windUp: 0.6  * paceScale, cue: .feint,     direction: direction, power: 0)
-            default:     telegraph = Telegraph(windUp: 0.4  * paceScale, cue: .eyeFlash,  direction: direction, power: 1.0)
+            case 0...5:  telegraph = Telegraph(windUp: 0.7  * paceScale, cue: .armPull,   direction: direction, power: 2.2)
+            case 6, 7:   telegraph = Telegraph(windUp: 0.95 * paceScale, cue: .bodyHunch, direction: direction, power: 3.0)
+            case 8:      telegraph = Telegraph(windUp: 0.55 * paceScale, cue: .feint,     direction: direction, power: 0)
+            default:     telegraph = Telegraph(windUp: 0.38 * paceScale, cue: .eyeFlash,  direction: direction, power: 1.4)
             }
         case 2:
             let roll = Int(arc4random_uniform(10))
             switch roll {
-            case 0, 1:   telegraph = Telegraph(windUp: 0.28 * paceScale, cue: .eyeFlash,  direction: direction, power: 1.0)
+            case 0, 1:   telegraph = Telegraph(windUp: 0.26 * paceScale, cue: .eyeFlash,  direction: direction, power: 1.5)
             case 2, 3:
-                // Double quick — schedule a follow-up jab same side
-                telegraph = Telegraph(windUp: 0.3, cue: .eyeFlash, direction: direction, power: 0.9)
+                telegraph = Telegraph(windUp: 0.28, cue: .eyeFlash, direction: direction, power: 1.4)
                 scheduleFollowup(after: 0.32, direction: direction, asEyeFlash: true)
-            case 4...6:  telegraph = Telegraph(windUp: 0.7  * paceScale, cue: .armPull,   direction: direction, power: 1.5)
-            case 7, 8:   telegraph = Telegraph(windUp: 0.9  * paceScale, cue: .bodyHunch, direction: direction, power: 2.0)
-            default:     telegraph = Telegraph(windUp: 0.5  * paceScale, cue: .feint,     direction: direction, power: 0)
+            case 4...6:  telegraph = Telegraph(windUp: 0.6  * paceScale, cue: .armPull,   direction: direction, power: 2.2)
+            case 7, 8:   telegraph = Telegraph(windUp: 0.8  * paceScale, cue: .bodyHunch, direction: direction, power: 2.8)
+            default:     telegraph = Telegraph(windUp: 0.45 * paceScale, cue: .feint,     direction: direction, power: 0)
             }
         default:
             let roll = Int(arc4random_uniform(10))
             switch roll {
-            case 0, 1:   telegraph = Telegraph(windUp: 0.22, cue: .eyeFlash,  direction: direction, power: 1.1)
+            case 0, 1:   telegraph = Telegraph(windUp: 0.20, cue: .eyeFlash,  direction: direction, power: 1.6)
             case 2, 3:
-                // Double feint into a real hit on the same side
-                telegraph = Telegraph(windUp: 0.35, cue: .feint, direction: direction, power: 0)
-                scheduleFollowup(after: 0.4, direction: direction, asEyeFlash: false)
-            case 4, 5:   telegraph = Telegraph(windUp: 0.45, cue: .armPull,   direction: direction, power: 1.8)
-            case 6, 7:   telegraph = Telegraph(windUp: 0.55, cue: .bodyHunch, direction: direction, power: 2.6)
-            case 8:      telegraph = Telegraph(windUp: 0.32, cue: .feint,     direction: direction, power: 0)
-            default:     telegraph = Telegraph(windUp: 0.25, cue: .eyeFlash,  direction: direction, power: 1.2)
+                telegraph = Telegraph(windUp: 0.30, cue: .feint, direction: direction, power: 0)
+                scheduleFollowup(after: 0.36, direction: direction, asEyeFlash: false)
+            case 4, 5:   telegraph = Telegraph(windUp: 0.4,  cue: .armPull,   direction: direction, power: 2.6)
+            case 6, 7:   telegraph = Telegraph(windUp: 0.5,  cue: .bodyHunch, direction: direction, power: 3.4)
+            case 8:      telegraph = Telegraph(windUp: 0.28, cue: .feint,     direction: direction, power: 0)
+            default:     telegraph = Telegraph(windUp: 0.22, cue: .eyeFlash,  direction: direction, power: 1.8)
             }
         }
 
@@ -98,12 +96,25 @@ class Boss: Opponent {
 
     private func scheduleFollowup(after delay: TimeInterval, direction: Direction, asEyeFlash: Bool) {
         let cue: Telegraph.Cue = asEyeFlash ? .eyeFlash : .armPull
-        let power: CGFloat = asEyeFlash ? 1.0 : 1.6
+        let power: CGFloat = asEyeFlash ? 1.4 : 2.2
         let followup = Telegraph(windUp: 0.2, cue: cue, direction: direction, power: power)
         self.opponent.run(SKAction.sequence([
             SKAction.wait(forDuration: delay),
             SKAction.run { [weak self] in self?.telegraphAttack(followup) }
         ]))
+    }
+
+    override func baseSpecialInterval() -> TimeInterval {
+        // Boss is the final fight — relentless. Cooldown scales heavily with
+        // the player's progress (BattleManager.multiplier increases per loop).
+        let mult = max(1, BattleManager.multiplier)
+        return max(3.0, 6.0 - Double(mult - 1))
+    }
+
+    override func pickSpecial() {
+        // Boss reuses its own comboAttack1 override (which already dispatches
+        // among fireball / multiFireball / lightning / super combo).
+        super.comboAttack1()
     }
 
     override func spark(_ direction:Direction, _ power:CGFloat){

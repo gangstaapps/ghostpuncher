@@ -130,8 +130,30 @@ class Opponent:SKNode
     var lastActivityCheck = 0.0
     var currentSceneTime = 0.0
     var lastAttack = 0.0
-    
+    var lastSpecial = 0.0
+    var fightStartTime: TimeInterval = 0
+
     var ghostMemory:[GameEvents] = Array(repeating: .empty, count: LENGTH_OF_MEMORY)
+
+    // Per-archetype: how often base-cadence specials fire. Scaled by
+    // currentSpecialInterval() to ramp difficulty as the fight runs long.
+    func baseSpecialInterval() -> TimeInterval { return 10.0 }
+
+    // Per-archetype move selection. Default: the existing comboAttack1
+    // dispatch (which most opponents already override).
+    func pickSpecial() {
+        comboAttack1()
+    }
+
+    /// Scales the special cooldown down over time AND when the opponent is
+    /// hurt — both push the fight to escalate.
+    func currentSpecialInterval() -> TimeInterval {
+        let elapsed = max(0, currentSceneTime - fightStartTime)
+        let timeRamp = max(0.35, 1.0 - elapsed / 90.0)
+        let hp = max(0.1, min(1.0, (BattleManager.opponentHealth ?? 100) / 100.0))
+        let hpRamp = hp < 0.5 ? 0.55 : 1.0
+        return baseSpecialInterval() * timeRamp * hpRamp
+    }
     
     static func makeOpponent(frame: CGRect, named:String, _ level:Int = 1)->Opponent {
         
@@ -959,6 +981,7 @@ class Opponent:SKNode
     func update(_ currentTime: TimeInterval){
 
        currentSceneTime = currentTime
+       if fightStartTime == 0 { fightStartTime = currentTime }
 
         if self.isBlocking {
 
@@ -971,6 +994,15 @@ class Opponent:SKNode
         }
 
         if self.opponent.action(forKey: TELEGRAPH_KEY) != nil {
+            return
+        }
+
+        // Special-attack cooldown — gives each opponent a regular pulse of
+        // signature moves that telegraphs alone can't deliver.
+        if self.opponent.alpha >= 1.0 &&
+           currentSceneTime - lastSpecial > currentSpecialInterval() {
+            lastSpecial = currentSceneTime
+            self.pickSpecial()
             return
         }
         
@@ -1167,7 +1199,7 @@ extension Opponent {
             self.telegraphPowerScale = 1.0
         }
 
-        let recovery = SKAction.wait(forDuration: 0.25)
+        let recovery = SKAction.wait(forDuration: 0.08)
         self.opponent.run(
             SKAction.sequence([SKAction.wait(forDuration: telegraph.windUp), fire, recovery]),
             withKey: TELEGRAPH_KEY
