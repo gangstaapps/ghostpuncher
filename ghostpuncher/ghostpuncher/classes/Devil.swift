@@ -265,7 +265,7 @@ class Devil: Opponent {
 
     override func baseSpecialInterval() -> TimeInterval {
         let level = BattleManager.level
-        return level <= 1 ? 6.0 : (level == 2 ? 4.5 : 3.0)
+        return level <= 1 ? 22.0 : (level == 2 ? 14.0 : 9.0)
     }
 
     override func pickSpecial() {

@@ -145,14 +145,26 @@ class Opponent:SKNode
         comboAttack1()
     }
 
+    /// Hard floor on the special cooldown by level. Round 1 (level 1) caps
+    /// at one special per 20 seconds, no matter how aggressive the ramps get.
+    func minSpecialInterval() -> TimeInterval {
+        switch BattleManager.level {
+        case 1:  return 20.0
+        case 2:  return 12.0
+        default: return 8.0
+        }
+    }
+
     /// Scales the special cooldown down over time AND when the opponent is
-    /// hurt — both push the fight to escalate.
+    /// hurt — both push the fight to escalate. The minSpecialInterval()
+    /// floor wins so specials never feel spammy.
     func currentSpecialInterval() -> TimeInterval {
         let elapsed = max(0, currentSceneTime - fightStartTime)
-        let timeRamp = max(0.35, 1.0 - elapsed / 90.0)
+        let timeRamp = max(0.6, 1.0 - elapsed / 180.0)
         let hp = max(0.1, min(1.0, (BattleManager.opponentHealth ?? 100) / 100.0))
-        let hpRamp = hp < 0.5 ? 0.55 : 1.0
-        return baseSpecialInterval() * timeRamp * hpRamp
+        let hpRamp: Double = hp < 0.4 ? 0.75 : 1.0
+        let scaled = baseSpecialInterval() * timeRamp * hpRamp
+        return max(minSpecialInterval(), scaled)
     }
     
     static func makeOpponent(frame: CGRect, named:String, _ level:Int = 1)->Opponent {
@@ -981,7 +993,12 @@ class Opponent:SKNode
     func update(_ currentTime: TimeInterval){
 
        currentSceneTime = currentTime
-       if fightStartTime == 0 { fightStartTime = currentTime }
+       if fightStartTime == 0 {
+           fightStartTime = currentTime
+           // Grace period — first special fires after baseSpecialInterval()
+           // from fight start, not on frame 1.
+           lastSpecial = currentTime
+       }
 
         if self.isBlocking {
 
@@ -997,9 +1014,12 @@ class Opponent:SKNode
             return
         }
 
-        // Special-attack cooldown — gives each opponent a regular pulse of
-        // signature moves that telegraphs alone can't deliver.
+        // Special-attack cooldown — must have completed at least one normal
+        // attack since the previous special so the player gets a breathing
+        // window between supers.
+        let didNormalAttackSinceSpecial = lastAttack > lastSpecial
         if self.opponent.alpha >= 1.0 &&
+           didNormalAttackSinceSpecial &&
            currentSceneTime - lastSpecial > currentSpecialInterval() {
             lastSpecial = currentSceneTime
             self.pickSpecial()

@@ -105,10 +105,17 @@ class Boss: Opponent {
     }
 
     override func baseSpecialInterval() -> TimeInterval {
-        // Boss is the final fight — relentless. Cooldown scales heavily with
-        // the player's progress (BattleManager.multiplier increases per loop).
+        // Boss is the final fight — uses player progress (multiplier) as
+        // the difficulty axis, since BattleManager.level for the boss is 4+.
         let mult = max(1, BattleManager.multiplier)
-        return max(3.0, 6.0 - Double(mult - 1))
+        return max(7.0, 12.0 - Double(mult - 1))
+    }
+
+    override func minSpecialInterval() -> TimeInterval {
+        // Boss has its own floor — it can be more relentless than the
+        // round-1 minimum since by the time you reach it you've earned
+        // the pacing.
+        return 6.0
     }
 
     override func pickSpecial() {

@@ -132,7 +132,7 @@ class Witch: Opponent {
 
     override func baseSpecialInterval() -> TimeInterval {
         let level = BattleManager.level
-        return level <= 1 ? 8.0 : (level == 2 ? 6.0 : 4.5)
+        return level <= 1 ? 22.0 : (level == 2 ? 14.0 : 10.0)
     }
 
     override func pickSpecial() {

@@ -48,9 +48,8 @@ class Ghost: Opponent {
     }
 
     override func baseSpecialInterval() -> TimeInterval {
-        // Ghost is the first boss — more breathing room.
         let level = BattleManager.level
-        return level <= 1 ? 11.0 : (level == 2 ? 9.0 : 7.0)
+        return level <= 1 ? 24.0 : (level == 2 ? 16.0 : 12.0)
     }
 
     override func pickSpecial() {

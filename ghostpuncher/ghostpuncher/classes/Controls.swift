@@ -268,20 +268,11 @@ class Controls:SKNode
             if self.leftPunch.contains(location) {
                 hitBitMask |= Button.punchLeft.rawValue
                 self.leftPunch.userData = ["touch":touch]
-                
-//                self.addEvent(event: .punchLeft)
-            } else if self.leftPunch.isHidden {
-                hitBitMask |= Button.punchLeft.rawValue
             }
-            
+
             if self.rightPunch.contains(location) {
                 hitBitMask |= Button.punchRight.rawValue
                 self.rightPunch.userData = ["touch":touch]
-//                self.rightPunch.isHidden = true
-//                self.addEvent(event: .punchRight)
-                
-            }  else if self.rightPunch.isHidden {
-                hitBitMask |= Button.punchRight.rawValue
             }
             
         }
