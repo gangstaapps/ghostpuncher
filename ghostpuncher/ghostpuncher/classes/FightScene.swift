@@ -86,13 +86,12 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         
         
         
-        let musicVolume: Float = 0.25 * GameSettings.shared.musicVolume
         let backgroundMusic = SKAudioNode(fileNamed: "atmos_loop1.wav")
-        backgroundMusic.run(SKAction.changeVolume(to: musicVolume, duration: 0))
+        backgroundMusic.run(SKAction.changeVolume(to: 0.25, duration: 0))
         self.addChild(backgroundMusic)
 
         let backgroundMusic2 = SKAudioNode(fileNamed: "atmos_loop2.wav")
-        backgroundMusic2.run(SKAction.changeVolume(to: musicVolume, duration: 0))
+        backgroundMusic2.run(SKAction.changeVolume(to: 0.25, duration: 0))
         self.addChild(backgroundMusic2)
         
         self.run(SKAction.sequence([SKAction.wait(forDuration: 2.0), FightScene.startSound]))
@@ -155,12 +154,11 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
             swipeRight.direction = UISwipeGestureRecognizer.Direction.left
             self.view?.addGestureRecognizer(swipeLeft)
         #else
-            if GameSettings.shared.tiltControls {
-                motionManager = CMMotionManager()
-                motionManager.startGyroUpdates()
-                motionManager.gyroUpdateInterval = 0.05
-                listenForTilt = true
-            }
+            motionManager = CMMotionManager()
+
+            motionManager.startGyroUpdates()
+            motionManager.gyroUpdateInterval = 0.05
+            listenForTilt = true
         #endif
 
         let twoFingerTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTwoFingerTap))
