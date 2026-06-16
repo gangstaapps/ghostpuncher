@@ -16,7 +16,6 @@ import UIKit
 enum FightState: UInt8 {
     case intro
     case fighting
-    case paused
     case victory
     case defeat
 

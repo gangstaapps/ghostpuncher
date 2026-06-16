@@ -23,10 +23,6 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     var listenForTilt:Bool = false
 
     var motionManager: CMMotionManager!
-
-    private var pauseOverlay: PauseOverlay?
-    private var pauseButton: SKShapeNode?
-    private var pausableNodes: [SKNode] { return [opponent, player, controls, room, effectsLayer, ghostHolder].compactMap { $0 } }
     
     static let lightPunchSound = SKAction.playSoundFileNamed("light_punch.wav", waitForCompletion: false)
     static let goInvisibleSound = SKAction.playSoundFileNamed("phaser.wav", waitForCompletion: false)
@@ -162,126 +158,6 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
             listenForTilt = true
         #endif
 
-        let twoFingerTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTwoFingerTap))
-        twoFingerTap.numberOfTouchesRequired = 2
-        view.addGestureRecognizer(twoFingerTap)
-
-        installPauseButton(in: view.bounds)
-        installPauseOverlay(in: view.bounds)
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(self.appWillResignActive),
-                                               name: UIApplication.willResignActiveNotification,
-                                               object: nil)
-
-        state.onChange = { [weak self] _, next in
-            self?.applyState(next)
-        }
-    }
-
-    @objc func handleTwoFingerTap() {
-        togglePause()
-    }
-
-    @objc func appWillResignActive() {
-        if state.current == .fighting {
-            requestPause()
-        }
-    }
-
-    private func installPauseButton(in bounds: CGRect) {
-        let size: CGFloat = 36
-        let inset: CGFloat = 16
-        let button = SKShapeNode(rectOf: CGSize(width: size, height: size), cornerRadius: 6)
-        button.fillColor = SKColor(white: 0.0, alpha: 0.55)
-        button.strokeColor = SKColor(white: 1.0, alpha: 0.7)
-        button.lineWidth = 1.5
-        button.position = CGPoint(x: bounds.width - inset - size / 2,
-                                  y: bounds.height - inset - size / 2)
-        button.zPosition = 50
-        button.name = "pauseButton"
-
-        let barWidth: CGFloat = 4
-        let barHeight: CGFloat = 18
-        let gap: CGFloat = 4
-        for offset in [-gap, gap] {
-            let bar = SKShapeNode(rectOf: CGSize(width: barWidth, height: barHeight))
-            bar.fillColor = SKColor.white
-            bar.strokeColor = .clear
-            bar.position = CGPoint(x: offset, y: 0)
-            button.addChild(bar)
-        }
-        self.addChild(button)
-        self.pauseButton = button
-    }
-
-    private func installPauseOverlay(in bounds: CGRect) {
-        let overlay = PauseOverlay(size: bounds.size)
-        overlay.zPosition = 100
-        overlay.isHidden = true
-        overlay.onResume = { [weak self] in self?.requestResume() }
-        overlay.onRestart = { [weak self] in self?.restartScene() }
-        overlay.onQuit = { [weak self] in self?.quitToMenu() }
-        self.addChild(overlay)
-        self.pauseOverlay = overlay
-    }
-
-    func togglePause() {
-        switch state.current {
-        case .fighting: requestPause()
-        case .paused: requestResume()
-        default: break
-        }
-    }
-
-    func requestPause() {
-        guard state.current == .fighting else { return }
-        state.transition(to: .paused)
-    }
-
-    func requestResume() {
-        guard state.current == .paused else { return }
-        state.transition(to: .fighting)
-    }
-
-    private func applyState(_ state: FightState) {
-        switch state {
-        case .paused:
-            pausableNodes.forEach { $0.isPaused = true }
-            pauseOverlay?.isHidden = false
-            pauseOverlay?.alpha = 0
-            pauseOverlay?.run(SKAction.fadeAlpha(to: 1.0, duration: 0.15))
-            pauseButton?.isHidden = true
-            listenForTilt = false
-        case .fighting:
-            pausableNodes.forEach { $0.isPaused = false }
-            pauseOverlay?.run(SKAction.sequence([
-                SKAction.fadeAlpha(to: 0, duration: 0.15),
-                SKAction.run { [weak self] in self?.pauseOverlay?.isHidden = true }
-            ]))
-            pauseButton?.isHidden = false
-            listenForTilt = true
-        case .victory, .defeat:
-            pauseButton?.isHidden = true
-        case .intro:
-            pauseButton?.isHidden = false
-        }
-    }
-
-    private func restartScene() {
-        let opponentName: String
-        if (opponent as? Ghost) != nil { opponentName = "ghost" }
-        else if (opponent as? Witch) != nil { opponentName = "witch" }
-        else if (opponent as? Devil) != nil { opponentName = "devil" }
-        else { opponentName = "boss" }
-
-        let scene = FightScene(frame: frame, backgroundColor: self.backgroundColor, opponent: opponentName, BattleManager.level)
-        self.view?.presentScene(scene, transition: SKTransition.fade(withDuration: 0.4))
-    }
-
-    private func quitToMenu() {
-        let scene = MenuScene(frame: frame, opponents: BattleManager.opponentNames, startWith: 0)
-        self.view?.presentScene(scene, transition: SKTransition.fade(withDuration: 0.4))
     }
     
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
@@ -346,21 +222,6 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if state.current == .paused {
-            if let touch = touches.first {
-                pauseOverlay?.handleTap(at: touch.location(in: self))
-            }
-            return
-        }
-
-        if let touch = touches.first, let button = pauseButton {
-            let p = touch.location(in: self)
-            if button.frame.insetBy(dx: -8, dy: -8).contains(p) {
-                requestPause()
-                return
-            }
-        }
-
         if !self.state.current.acceptsInput
         {
             return
@@ -688,84 +549,4 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         self.opponent?.run(SKAction.scale(to: min(max(0.9, scaleAmount), 1.1), duration: 0.3))
     }
 
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-}
-
-// MARK: - PauseOverlay
-
-final class PauseOverlay: SKNode {
-    private let backdrop: SKShapeNode
-    private let panel: SKShapeNode
-    private let resumeButton: SKShapeNode
-    private let restartButton: SKShapeNode
-    private let quitButton: SKShapeNode
-
-    var onResume: (() -> Void)?
-    var onRestart: (() -> Void)?
-    var onQuit: (() -> Void)?
-
-    init(size: CGSize) {
-        backdrop = SKShapeNode(rectOf: size)
-        backdrop.fillColor = SKColor(white: 0, alpha: 0.7)
-        backdrop.strokeColor = .clear
-        backdrop.position = CGPoint(x: size.width / 2, y: size.height / 2)
-
-        let panelSize = CGSize(width: 320, height: 220)
-        panel = SKShapeNode(rectOf: panelSize, cornerRadius: 12)
-        panel.fillColor = SKColor(white: 0.08, alpha: 0.95)
-        panel.strokeColor = SKColor(white: 1, alpha: 0.25)
-        panel.lineWidth = 1
-        panel.position = CGPoint(x: size.width / 2, y: size.height / 2)
-
-        resumeButton = PauseOverlay.makeButton(title: "Resume", width: 240)
-        resumeButton.position = CGPoint(x: 0, y: 60)
-        restartButton = PauseOverlay.makeButton(title: "Restart", width: 240)
-        restartButton.position = CGPoint(x: 0, y: 10)
-        quitButton = PauseOverlay.makeButton(title: "Quit", width: 240)
-        quitButton.position = CGPoint(x: 0, y: -40)
-
-        super.init()
-
-        addChild(backdrop)
-        panel.addChild(resumeButton)
-        panel.addChild(restartButton)
-        panel.addChild(quitButton)
-        addChild(panel)
-
-        let title = SKLabelNode(text: "Paused")
-        title.fontName = "AvenirNext-Bold"
-        title.fontSize = 28
-        title.fontColor = .white
-        title.position = CGPoint(x: 0, y: panelSize.height / 2 - 36)
-        title.verticalAlignmentMode = .center
-        panel.addChild(title)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private static func makeButton(title: String, width: CGFloat) -> SKShapeNode {
-        let button = SKShapeNode(rectOf: CGSize(width: width, height: 44), cornerRadius: 8)
-        button.fillColor = SKColor(white: 0.2, alpha: 1)
-        button.strokeColor = SKColor(white: 1, alpha: 0.4)
-        button.lineWidth = 1
-        button.name = title.lowercased()
-        let label = SKLabelNode(text: title)
-        label.fontName = "AvenirNext-DemiBold"
-        label.fontSize = 18
-        label.fontColor = .white
-        label.verticalAlignmentMode = .center
-        button.addChild(label)
-        return button
-    }
-
-    func handleTap(at scenePoint: CGPoint) {
-        let panelPoint = convert(scenePoint, to: panel)
-        if resumeButton.frame.contains(panelPoint) { onResume?(); return }
-        if restartButton.frame.contains(panelPoint) { onRestart?(); return }
-        if quitButton.frame.contains(panelPoint) { onQuit?(); return }
-    }
 }
