@@ -91,6 +91,47 @@ class Witch: Opponent {
         self.opponent?.addChild(bodyGlow!)
     }
     
+    // Witch movekit: heavy on feints, quick jabs to punish over-commitment.
+    // Whip-fast at low health.
+    override func randomAttack() {
+        let direction: Direction = arc4random_uniform(2) == 0 ? .left : .right
+        let healthFrac = max(0.2, min(1.0, (BattleManager.opponentHealth ?? 100) / 100.0))
+        let paceScale = 0.5 + 0.4 * healthFrac
+
+        let roll = Int(arc4random_uniform(10))
+        let telegraph: Telegraph
+
+        switch roll {
+        case 0...2:
+            telegraph = Telegraph(windUp: 0.28 * paceScale, cue: .eyeFlash,  direction: direction, power: 0.95)
+        case 3, 4:
+            telegraph = Telegraph(windUp: 0.65 * paceScale, cue: .armPull,   direction: direction, power: 1.4)
+        case 5, 6:
+            // Feint — Witch's signature. Punishes panic-blocks.
+            telegraph = Telegraph(windUp: 0.55 * paceScale, cue: .feint,     direction: direction, power: 0)
+        case 7:
+            // Double feint — same side, twice. Schedule the real follow-up.
+            telegraph = Telegraph(windUp: 0.45 * paceScale, cue: .feint,     direction: direction, power: 0)
+            self.scheduleFollowup(after: 0.55 * paceScale, direction: direction)
+        case 8:
+            telegraph = Telegraph(windUp: 0.7 * paceScale,  cue: .bodyHunch, direction: direction, power: 1.7)
+        default:
+            telegraph = Telegraph(windUp: 0.3 * paceScale,  cue: .eyeFlash,  direction: direction, power: 1.0)
+        }
+
+        self.telegraphAttack(telegraph)
+        self.isBlocking = false
+    }
+
+    private func scheduleFollowup(after delay: TimeInterval, direction: Direction) {
+        let realDir: Direction = direction == .left ? .right : .left
+        let followup = Telegraph(windUp: 0.18, cue: .eyeFlash, direction: realDir, power: 1.2)
+        self.opponent.run(SKAction.sequence([
+            SKAction.wait(forDuration: delay + 0.05),
+            SKAction.run { [weak self] in self?.telegraphAttack(followup) }
+        ]))
+    }
+
     override func spark(_ direction:Direction, _ power:CGFloat){
         
         let sparkEmmiter = SKEmitterNode(fileNamed: "devilBlood.sks")!

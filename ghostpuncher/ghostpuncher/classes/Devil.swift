@@ -235,23 +235,31 @@ class Devil: Opponent {
     
     
     
-    override func randomAttack(){
-        
-                
-        if Int(arc4random_uniform(UInt32(2))) == 1 {
-            
-            
-            self.opponent?.run(SKAction.sequence([SKAction.scale(to: 0.9, duration: 0.1),
-                  SKAction.run {
-                    self.delegate?.opponentAttackLeft()
-                }]))
-            
-        } else {
-            self.opponent?.run(SKAction.sequence([SKAction.scale(to: 0.9, duration: 0.1),
-                                                  SKAction.run {[weak self] in
-                                                    self?.delegate?.opponentAttackRight()
-                }]))
+    // Devil movekit: slow, heavy. Body-slams and arm-loaded hooks. Tells
+    // shorten dramatically below half health — phase-two pressure.
+    override func randomAttack() {
+        let direction: Direction = arc4random_uniform(2) == 0 ? .left : .right
+        let healthFrac = max(0.2, min(1.0, (BattleManager.opponentHealth ?? 100) / 100.0))
+        let phase2 = healthFrac < 0.5
+        let paceScale = phase2 ? 0.5 : 0.75 + 0.25 * healthFrac
+
+        let roll = Int(arc4random_uniform(10))
+        let telegraph: Telegraph
+
+        switch roll {
+        case 0...3:
+            telegraph = Telegraph(windUp: 0.85 * paceScale, cue: .armPull,   direction: direction, power: 1.6)
+        case 4...6:
+            telegraph = Telegraph(windUp: 1.0  * paceScale, cue: .bodyHunch, direction: direction, power: 2.2)
+        case 7:
+            telegraph = Telegraph(windUp: 0.4  * paceScale, cue: .eyeFlash,  direction: direction, power: 1.0)
+        case 8:
+            telegraph = Telegraph(windUp: 0.7  * paceScale, cue: .feint,     direction: direction, power: 0)
+        default:
+            telegraph = Telegraph(windUp: 1.1  * paceScale, cue: .bodyHunch, direction: direction, power: 2.4)
         }
+
+        self.telegraphAttack(telegraph)
         self.isBlocking = false
     }
     

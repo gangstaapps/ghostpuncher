@@ -105,6 +105,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
                 self?.opponent?.isHidden = false
                 self?.state.transition(to: .fighting)
                 self?.turnOnLights()
+                HapticsService.shared.bossIntro()
             })]))
         } else if opponent == "ghost" {
             self.opponent?.alpha = 0
@@ -313,11 +314,15 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
         {
             return
         }
-        
-        
+
+
         self.opponent?.update(currentTime)
         self.controls?.update(currentTime)
         self.player?.update()
+        self.player?.updateStamina(currentTime: currentTime)
+        if let staminaPct = self.player?.staminaPercent {
+            self.controls?.setStamina(percent: staminaPct)
+        }
         
         
         #if !(arch(i386) || arch(x86_64))
@@ -392,34 +397,64 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     }
     
     func punchRight(power:CGFloat) {
-        self.player?.punchRight(power)
-        if (self.opponent?.willRightPunchConnect(power))! {
-            if power < 3 {
+        let cancelMul = self.player?.consumePunchTiming() ?? 1.0
+        let staminaMul = self.player?.staminaPowerMultiplier ?? 1.0
+        let finalPower = power * cancelMul * staminaMul
+        let isHaymaker = power > 5
+        self.player?.consumeStamina(forHaymaker: isHaymaker)
+        self.player?.punchRight(finalPower)
+        if (self.opponent?.willRightPunchConnect(finalPower))! {
+            if finalPower < 3 {
                 self.run(FightScene.lightPunchSound)
-            } else if power < 7 {
+            } else if finalPower < 7 {
                 self.run((self.opponent?.mediumPunchSFX())!)
             } else {
                 self.run((self.opponent?.heavyPunchSFX())!)
             }
-            self.battleManager?.playerConnect(power: power)
-            self.opponent?.hitRecoil(.right, power:power)
+            self.battleManager?.playerConnect(power: finalPower)
+            self.opponent?.hitRecoil(.right, power:finalPower)
+            HapticsService.shared.punchConnect(power: finalPower)
+            if cancelMul > 1.0 {
+                cancelChainShake(intensity: cancelMul - 1.0)
+                HapticsService.shared.cancelChainTick()
+            }
         }
 //        self.run(punchSound)
     }
     func punchLeft(power:CGFloat) {
-        self.player?.punchLeft(power)
-        if (self.opponent?.willLeftPunchConnect(power))! {
-            if power < 3 {
+        let cancelMul = self.player?.consumePunchTiming() ?? 1.0
+        let staminaMul = self.player?.staminaPowerMultiplier ?? 1.0
+        let finalPower = power * cancelMul * staminaMul
+        let isHaymaker = power > 5
+        self.player?.consumeStamina(forHaymaker: isHaymaker)
+        self.player?.punchLeft(finalPower)
+        if (self.opponent?.willLeftPunchConnect(finalPower))! {
+            if finalPower < 3 {
                 self.run(FightScene.lightPunchSound)
-            } else if power < 7 {
+            } else if finalPower < 7 {
                 self.run((self.opponent?.mediumPunchSFX())!)
             } else {
                 self.run((self.opponent?.heavyPunchSFX())!)
             }
-            self.battleManager?.playerConnect(power: power)
-             self.opponent?.hitRecoil(.left, power:power)
+            self.battleManager?.playerConnect(power: finalPower)
+             self.opponent?.hitRecoil(.left, power:finalPower)
+            HapticsService.shared.punchConnect(power: finalPower)
+            if cancelMul > 1.0 {
+                cancelChainShake(intensity: cancelMul - 1.0)
+                HapticsService.shared.cancelChainTick()
+            }
         }
 //        self.run(punchSound)
+    }
+
+    private func cancelChainShake(intensity: CGFloat) {
+        let mag = min(8.0, 4.0 + intensity * 10.0)
+        let dx = CGFloat.random(in: -mag...mag)
+        let dy = CGFloat.random(in: -mag...mag)
+        ghostHolder?.run(SKAction.sequence([
+            SKAction.moveBy(x: dx, y: dy, duration: 0.02),
+            SKAction.moveBy(x: -dx, y: -dy, duration: 0.05)
+        ]))
     }
     
     func comboRight() {
@@ -550,6 +585,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
             self.effectsLayer?.showDamage(direction:.left)
             self.opponent?.showDamage(direction:.left)
             self.run(self.opponent!.enemyConnectSFX())
+            HapticsService.shared.playerHit()
         } else {
             self.battleManager?.opponentConnect(power:connected ? self.opponent!.returnBlockedHit() : 0)
             self.run(self.opponent!.enemyBlockedSFX())
@@ -577,6 +613,7 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
             self.effectsLayer?.showDamage(direction:.right)
             self.opponent?.showDamage(direction:.right)
             self.run(self.opponent!.enemyConnectSFX())
+            HapticsService.shared.playerHit()
         }else {
             self.battleManager?.opponentConnect(power:connected ? self.opponent!.returnBlockedHit() : 0)
             self.run(self.opponent!.enemyBlockedSFX())

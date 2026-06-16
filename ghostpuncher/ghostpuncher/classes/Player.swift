@@ -26,8 +26,53 @@ class Player:SKNode
     var blockingRight:Bool = false
     
     let MOVEMENT_KEY  = "movementKey"
-    
+
     let fistMovementDegree = 10
+
+    // Cancel-window timing. Tapping a punch this many seconds after the
+    // previous punch chains into a combo cancel — each successive cancel
+    // builds a damage multiplier. Tapping outside the window resets the chain.
+    private let CANCEL_WINDOW_OPEN: TimeInterval  = 0.14
+    private let CANCEL_WINDOW_CLOSE: TimeInterval = 0.28
+    private let MAX_CHAIN_BONUS: CGFloat = 0.6  // +60% at full chain
+    private let BONUS_PER_LINK:  CGFloat = 0.15
+
+    private var lastPunchTime: TimeInterval = 0
+    private(set) var cancelChain: Int = 0
+
+    // Stamina — tapping too often burns out player damage. Encourages
+    // rhythm-based play instead of pure button mash.
+    private let STAMINA_MAX: CGFloat = 100
+    private let STAMINA_REGEN_PER_SEC: CGFloat = 28
+    private let LIGHT_PUNCH_COST: CGFloat = 8
+    private let HAYMAKER_COST: CGFloat = 14
+    private var lastStaminaTickTime: TimeInterval = 0
+
+    private(set) var stamina: CGFloat = 100
+
+    var staminaPercent: CGFloat { return stamina / STAMINA_MAX }
+
+    /// Returns the damage multiplier the current stamina level produces.
+    /// Full bar = 1.0. Low stamina punches deal less.
+    var staminaPowerMultiplier: CGFloat {
+        let pct = staminaPercent
+        if pct > 0.4 { return 1.0 }
+        if pct > 0.2 { return 0.7 }
+        if pct > 0.05 { return 0.4 }
+        return 0.15
+    }
+
+    func consumeStamina(forHaymaker: Bool) {
+        let cost = forHaymaker ? HAYMAKER_COST : LIGHT_PUNCH_COST
+        stamina = max(0, stamina - cost)
+    }
+
+    func updateStamina(currentTime: TimeInterval) {
+        if lastStaminaTickTime == 0 { lastStaminaTickTime = currentTime; return }
+        let dt = CGFloat(currentTime - lastStaminaTickTime)
+        lastStaminaTickTime = currentTime
+        stamina = min(STAMINA_MAX, stamina + STAMINA_REGEN_PER_SEC * dt)
+    }
     
     init(frame: CGRect) {
         self.opponentFrame = frame
@@ -105,25 +150,58 @@ class Player:SKNode
         if self.checkBlocking() {
             return
         }
-        
+
         if self.rightFist.action(forKey: MOVEMENT_KEY) != nil {
             self.rightFist.removeAction(forKey: MOVEMENT_KEY)
         }
-        
+
         rightFist.run(power > 5 ? rightHaymaker! : rightJab!, withKey: MOVEMENT_KEY)
 
+        if cancelChain >= 2 {
+            playCancelFlash(on: rightFist)
+        }
     }
-    
+
     func punchLeft(_ power:CGFloat = 1.0){
         if self.checkBlocking() {
             return
         }
-        
+
         if self.leftFist.action(forKey: MOVEMENT_KEY) != nil {
             self.leftFist.removeAction(forKey: MOVEMENT_KEY)
         }
-        
+
         leftFist.run(power > 5 ? leftHaymaker! : leftJab!, withKey: MOVEMENT_KEY)
+
+        if cancelChain >= 2 {
+            playCancelFlash(on: leftFist)
+        }
+    }
+
+    /// Consumes the timing of an incoming punch and returns a power
+    /// multiplier. Within the cancel window the chain extends; outside it
+    /// resets to zero. Call this exactly once per punch input.
+    func consumePunchTiming() -> CGFloat {
+        let now = CACurrentMediaTime()
+        let dt = now - lastPunchTime
+        lastPunchTime = now
+
+        if dt >= CANCEL_WINDOW_OPEN && dt <= CANCEL_WINDOW_CLOSE {
+            cancelChain += 1
+            let bonus = min(BONUS_PER_LINK * CGFloat(cancelChain), MAX_CHAIN_BONUS)
+            return 1.0 + bonus
+        }
+        cancelChain = 0
+        return 1.0
+    }
+
+    private func playCancelFlash(on fist: SKSpriteNode) {
+        fist.run(SKAction.sequence([
+            SKAction.colorize(with: SKColor(red: 1.0, green: 0.85, blue: 0.3, alpha: 1),
+                              colorBlendFactor: 0.7, duration: 0.04),
+            SKAction.wait(forDuration: 0.08),
+            SKAction.colorize(withColorBlendFactor: 0.0, duration: 0.10)
+        ]))
     }
     
     func update(){

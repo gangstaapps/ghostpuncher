@@ -31,9 +31,13 @@ class Controls:SKNode
     
     let energyBarHolderPlayer:SKSpriteNode
     let energyBarHolderOpponent:SKSpriteNode
-    
+
     let energyBarPlayer:SKSpriteNode
     let energyBarOpponent:SKSpriteNode
+
+    // Stamina bar — thin yellow strip below the player health bar
+    let staminaBarBackground: SKShapeNode
+    let staminaBar: SKShapeNode
     
     var leftButtonPowerMeter:SKShapeNode
     var rightButtonPowerMeter:SKShapeNode
@@ -118,8 +122,21 @@ class Controls:SKNode
         self.leftPunch.position = leftPunchRoll.position
         
         leftButtonPowerMeter = SKShapeNode()
-        
+
         rightButtonPowerMeter = SKShapeNode()
+
+        let staminaWidth: CGFloat = energyBarHolderPlayer.frame.size.width * 0.86
+        let staminaHeight: CGFloat = 6
+        staminaBarBackground = SKShapeNode(rectOf: CGSize(width: staminaWidth, height: staminaHeight), cornerRadius: 2)
+        staminaBarBackground.fillColor = SKColor(white: 0, alpha: 0.55)
+        staminaBarBackground.strokeColor = SKColor(white: 1, alpha: 0.25)
+        staminaBarBackground.lineWidth = 1
+        staminaBarBackground.position = CGPoint(x: energyBarHolderPlayer.position.x,
+                                                y: energyBarHolderPlayer.position.y - energyBarHolderPlayer.frame.size.height / 2 - staminaHeight)
+        staminaBar = SKShapeNode(rectOf: CGSize(width: staminaWidth, height: staminaHeight - 2), cornerRadius: 2)
+        staminaBar.fillColor = SKColor(red: 1.0, green: 0.85, blue: 0.2, alpha: 1)
+        staminaBar.strokeColor = .clear
+        staminaBar.position = staminaBarBackground.position
         
         leftButtonPowerSmoke = SKEmitterNode(fileNamed: "ButtonPowerMeter.sks")!
 //        leftButtonPowerSmoke.position = leftPunch.position
@@ -186,8 +203,27 @@ class Controls:SKNode
         self.addChild(self.energyBarPlayer)
         self.addChild(self.energyBarOpponent)
         
+        self.addChild(self.staminaBarBackground)
+        self.addChild(self.staminaBar)
+
         self.setPlayerHealth(percent:1.00)
         self.setOpponentHealth(percent:1.00)
+        self.setStamina(percent: 1.0)
+    }
+
+    func setStamina(percent: CGFloat) {
+        let clamped = max(0, min(1, percent))
+        staminaBar.xScale = clamped
+        // Anchor stays centered; xScale around center makes it shrink both
+        // ways. Offset position so the bar drains from the right edge.
+        let fullWidth = staminaBarBackground.frame.size.width - 2
+        staminaBar.position = CGPoint(x: staminaBarBackground.position.x - fullWidth * (1 - clamped) / 2,
+                                      y: staminaBarBackground.position.y)
+        if clamped < 0.25 {
+            staminaBar.fillColor = SKColor(red: 1.0, green: 0.35, blue: 0.2, alpha: 1)
+        } else {
+            staminaBar.fillColor = SKColor(red: 1.0, green: 0.85, blue: 0.2, alpha: 1)
+        }
     }
     
     
