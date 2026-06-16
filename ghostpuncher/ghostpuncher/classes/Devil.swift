@@ -269,9 +269,9 @@ class Devil: Opponent {
     }
 
     override func pickSpecial() {
-        // Devil already overrides comboAttack1 to dispatch wing-combo /
-        // lightning. Use that.
-        super.comboAttack1()
+        // Use self (not super) so we dispatch through Devil's overridden
+        // comboAttack1 — wing-combo + lightning.
+        self.comboAttack1()
     }
     
     

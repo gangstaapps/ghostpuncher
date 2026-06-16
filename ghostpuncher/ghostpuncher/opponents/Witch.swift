@@ -136,9 +136,10 @@ class Witch: Opponent {
     }
 
     override func pickSpecial() {
-        // Witch already overrides comboAttack1 to dispatch among
-        // fireball / multiFireball / lightning, which is the perfect pool.
-        super.comboAttack1()
+        // Witch's overridden comboAttack1 routes to fireball / multiFireball
+        // / lightning. Use self.comboAttack1 (NOT super) so we hit the
+        // elemental versions, not the base "fury of punches" barrage.
+        self.comboAttack1()
     }
 
     override func spark(_ direction:Direction, _ power:CGFloat){

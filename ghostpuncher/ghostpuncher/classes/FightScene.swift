@@ -426,13 +426,16 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     }
     
     func opponentAttackLeft(){
-        
+
         let isBlocking:Bool! = self.player?.checkBlocking()
-        
+
         let hitPos = (self.opponent?.position.x)! + (self.ghostHolder?.position.x)!
-        
-        let connected = min(max(hitPos, 0), 400) == hitPos
-        print("hitPos = \(hitPos)")
+
+        // Hits land when opponent is on-screen (juke moves them off, breaking
+        // the hit). Original code hardcoded [0, 400] for ~480-wide screens —
+        // modern iPhones in landscape are 800+ wide, so the upper bound was
+        // breaking every attack.
+        let connected = hitPos > 0 && hitPos < frame.size.width
 //
 //        self.opponent?.doLeftArmAttack(connected:isBlocking!)
 //        
@@ -455,11 +458,10 @@ class FightScene: SKScene, ControlsDelegate, BattleManagerDelegate, OpponentDele
     }
     func opponentAttackRight(){
         let isBlocking:Bool! = self.player?.checkBlocking()
-        
+
         let hitPos = (self.opponent?.position.x)! + (self.ghostHolder?.position.x)!
-        
-        let connected = min(max(hitPos, 100), 400) == hitPos
-//        print("hitPos = \(hitPos)")
+
+        let connected = hitPos > frame.size.width * 0.15 && hitPos < frame.size.width
 //
 //        self.opponent?.doRightArmAttack(connected:isBlocking!)
 //        

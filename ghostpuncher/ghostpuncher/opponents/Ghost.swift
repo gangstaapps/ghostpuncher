@@ -53,9 +53,12 @@ class Ghost: Opponent {
     }
 
     override func pickSpecial() {
+        // Ghost has no fireball/lightning textures, so its evil flavor comes
+        // from the vanish + lights-out moments. The base fury barrage is kept
+        // as a rare "boss-mode" punctuation.
         let roll = Int(arc4random_uniform(10))
         switch roll {
-        case 0...4:
+        case 0...5:
             // Vanish — the ghost's signature. Disappear, then strike from
             // the dark.
             self.goInvisible()
@@ -66,7 +69,7 @@ class Ghost: Opponent {
                     self?.telegraphAttack(Telegraph(windUp: 0.18, cue: .eyeFlash, direction: dir, power: 1.8))
                 }
             ]))
-        case 5, 6:
+        case 6...8:
             // Lights-out scare into a hard hit.
             self.delegate?.turnOffLights()
             self.opponent.run(SKAction.sequence([
@@ -79,7 +82,7 @@ class Ghost: Opponent {
                 SKAction.run { [weak self] in self?.delegate?.turnOnLights() }
             ]))
         default:
-            // Full combo barrage.
+            // Rare full combo barrage.
             super.comboAttack1()
         }
     }

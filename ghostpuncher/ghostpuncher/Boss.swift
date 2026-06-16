@@ -119,9 +119,10 @@ class Boss: Opponent {
     }
 
     override func pickSpecial() {
-        // Boss reuses its own comboAttack1 override (which already dispatches
-        // among fireball / multiFireball / lightning / super combo).
-        super.comboAttack1()
+        // self (not super) — routes through Boss's overridden comboAttack1
+        // which dispatches among fireball / multiFireball / lightning /
+        // super combo.
+        self.comboAttack1()
     }
 
     override func spark(_ direction:Direction, _ power:CGFloat){
