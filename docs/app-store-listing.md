@@ -7,7 +7,13 @@ verified.
 
 ## App Name (30 char max)
 
-**Ghost Puncher** _(13/30)_
+**Ghost Puncher: Redead** _(21/30)_
+
+_Note: the public App Store listing name is "Ghost Puncher: Redead"
+because "Ghost Puncher" was still reserved by the dormant 2016
+swanriders.com account. The CFBundleDisplayName in Info.plist
+remains just "Ghost Puncher" — that's what appears under the icon
+on the phone home screen._
 
 ## Subtitle (30 char max — 3 options, pick one)
 
@@ -66,7 +72,13 @@ _(99/100 — exactly at the line)_
 - "indie", "retro" cover sentiment (people who actively seek non-Mihoyo games)
 - DO NOT repeat words from the App Name or Subtitle — Apple already indexes those, repeating wastes characters
 
-## What's New (4000 char max, for version 2.0)
+## What's New (only required from v1.1 onward)
+
+For the **initial v1.0 submission, Apple does NOT show a "What's New"
+section** — that field only appears starting with the first update.
+Skip this in App Store Connect for now.
+
+(Draft preserved for the next update / a hypothetical v2.0 reframing:)
 
 ```
 Welcome back. Ghost Puncher is reborn.
